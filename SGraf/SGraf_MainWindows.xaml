@@ -1,0 +1,92 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGraf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:My="clr-namespace:SGraf.My" x:Name="window" x:Class="MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="445" Width="800">
+    <Window.DataContext>
+        <My:MySettings/>
+    </Window.DataContext>
+
+
+    <DockPanel Margin="0,0,0,0">
+        <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Apri immagini..." />
+                <MenuItem Header="Apri _progetto..." />
+                <MenuItem Header="_Salva progetto..." />
+            </MenuItem>
+            <MenuItem Header="_Strumenti">
+                <MenuItem Header="_Genera fascicolo fotograico" />
+                <MenuItem Name="menu_setup" Header="_Setup..." Click="MenuSetupItem_Click"  />
+                <MenuItem Header="S_vuota" />
+            </MenuItem>
+        </Menu>
+
+        <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Background="WhiteSmoke" >
+            <Expander Header="Dati fascicolo" IsExpanded="True">
+                <DockPanel LastChildFill="False" DockPanel.Dock="Top" Height="169" Margin="10,10,10,10" >
+                    <GroupBox Header="Oggetto" DockPanel.Dock="Top" Height="45">
+                        <TextBox x:Name="tb_oggetto" TextWrapping="Wrap" Margin="0,0,0,0" VerticalAlignment="Top" AllowDrop="True" Text="{Binding oggetto}"/>
+                    </GroupBox>
+                    <GroupBox Header="Dettaglio contenuto" DockPanel.Dock="Top" Height="42">
+                        <TextBox x:Name="tb_contenuto" TextWrapping="Wrap" Margin="0,0,0,0" VerticalAlignment="Top" Text="{Binding contenutoDettaglio}"/>
+                    </GroupBox>
+
+                    <DockPanel LastChildFill="False" DockPanel.Dock="Top">
+                        <GroupBox Header="Tipo Fascicolo" Width="159">
+                            <Canvas Width="150" Height="25" HorizontalAlignment="Left">
+                                <ComboBox x:Name="cb_tipofascicolo" Width="150" SelectedIndex="{Binding tipoFascicolo}" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                    <ComboBoxItem Content="Descrittivo"/>
+                                    <ComboBoxItem Content="Identificazione"/>
+                                </ComboBox>
+                            </Canvas>
+                        </GroupBox>
+                        <GroupBox Header="Disposizione" Width="120">
+                            <StackPanel Margin="0,0,-2,0">
+                                <Canvas Width="104" Height="25" HorizontalAlignment="Left">
+                                    <Label Content="Colonne" Canvas.Top="-2"/>
+                                    <xctk:IntegerUpDown x:Name="sl_colonne" Width="45" Height="20" Canvas.Left="54" Canvas.Top="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding disposizioneColonne}" Minimum="1" />
+                                </Canvas>
+                                <Canvas Width="104" Height="25" HorizontalAlignment="Left">
+                                    <Label Content="Righe" Canvas.Top="-2"/>
+                                    <xctk:IntegerUpDown x:Name="sl_righe" Width="45" Height="20" Canvas.Left="54" Canvas.Top="2" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding disposizioneRighe}" Minimum="1"/>
+                                </Canvas>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Dimensioni (cm)" Width="126">
+                            <StackPanel Margin="0,0,-2,0" HorizontalAlignment="Left">
+                                <Canvas Width="92" Height="26">
+                                    <Label Content="Altezza" Canvas.Top="-2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="48"/>
+                                    <TextBox x:Name="tb_altezzaimmagine" Canvas.Left="58" Canvas.Top="3"  Width="30" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding fotoAltezzaCM}"/>
+                                </Canvas>
+                                <Canvas Width="105" Height="26">
+                                    <Label Content="Larghezza" Canvas.Top="-2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64"/>
+                                    <TextBox x:Name="tb_larghezzaimmagine" Canvas.Left="64" Canvas.Top="3" Width="30" Text="{Binding fotoLarghezzaCM}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </Canvas>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </DockPanel>
+                </DockPanel>
+            </Expander>
+        </DockPanel>
+
+        <DockPanel DockPanel.Dock="Top" >
+            <ScrollViewer >
+                <WrapPanel x:Name="WrapPanelImmagini"/>
+            </ScrollViewer>   
+
+
+
+        </DockPanel>
+
+
+
+    </DockPanel>
+
+</Window>
