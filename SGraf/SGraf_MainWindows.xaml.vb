@@ -1,11 +1,12 @@
 ﻿
 
+Imports System.Drawing
+Imports System.IO
 Imports log4net
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Class MainWindow
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
-
-
 
     Private Sub tb_oggetto_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_oggetto.TextChanged
         My.Settings.oggetto = sender.text
@@ -54,22 +55,76 @@ Class MainWindow
         log.Info("Start")
 
 
-        Dim img As Image = New Image()
+        'Dim img As Image = New Image()
         Dim sPath As String = AppDomain.CurrentDomain.BaseDirectory & "test"
 
 
-
-
-        For a = 0 To 100
-            Dim usr As UserControlImg = New UserControlImg(img, sPath & "\dsc_0181.jpg", 100, 100)
-            WrapPanelImmagini.Children.Add(usr)
-        Next
-
-
-
-
+        ' For a = 0 To 50
+        ' Dim usr As UserControlImg = New UserControlImg(img, sPath & "\dsc_0181.jpg", 250, 100)
+        ' WrapPanelImmagini.Children.Add(usr)
+        '    Next
 
 
     End Sub
+
+    Private Sub WrapPanelImmagini_Drop(sender As Object, e As DragEventArgs) Handles WrapPanelImmagini.Drop
+        If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then
+
+            ' Note that you can have more than one file.
+            Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
+
+            PopolaImmagini(files)
+
+        End If
+    End Sub
+
+    Private Sub ScrollViewer_Drop(sender As Object, e As DragEventArgs)
+        WrapPanelImmagini_Drop(sender, e)
+    End Sub
+
+    Private Sub PopolaImmagini(arrayFileNames As String())
+        Dim i As Integer = 0
+        Dim sFile As String
+        Dim imageItem As UserControlImg
+        For Each sFile In arrayFileNames
+            Try
+
+                'BitmapImage è la miniatura
+                Dim b_image As BitmapImage = New BitmapImage()
+                b_image.BeginInit()
+                b_image.UriSource = New Uri(sFile, UriKind.RelativeOrAbsolute)
+                b_image.DecodePixelHeight = 200
+                b_image.EndInit()
+
+                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb, My.Settings.fotoAltezzaThumb)
+                WrapPanelImmagini.Children.Add(imageItem)
+
+            Catch ex As Exception
+                log.Info("Inserimento immagine fallito - " & ex.Message)
+            End Try
+            i = i + 1
+        Next
+
+        For Each child As UserControlImg In WrapPanelImmagini.Children
+            RemoveHandler child.PictureBox1.MouseDown, AddressOf childs_MouseDown
+            AddHandler child.PictureBox1.MouseDown, AddressOf childs_MouseDown
+
+            child.LabelNumeroFoto.Content = WrapPanelImmagini.Children.IndexOf(child).ToString + 1
+
+        Next
+    End Sub
+
+    Private Sub childs_MouseDown(ByVal sender As System.Object, ByVal e As MouseEventArgs)
+        'occorre distinguere tra drag&drop e click
+        Dim source As UserControlImg = CType(sender.parent, UserControlImg)
+        ' If e.Button = MouseButtons.Left Then
+        ' Me.dragtype = source.GetType
+        ' Me.DoDragDrop(source, DragDropEffects.Move)
+        ' Else
+
+        '  End If
+    End Sub
+
+
 End Class
 

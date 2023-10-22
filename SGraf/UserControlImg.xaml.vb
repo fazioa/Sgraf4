@@ -1,5 +1,4 @@
-﻿Imports Xceed.Wpf.Toolkit.PropertyGrid
-
+﻿
 Public Enum ExifProperty
     Title = &H9C9B              ' 40091
     Comments = &H9C9C           ' 40092
@@ -479,134 +478,129 @@ Public Class UserControlImg
         End Set
     End Property
 
+    Private Sub TextBoxTag_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TextBoxTag.TextChanged
+
+    End Sub
+
+    Private Sub clickFoto(sLink As String)
+        Process.Start(sLink)
+    End Sub
+
+    Private Sub LinkNomeFile_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs) Handles LinkNomeFile.MouseLeftButtonDown
+        clickFoto(sNomeFile)
+    End Sub
+
     Public Property Orientation As Object
 
 
 
 
-    Sub New(_image As Image, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
+    Sub New(_b_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
         InitializeComponent()
+        sNomeFile = _sNomeFile
 
+        PictureBox1.Source = _b_image
 
-        'BitmapImage è la miniatura
-        Dim bi As BitmapImage = New BitmapImage()
-        bi.BeginInit()
-        bi.UriSource = New Uri(_sNomeFile, UriKind.RelativeOrAbsolute)
-        bi.EndInit()
-        _image.Source = bi
-
-        PictureBox1.Source = bi
-
-
-        Dim imgWidth, imgHeight As Double
+        'Dim imgWidth, imgHeight As Double
         Dim ratio As Single = 0
 
         Me.Width = _userCtrlWidth
-        Me.Height = _userCtrlHeight
-        imageWidth = _image.Width
+        'Me.Height = _userCtrlHeight
+        ' imageWidth = _image.Width
         'imageWidth = _image.PhysicalDimension.Width
-        imageHeight = _image.Height
+        'imageHeight = _image.Height
         'imageHeight = _image.PhysicalDimension.Height
 
+        ' ratio = CSng(imageHeight) / CSng(imageWidth)
 
-        ratio = CSng(imageHeight) / CSng(imageWidth)
+        'imgWidth = _userCtrlWidth
+        'imgHeight = _userCtrlWidth * ratio
 
+        'If imgHeight > _userCtrlHeight Then
+        '    imgHeight = _userCtrlHeight
+        '    imgWidth = _userCtrlHeight / ratio
+        'End If
 
-        imgWidth = _userCtrlWidth
-        imgHeight = _userCtrlWidth * ratio
+        LinkNomeFile.Content = System.IO.Path.GetFileName(_sNomeFile)
+        LinkNomeFile.ToolTip = _sNomeFile
+        PictureBox1.ToolTip = _sNomeFile
 
-        If imgHeight > _userCtrlHeight Then
-            imgHeight = _userCtrlHeight
-            '    'Me.Width = Convert.ToInt32(Math.Round(CSng(userCtrlWidth) * ratio))
-            imgWidth = _userCtrlHeight / ratio
-        End If
+        'LETTURA DATI EXIF
 
-        '_imageTmb = _image.GetThumbnailImage(imgWidth, imgHeight, Nothing, IntPtr.Zero)
+        Dim count As Integer = 0
 
-        'sNomeFile = _sNomeFile
+        Dim _img As System.Drawing.Bitmap = New System.Drawing.Bitmap(_sNomeFile)
+        'lettura proprietà EXIF
+        Dim propItems As System.Drawing.Imaging.PropertyItem() = _img.PropertyItems()
 
-        'PictureBox1.Image = _imageTmb
+        ' Dim encoding As New System.Text.ASCIIEncoding()
 
-
-
-        LinkNomeFile.Text = System.IO.Path.GetFileName(_sNomeFile)
-        'sFilePath = _sNomeFile
-        'ToolTip1.SetToolTip(PictureBox1, _image.PhysicalDimension.ToString)
-        'ToolTip1.SetToolTip(LinkLabelNomeFile, _sNomeFile)
-
-        ''LETTURA DATI EXIF
-        ''Get the PropertyItems property from image
-        'Dim count As Integer = 0
-        'Dim propItems As Imaging.PropertyItem() = _image.PropertyItems()
-
-        'Dim encoding As New System.Text.ASCIIEncoding()
-
-        'Dim pic_data As PropertyItem
+        Dim pic_data As System.Drawing.Imaging.PropertyItem
         Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.Equip_Make)
-            '    sMarca = System.Text.Encoding.ASCII.GetString(pic_data.Value, 0, pic_data.Len - 1)
-            '    sMarca = sMarca.Trim()
+            pic_data = _img.GetPropertyItem(ExifProperty.Equip_Make)
+            sMarca = System.Text.Encoding.ASCII.GetString(pic_data.Value, 0, pic_data.Len - 1)
+            sMarca = sMarca.Trim()
 
         Catch ex As Exception
         End Try
 
         Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.Equip_Model)
-            '    sModello = System.Text.Encoding.ASCII.GetString(pic_data.Value, 0, pic_data.Len - 1)
-            '    sModello = sModello.Trim
+            pic_data = _img.GetPropertyItem(ExifProperty.Equip_Model)
+            sModello = System.Text.Encoding.ASCII.GetString(pic_data.Value, 0, pic_data.Len - 1)
+            sModello = sModello.Trim
         Catch ex As Exception
         End Try
         Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.Date_Time)
-            '    sDataScatto = System.Text.Encoding.ASCII.GetString(pic_data.Value, 0, pic_data.Len - 1)
-            '    Dim time As DateTime
-            '    Dim sData As String = sDataScatto.Substring(0, 10)
-            '    Dim sArrayData As String() = sData.Split(":")
-            '    Dim sOra As String = sDataScatto.Substring(11, 8)
-            '    Dim sArrayOra As String() = sOra.Split(":")
-            '    time = New DateTime(CType(sArrayData(0), Integer), CType(sArrayData(1), Integer), CType(sArrayData(2), Integer), CType(sArrayOra(0), Integer), CType(sArrayOra(1), Integer), CType(sArrayOra(2), Integer))
-            '    Dim format As String = "dd/MMM/yyyy ore HH:mm"
-            '    sDataScatto = time.ToString(format)
-        Catch ex As Exception
-        End Try
-
-        'Dim a, b As UShort
-        Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.Exposure_Time)
-            '    a = CType(BitConverter.ToUInt16(pic_data.Value, 0), Double)
-            '    b = CType(BitConverter.ToUInt16(pic_data.Value, 4), Double)
-            '    If (a / b) >= 1 Then
-            '        sEsposizione = (a / b) & " sec"
-            '    Else
-            '        sEsposizione = "1/" & 1 / (a / b) & " sec"
-            '    End If
+            pic_data = _img.GetPropertyItem(ExifProperty.Date_Time)
+            sDataScatto = System.Text.Encoding.ASCII.GetString(pic_data.Value, 0, pic_data.Len - 1)
+            Dim time As DateTime
+            Dim sData As String = sDataScatto.Substring(0, 10)
+            Dim sArrayData As String() = sData.Split(":")
+            Dim sOra As String = sDataScatto.Substring(11, 8)
+            Dim sArrayOra As String() = sOra.Split(":")
+            time = New DateTime(CType(sArrayData(0), Integer), CType(sArrayData(1), Integer), CType(sArrayData(2), Integer), CType(sArrayOra(0), Integer), CType(sArrayOra(1), Integer), CType(sArrayOra(2), Integer))
+            Dim format As String = "dd/MMM/yyyy ore HH:mm"
+            sDataScatto = time.ToString(format)
         Catch ex As Exception
         End Try
 
+        Dim a, b As UShort
         Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.F_Number)
-            '    a = BitConverter.ToUInt16(pic_data.Value, 0)
-            '    b = BitConverter.ToUInt16(pic_data.Value, 4)
-            '    sDiaframma = "f/" & a / b
+            pic_data = _img.GetPropertyItem(ExifProperty.Exposure_Time)
+            a = CType(BitConverter.ToUInt16(pic_data.Value, 0), Double)
+            b = CType(BitConverter.ToUInt16(pic_data.Value, 4), Double)
+            If (a / b) >= 1 Then
+                sEsposizione = (a / b) & " sec"
+            Else
+                sEsposizione = "1/" & 1 / (a / b) & " sec"
+            End If
         Catch ex As Exception
         End Try
 
         Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.ISO_Speed)
-            '    a = BitConverter.ToUInt16(pic_data.Value, 0)
-            '    sISO = "ISO " & a
+            pic_data = _img.GetPropertyItem(ExifProperty.F_Number)
+            a = BitConverter.ToUInt16(pic_data.Value, 0)
+            b = BitConverter.ToUInt16(pic_data.Value, 4)
+            sDiaframma = "f/" & a / b
         Catch ex As Exception
         End Try
 
         Try
-            '    pic_data = _image.GetPropertyItem(ExifProperty.Flash)
-            '    a = BitConverter.ToUInt16(pic_data.Value, 0)
-            '    Dim ba As New BitArray({a})
-            '    If (ba.Get(0)) Then
-            '        sFlash = "Flash on"
-            '    Else
-            '        sFlash = "Flash off"
-            '    End If
+            pic_data = _img.GetPropertyItem(ExifProperty.ISO_Speed)
+            a = BitConverter.ToUInt16(pic_data.Value, 0)
+            sISO = "ISO " & a
+        Catch ex As Exception
+        End Try
+
+        Try
+            pic_data = _img.GetPropertyItem(ExifProperty.Flash)
+            a = BitConverter.ToUInt16(pic_data.Value, 0)
+            Dim ba As New BitArray({a})
+            If (ba.Get(0)) Then
+                sFlash = "Flash on"
+            Else
+                sFlash = "Flash off"
+            End If
 
         Catch ex As Exception
         End Try
