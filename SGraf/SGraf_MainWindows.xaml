@@ -15,7 +15,7 @@
     <DockPanel Margin="0,0,0,0">
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_Apri immagini..." />
+                <MenuItem Header="_Apri immagini..." Click="MenuItem_Click" />
                 <MenuItem Header="Apri _progetto..." />
                 <MenuItem Header="_Salva progetto..." />
             </MenuItem>

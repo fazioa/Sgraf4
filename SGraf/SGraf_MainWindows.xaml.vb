@@ -4,6 +4,7 @@ Imports System.Drawing
 Imports System.IO
 Imports log4net
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.Win32
 
 Class MainWindow
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
@@ -93,7 +94,7 @@ Class MainWindow
                 Dim b_image As BitmapImage = New BitmapImage()
                 b_image.BeginInit()
                 b_image.UriSource = New Uri(sFile, UriKind.RelativeOrAbsolute)
-                b_image.DecodePixelHeight = 200
+                b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
                 b_image.EndInit()
 
                 imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb, My.Settings.fotoAltezzaThumb)
@@ -116,7 +117,7 @@ Class MainWindow
 
     Private Sub childs_MouseDown(ByVal sender As System.Object, ByVal e As MouseEventArgs)
         'occorre distinguere tra drag&drop e click
-        Dim source As UserControlImg = CType(sender.parent, UserControlImg)
+        'Dim source As UserControlImg = CType(sender.parent, UserControlImg)
         ' If e.Button = MouseButtons.Left Then
         ' Me.dragtype = source.GetType
         ' Me.DoDragDrop(source, DragDropEffects.Move)
@@ -125,6 +126,13 @@ Class MainWindow
         '  End If
     End Sub
 
+    Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
+        Dim o As OpenFileDialog = New OpenFileDialog
+        o.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.tif;*.bmp|All files (*.*)|*.*"
 
+        o.Multiselect = True
+        Dim result = o.ShowDialog()
+        PopolaImmagini(o.FileNames)
+    End Sub
 End Class
 

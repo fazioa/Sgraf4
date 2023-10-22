@@ -56,18 +56,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property fsdfsd() As String
-            Get
-                Return CType(Me("fsdfsd"),String)
-            End Get
-            Set
-                Me("fsdfsd") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("prima riga intestazione")>  _
         Public Property intestazione1() As String
             Get
@@ -483,6 +471,18 @@ Namespace My
             End Get
             Set
                 Me("zoomMiniaturaDefaultMouse") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("200")>  _
+        Public Property thumbnailDisplayResolution() As String
+            Get
+                Return CType(Me("thumbnailDisplayResolution"),String)
+            End Get
+            Set
+                Me("thumbnailDisplayResolution") = value
             End Set
         End Property
     End Class

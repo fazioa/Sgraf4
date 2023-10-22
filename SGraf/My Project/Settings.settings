@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="fsdfsd" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="intestazione1" Type="System.String" Scope="User">
       <Value Profile="(Default)">prima riga intestazione</Value>
     </Setting>
@@ -109,6 +106,9 @@
     </Setting>
     <Setting Name="zoomMiniaturaDefaultMouse" Type="System.String" Scope="User">
       <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="thumbnailDisplayResolution" Type="System.String" Scope="User">
+      <Value Profile="(Default)">200</Value>
     </Setting>
   </Settings>
 </SettingsFile>
