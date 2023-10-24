@@ -1,4 +1,7 @@
 ﻿
+Imports log4net
+Imports Microsoft.VisualBasic.Logging
+Imports System.IO
 Imports Xceed.Wpf.AvalonDock.Layout
 
 Public Enum ExifProperty
@@ -392,8 +395,7 @@ End Structure
 
 Public Class UserControlImg
     Private _imageTmb As Image
-    Private sFilePath As String
-    Private isSelected As Boolean = False
+
 
     Private sTitolo As String
     Private sMarca As String
@@ -407,9 +409,13 @@ Public Class UserControlImg
     Dim pixelColor As Color
     Dim r, g, b As Byte
 
+
+    Public Property isSelected As Boolean = False
     Public Property imageWidth As Single
     Public Property imageHeight As Single
     Public Property sNomeFile As String
+
+    Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
 
     Public Property titolo As String
         Get
@@ -480,8 +486,11 @@ Public Class UserControlImg
         End Set
     End Property
 
-    Private Sub TextBoxTag_TextChanged(sender As Object, e As TextChangedEventArgs) Handles TextBoxTag.TextChanged
 
+    Private Sub TextBoxTag_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextBoxTag.LostFocus
+        Dim tb As TextBox = sender
+        'memorizza la didascalia solo se la relativa opzione è abilitata e se la casella non è vuota
+        If My.Settings.bMemorizzaDidascalia And Not tb.Text = "" Then salvaContenuto(sNomeFile, tb.Text)
     End Sub
 
     Private Sub clickFoto(sLink As String)
@@ -492,15 +501,15 @@ Public Class UserControlImg
         clickFoto(sNomeFile)
     End Sub
 
-    Private Sub UserControl_MouseLeftButtonUp(sender As Object)
-
-    End Sub
 
     Public Property Orientation As Object
 
 
     Sub New(_b_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
         InitializeComponent()
+
+        log4net.Config.XmlConfigurator.Configure()
+
         sNomeFile = _sNomeFile
 
         PictureBox1.Source = _b_image
@@ -530,7 +539,7 @@ Public Class UserControlImg
         PictureBox1.ToolTip = _sNomeFile
 
         'LETTURA DATI EXIF
-
+        log.Info("Lettura dati EXIF immagine" & _sNomeFile)
         Dim count As Integer = 0
 
         Dim _img As System.Drawing.Bitmap = New System.Drawing.Bitmap(_sNomeFile)
@@ -637,11 +646,39 @@ Public Class UserControlImg
             LabelEXIF.Text = LabelEXIF.Text & Trim(sFlash)
         End If
 
-        '     leggiContenuto(sFilePath, TextBoxTag)
-        'ToolTip1.SetToolTip(LabelEXIF, LabelEXIF.Text)
+        log.Info("Lettura didascalia " & _sNomeFile)
+        TextBoxTag.Text = leggiContenuto(_sNomeFile)
+        LabelEXIF.ToolTip() = LabelEXIF.Text
+
+
+        ImgTickSelected.Visibility = Visibility.Collapsed
 
     End Sub
 
+    Public Sub toggleSelected()
+        If ImgTickSelected.Visibility = Visibility.Collapsed Then
+            ImgTickSelected.Visibility = Visibility.Visible
+        Else
+            ImgTickSelected.Visibility = Visibility.Collapsed
+        End If
+        isSelected = Not isSelected
+    End Sub
 
+    Private Function leggiContenuto(sNomeFile As String)
+        Try
+            Dim file As New StreamReader(sNomeFile & ".txt")
+            Return file.ReadToEnd
+            file.Close()
+        Catch ex As Exception
+            log.Error("File commento """ & sNomeFile & ".txt" & """ non presente")
+        End Try
+        Return ""
+    End Function
+    Private Sub salvaContenuto(sNomeFile As String, sValore As String)
+        Dim file As New StreamWriter(sNomeFile & ".txt")
+        file.Write(sValore)
+        file.Flush()
+        file.Close()
+    End Sub
 
 End Class

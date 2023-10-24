@@ -167,5 +167,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selected.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="tick.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
