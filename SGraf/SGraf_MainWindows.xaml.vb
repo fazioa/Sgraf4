@@ -2,6 +2,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports System.Web.UI
 Imports log4net
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
@@ -68,6 +69,8 @@ Class MainWindow
 
     End Sub
 
+
+    Dim dragtype As Type
     Private Sub WrapPanelImmagini_Drop(sender As Object, e As DragEventArgs) Handles WrapPanelImmagini.Drop
         If (e.Data.GetDataPresent(DataFormats.FileDrop)) Then
 
@@ -75,6 +78,13 @@ Class MainWindow
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
 
             PopolaImmagini(files)
+        Else
+            'spostamento immagini
+
+            'Dim source As UserControlImg = CType(e.Data.GetData(dragtype), UserControlImg)
+            '   Dim target = Mouse.DirectlyOver()
+
+
 
         End If
     End Sub
@@ -89,7 +99,7 @@ Class MainWindow
         Dim imageItem As UserControlImg
         For Each sFile In arrayFileNames
             Try
-
+                log.Info("Inserimento immagine " & sFile)
                 'BitmapImage è la miniatura
                 Dim b_image As BitmapImage = New BitmapImage()
                 b_image.BeginInit()
@@ -101,30 +111,116 @@ Class MainWindow
                 WrapPanelImmagini.Children.Add(imageItem)
 
             Catch ex As Exception
-                log.Info("Inserimento immagine fallito - " & ex.Message)
+                log.Error("Inserimento immagine fallito - " & ex.Message)
             End Try
-            i = i + 1
         Next
 
         For Each child As UserControlImg In WrapPanelImmagini.Children
-            RemoveHandler child.PictureBox1.MouseDown, AddressOf childs_MouseDown
-            AddHandler child.PictureBox1.MouseDown, AddressOf childs_MouseDown
+            RemoveHandler child.MouseDown, AddressOf childs_MouseDown
+            AddHandler child.MouseDown, AddressOf childs_MouseDown
+
+            ' RemoveHandler child.MouseMove, AddressOf root_MouseMove
+            ' AddHandler child.MouseMove, AddressOf root_MouseMove
+            ' RemoveHandler child.MouseLeftButtonDown, AddressOf root_MouseLeftButtonDown
+            ' AddHandler child.MouseLeftButtonDown, AddressOf root_MouseLeftButtonDown
+            ' RemoveHandler child.MouseLeftButtonUp, AddressOf root_MouseLeftButtonUp
+            ' AddHandler child.MouseLeftButtonUp, AddressOf root_MouseLeftButtonUp
+
+            RemoveHandler child.Drop, AddressOf childs_Drop
+            AddHandler child.Drop, AddressOf childs_Drop
+
 
             child.LabelNumeroFoto.Content = WrapPanelImmagini.Children.IndexOf(child).ToString + 1
 
         Next
     End Sub
 
-    Private Sub childs_MouseDown(ByVal sender As System.Object, ByVal e As MouseEventArgs)
-        'occorre distinguere tra drag&drop e click
-        'Dim source As UserControlImg = CType(sender.parent, UserControlImg)
-        ' If e.Button = MouseButtons.Left Then
-        ' Me.dragtype = source.GetType
-        ' Me.DoDragDrop(source, DragDropEffects.Move)
-        ' Else
+    Private Sub childs_Drop(sender As Object, e As DragEventArgs)
 
-        '  End If
+        If (e.Data.GetData(dragtype)) Then
+            Dim source As UserControlImg = CType(e.Data.GetData(dragtype), UserControlImg)
+
+            Dim final As UserControlImg = sender
+            Dim wpanel As WrapPanel = source.Parent
+
+            'estrare il numero di posizione finale
+            Dim i = wpanel.Children.IndexOf(source)
+
+            'inserisce l'elelento nella nuova posizione
+            wpanel.Children.Remove(source)
+            wpanel.Children.Insert(i, source)
+
+            'rinumera
+            renumber(wpanel)
+
+        End If
+
+
+
+
+
+
+
     End Sub
+
+    Private Sub renumber(wpanel As WrapPanel)
+        For Each child As UserControlImg In wpanel.Children
+            child.LabelNumeroFoto.Content = wpanel.Children.IndexOf(child) + 1
+        Next
+    End Sub
+
+    Private Sub childs_MouseDown(ByVal sender As System.Object, ByVal e As MouseEventArgs)
+
+        If e.LeftButton = MouseButtonState.Pressed Then
+
+            Me.dragtype = sender.GetType
+            'Package the data.
+            Dim Data As DataObject = New DataObject()
+            Data.SetData(sender)
+            ' Initiate the drag-And-drop operation.
+            DragDrop.DoDragDrop(Me, Data, DragDropEffects.Move)
+
+        End If
+    End Sub
+
+
+    Dim anchorPoint As System.Windows.Point
+    Dim currentPoint As System.Windows.Point
+    Dim isInDrag As Boolean = False
+    Dim Transform = New TranslateTransform()
+    Private Sub root_MouseMove(sender As Object, e As MouseEventArgs)
+        If isInDrag = True Then
+            Dim element As FrameworkElement = sender
+            currentPoint = e.GetPosition(Nothing)
+
+            Transform.X += currentPoint.X - anchorPoint.X
+            Transform.Y += currentPoint.Y - anchorPoint.Y
+
+            CType(sender, UserControlImg).RenderTransform = Transform
+            anchorPoint = currentPoint
+        End If
+
+
+    End Sub
+
+    Private Sub root_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs)
+        Dim element As FrameworkElement = sender
+        anchorPoint = e.GetPosition(Nothing)
+            element.CaptureMouse()
+
+            isInDrag = True
+            e.Handled = True
+    End Sub
+    Private Sub root_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs)
+        If isInDrag = True Then
+            Dim element As FrameworkElement = sender
+            element.ReleaseMouseCapture()
+
+            isInDrag = False
+            e.Handled = False
+        End If
+    End Sub
+
 
     Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
         Dim o As OpenFileDialog = New OpenFileDialog
@@ -134,5 +230,6 @@ Class MainWindow
         Dim result = o.ShowDialog()
         PopolaImmagini(o.FileNames)
     End Sub
+
 End Class
 

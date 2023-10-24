@@ -6,9 +6,10 @@
              xmlns:local="clr-namespace:SGraf"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="UserControlImg"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" VerticalAlignment="Top" BorderBrush="Black">
+             d:DesignHeight="450" d:DesignWidth="800" VerticalAlignment="Top" BorderBrush="Black"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <DockPanel >
+    <DockPanel x:Name="UsrControlDockPanel" >
         <Label x:Name="LabelNumeroFoto" Content="Immagine" DockPanel.Dock="Top" Height="53" Margin="5,5,5,-20" Background="#FFFFDE00" Width="53" FontSize="24" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0,0,0,0" ScrollViewer.CanContentScroll="True" FontWeight="Black" FontFamily="Arial Black" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="2,2,2,2"/>
         <Image x:Name="PictureBox1" DockPanel.Dock="Top" Margin="5,0,5,0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
             <Image.ContextMenu>

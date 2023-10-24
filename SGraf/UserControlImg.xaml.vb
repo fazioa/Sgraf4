@@ -1,4 +1,6 @@
 ﻿
+Imports Xceed.Wpf.AvalonDock.Layout
+
 Public Enum ExifProperty
     Title = &H9C9B              ' 40091
     Comments = &H9C9C           ' 40092
@@ -490,9 +492,11 @@ Public Class UserControlImg
         clickFoto(sNomeFile)
     End Sub
 
+    Private Sub UserControl_MouseLeftButtonUp(sender As Object)
+
+    End Sub
+
     Public Property Orientation As Object
-
-
 
 
     Sub New(_b_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
@@ -637,6 +641,7 @@ Public Class UserControlImg
         'ToolTip1.SetToolTip(LabelEXIF, LabelEXIF.Text)
 
     End Sub
+
 
 
 End Class
