@@ -183,7 +183,7 @@ Class MainWindow
     Dim anchorPoint As System.Windows.Point
     Dim currentPoint As System.Windows.Point
     Dim isInDrag As Boolean = False
-    Dim Transform = New TranslateTransform()
+    '   Dim Transform = New TranslateTransform()
     'Private Sub root_MouseMove(sender As Object, e As MouseEventArgs)
     '    If isInDrag = True Then
     '        Dim element As FrameworkElement = sender

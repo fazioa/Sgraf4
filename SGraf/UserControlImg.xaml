@@ -10,30 +10,27 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <DockPanel x:Name="UsrControlDockPanel" >
-        
+
         <Label x:Name="LabelNumeroFoto" Content="Immagine" DockPanel.Dock="Top" Height="53" Margin="5,5,5,-20" Background="#FFFFDE00" Width="53" FontSize="24" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0,0,0,0" ScrollViewer.CanContentScroll="True" FontWeight="Black" FontFamily="Arial Black" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="2,2,2,2"/>
         <Image x:Name="ImgTickSelected" Source="/tick.png" DockPanel.Dock="Top" Margin="0,0,15,-60" Stretch="None" Width="52" Height="58" HorizontalAlignment="Right" VerticalAlignment="Top"  Panel.ZIndex="1">
             <Image.Effect>
                 <DropShadowEffect Color="White" BlurRadius="40"/>
             </Image.Effect>
         </Image>
-        <Image x:Name="PictureBox1" DockPanel.Dock="Top" Margin="5,0,5,0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-         
-            
+        <Image x:Name="PictureBox1" DockPanel.Dock="Top" Margin="5,0,5,0" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" RenderTransformOrigin="0.5,0.5">
             <Image.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="context_img_Menu1" Header="Menu item 1" />
-                    <MenuItem x:Name="context_img_Menu2" Header="Menu item 2" />
-                    <Separator />
-                    <MenuItem x:Name="context_img_Menu3" Header="Menu item 3" />
+                    <MenuItem x:Name="context_img_Menu_Rotate90sx" Header="Ruota sinistra" />
+                    <MenuItem x:Name="context_img_Menu_Rotate90dx" Header="Ruota destra" />
+
                 </ContextMenu>
             </Image.ContextMenu>
-            
+
         </Image>
         <Label x:Name="LinkNomeFile"  Foreground="Blue" DockPanel.Dock="Top" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" />
         <TextBlock x:Name="LabelEXIF" DockPanel.Dock="Top" Height="33" Margin="5,0,5,0"  VerticalAlignment="Top" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
         <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" VerticalAlignment="Bottom"/>
-       
+
 
     </DockPanel>
 

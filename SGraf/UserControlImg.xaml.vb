@@ -392,11 +392,38 @@ Public Structure Rational
     End Function
 End Structure
 
+Public Class ImageRotation
+    Public Enum rotation As Short
+        r0 = 0
+        r90 = 1
+        r180 = 2
+        r270 = 3
+    End Enum
+
+    Dim _rotation = New rotation
+
+    Public Sub nextDx()
+        If _rotation = rotation.r0 Then
+            _rotation = rotation.r90
+        ElseIf _rotation = rotation.r90 Then
+            _rotation = rotation.r180
+        ElseIf _rotation = rotation.r180 Then
+            _rotation = rotation.r270
+        End If
+    End Sub
+    Public Sub nextSx()
+        If _rotation = rotation.r0 Then
+            _rotation = rotation.r270
+        ElseIf _rotation = rotation.r270 Then
+            _rotation = rotation.r180
+        ElseIf _rotation = rotation.r180 Then
+            _rotation = rotation.r0
+        End If
+    End Sub
+End Class
+
 
 Public Class UserControlImg
-    Private _imageTmb As Image
-
-
     Private sTitolo As String
     Private sMarca As String
     Private sModello As String
@@ -405,6 +432,8 @@ Public Class UserControlImg
     Private sEsposizione As String
     Private sDiaframma As String
     Private sFlash As String
+
+    Public imgRotation As New ImageRotation
 
     Dim pixelColor As Color
     Dim r, g, b As Byte
@@ -505,14 +534,15 @@ Public Class UserControlImg
     Public Property Orientation As Object
 
 
-    Sub New(_b_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
+    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
         InitializeComponent()
+
 
         log4net.Config.XmlConfigurator.Configure()
 
         sNomeFile = _sNomeFile
 
-        PictureBox1.Source = _b_image
+        PictureBox1.Source = _bi_image
 
         'Dim imgWidth, imgHeight As Double
         Dim ratio As Single = 0
@@ -662,6 +692,46 @@ Public Class UserControlImg
             ImgTickSelected.Visibility = Visibility.Collapsed
         End If
         isSelected = Not isSelected
+    End Sub
+
+    Private Sub context_img_Menu_Rotate90dx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90dx.Click
+
+        log.Info("Rotazione immagine")
+        log.Info("Rotazione immagine")
+
+        Dim tb As TransformedBitmap = New TransformedBitmap()
+        tb.BeginInit()
+        tb.Source = PictureBox1.Source
+        Dim Transform As RotateTransform = Nothing
+
+        Transform = New RotateTransform(90)
+        tb.Transform = Transform
+        tb.EndInit()
+        PictureBox1.Source = tb
+
+        'tiene traccia dell'orientamento dell'immagine
+        imgRotation.nextDx()
+
+
+    End Sub
+
+    Private Sub context_img_Menu_Rotate90sx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90sx.Click
+
+        log.Info("Rotazione immagine")
+
+        Dim tb As TransformedBitmap = New TransformedBitmap()
+        tb.BeginInit()
+        tb.Source = PictureBox1.Source
+        Dim Transform As RotateTransform = Nothing
+
+        Transform = New RotateTransform(270)
+
+        tb.Transform = Transform
+        tb.EndInit()
+        PictureBox1.Source = tb
+
+        'tiene traccia dell'orientamento dell'immagine
+        imgRotation.nextSx()
     End Sub
 
     Private Function leggiContenuto(sNomeFile As String)
