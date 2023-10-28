@@ -116,7 +116,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("cognome e nome autore")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("nome e cognome autore")>  _
         Public Property autore() As String
             Get
                 Return CType(Me("autore"),String)
@@ -483,6 +483,42 @@ Namespace My
             End Get
             Set
                 Me("thumbnailDisplayResolution") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("fascicolo fotografico.dotx")>  _
+        Public Property nomeModello() As String
+            Get
+                Return CType(Me("nomeModello"),String)
+            End Get
+            Set
+                Me("nomeModello") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("autore")>  _
+        Public Property segnalibro_autore() As String
+            Get
+                Return CType(Me("segnalibro_autore"),String)
+            End Get
+            Set
+                Me("segnalibro_autore") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("intestazione1")>  _
+        Public Property segnalibro_intestazione1() As String
+            Get
+                Return CType(Me("segnalibro_intestazione1"),String)
+            End Get
+            Set
+                Me("segnalibro_intestazione1") = value
             End Set
         End Property
     End Class

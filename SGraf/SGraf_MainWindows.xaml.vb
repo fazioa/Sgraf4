@@ -6,6 +6,7 @@ Imports System.Web.UI
 Imports log4net
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
+Imports Xceed.Words.NET
 
 Class MainWindow
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
@@ -140,19 +141,20 @@ Class MainWindow
 
 
             log.Info("Sposta immagine alla posizione " & i_final)
-                'inserisce l'elelento nella nuova posizione
-                wpanel.Children.Remove(source)
-                wpanel.Children.Insert(i_final, source)
+            'inserisce l'elelento nella nuova posizione
+            wpanel.Children.Remove(source)
+            wpanel.Children.Insert(i_final, source)
 
-                'rinumera
-                log.Info("Aggiorna la numerazione delle immagini")
-                renumber(wpanel)
+            'rinumera
+            log.Info("Aggiorna la numerazione delle immagini")
+            renumber(wpanel)
 
-            End If
+        End If
 
     End Sub
 
     Private Sub renumber(wpanel As WrapPanel)
+        log.Info("Assegnazione numeri immagini")
         For Each child As UserControlImg In wpanel.Children
             child.LabelNumeroFoto.Content = wpanel.Children.IndexOf(child) + 1
         Next
@@ -167,6 +169,22 @@ Class MainWindow
             Me.dragtype = sender.GetType
             'Package the data.
             Dim Data As DataObject = New DataObject()
+
+
+            'TO DO
+            'spostamento di più immagini in un colpo solo.
+
+
+            'Dim index As Integer
+            'Dim usrCtrl As UserControlImg
+            'For index = WrapPanelImmagini.Children.Count - 1 To 0 Step -1
+            '    usrCtrl = WrapPanelImmagini.Children.Item(index)
+
+            '    If usrCtrl.isSelected Then
+            '        Data.SetData(usrCtrl)
+            '    End If
+            'Next
+
             Data.SetData(sender)
             ' Initiate the drag-And-drop operation.
             log.Info("Avvia spostamento immagine")
@@ -231,17 +249,53 @@ Class MainWindow
 
     Private Sub window_PreviewKeyDown(sender As Object, e As KeyEventArgs) Handles window.PreviewKeyDown
         If e.Key = Key.Delete Then
+            log.Info("Cancellazione")
             Dim index As Integer
             Dim usrCtrl As UserControlImg
 
             For index = WrapPanelImmagini.Children.Count - 1 To 0 Step -1
                 usrCtrl = WrapPanelImmagini.Children.Item(index)
                 If usrCtrl.isSelected Then
+                    log.Info("Cancellazione " & index)
                     WrapPanelImmagini.Children.Remove(usrCtrl)
                 End If
             Next
             renumber(WrapPanelImmagini)
         End If
+    End Sub
+
+    Private Sub Genera_fascicolo_Click(sender As Object, e As RoutedEventArgs)
+
+        Dim sPath As String = AppDomain.CurrentDomain.BaseDirectory & "modello\"
+        Dim sFilename As String = sPath & My.MySettings.Default.nomeModello
+
+
+
+
+        log.Info("Generazione fascicolo")
+        Dim a = "Intestazione1 "
+        Dim b = "nuovo testo"
+        Dim document As DocX
+
+        Try
+            log.Info("Apertura modello ")
+            document = DocX.Load(sFilename)
+
+        Catch ex As Exception
+            log.Info("Errore apertura modello " & sFilename)
+        End Try
+
+        If document IsNot Nothing Then
+            log.Info("Compilazione")
+            document.InsertAtBookmark("fsdafsd", My.MySettings.Default.segnalibro_autore)
+            document.InsertAtBookmark("76876876787g8", My.MySettings.Default.segnalibro_intestazione1)
+
+            ' document.RemoveBookmark(My.MySettings.Default.segnalibro_autore)
+
+            document.SaveAs(sPath & "NewCopy.doc")
+
+        End If
+
     End Sub
 End Class
 

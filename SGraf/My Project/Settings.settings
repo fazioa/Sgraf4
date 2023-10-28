@@ -18,7 +18,7 @@
       <Value Profile="(Default)">Contiene fotografie di....</Value>
     </Setting>
     <Setting Name="autore" Type="System.String" Scope="User">
-      <Value Profile="(Default)">cognome e nome autore</Value>
+      <Value Profile="(Default)">nome e cognome autore</Value>
     </Setting>
     <Setting Name="luogo" Type="System.String" Scope="User">
       <Value Profile="(Default)">comune</Value>
@@ -109,6 +109,15 @@
     </Setting>
     <Setting Name="thumbnailDisplayResolution" Type="System.String" Scope="User">
       <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="nomeModello" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fascicolo fotografico.dotx</Value>
+    </Setting>
+    <Setting Name="segnalibro_autore" Type="System.String" Scope="User">
+      <Value Profile="(Default)">autore</Value>
+    </Setting>
+    <Setting Name="segnalibro_intestazione1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">intestazione1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

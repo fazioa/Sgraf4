@@ -21,7 +21,7 @@
                 <MenuItem Header="_Salva progetto..." />
             </MenuItem>
             <MenuItem Header="_Strumenti">
-                <MenuItem Header="_Genera fascicolo fotograico" />
+                <MenuItem Header="_Genera fascicolo fotografico" Click="Genera_fascicolo_Click" />
                 <MenuItem Name="menu_setup" Header="_Setup..." Click="MenuSetupItem_Click"  />
                 <MenuItem Header="S_vuota" />
             </MenuItem>
