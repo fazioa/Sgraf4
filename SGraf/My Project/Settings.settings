@@ -2,6 +2,9 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
+    <Setting Name="dfsd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="intestazione1" Type="System.String" Scope="User">
       <Value Profile="(Default)">prima riga intestazione</Value>
     </Setting>
@@ -26,13 +29,7 @@
     <Setting Name="gradoCognomeNome" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="carattereDimensioneBase" Type="System.String" Scope="User">
-      <Value Profile="(Default)">11</Value>
-    </Setting>
-    <Setting Name="gruppoFirmaIRiga" Type="System.String" Scope="User">
-      <Value Profile="(Default)">IL COMANDANTE</Value>
-    </Setting>
-    <Setting Name="carattereDimensioneTitoloFoto" Type="System.String" Scope="User">
+    <Setting Name="carattereDimensioneTitoloImmagine" Type="System.String" Scope="User">
       <Value Profile="(Default)">20</Value>
     </Setting>
     <Setting Name="titoloFoto" Type="System.String" Scope="User">
@@ -57,7 +54,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="tipoFascicolo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Identificazione</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="newVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -118,6 +115,30 @@
     </Setting>
     <Setting Name="segnalibro_intestazione1" Type="System.String" Scope="User">
       <Value Profile="(Default)">intestazione1</Value>
+    </Setting>
+    <Setting Name="segnalibro_intestazione2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">intestazione2</Value>
+    </Setting>
+    <Setting Name="segnalibro_intestazione3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">intestazione3</Value>
+    </Setting>
+    <Setting Name="segnalibro_oggetto" Type="System.String" Scope="User">
+      <Value Profile="(Default)">oggetto</Value>
+    </Setting>
+    <Setting Name="segnalibro_contenutoDettaglio" Type="System.String" Scope="User">
+      <Value Profile="(Default)">contenutoDettaglio</Value>
+    </Setting>
+    <Setting Name="segnalibro_luogo_data" Type="System.String" Scope="User">
+      <Value Profile="(Default)">luogo_data</Value>
+    </Setting>
+    <Setting Name="carattereFont" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneNomeFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneDatiEXIF" Type="System.String" Scope="User">
+      <Value Profile="(Default)">8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

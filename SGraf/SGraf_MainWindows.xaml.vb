@@ -7,10 +7,11 @@ Imports log4net
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports Xceed.Words.NET
+Imports Xceed.Wpf.Toolkit
 
 Class MainWindow
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
-
+    Private Shared feAction As New ActionLibrary
     Private Sub tb_oggetto_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_oggetto.TextChanged
         My.Settings.oggetto = sender.text
         My.Settings.Save()
@@ -21,16 +22,6 @@ Class MainWindow
         My.Settings.Save()
     End Sub
 
-
-    Private Sub sl_colonne_LostFocus(sender As Object, e As RoutedEventArgs) Handles sl_colonne.LostFocus
-        My.Settings.disposizioneColonne = sender.Value
-        My.Settings.Save()
-    End Sub
-
-    Private Sub sl_righe_LostFocus(sender As Object, e As RoutedEventArgs) Handles sl_righe.LostFocus
-        My.Settings.disposizioneRighe = sender.Value
-        My.Settings.Save()
-    End Sub
 
     Private Sub cb_tipofascicolo_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cb_tipofascicolo.SelectionChanged
         My.Settings.tipoFascicolo = sender.SelectedIndex
@@ -287,15 +278,47 @@ Class MainWindow
 
         If document IsNot Nothing Then
             log.Info("Compilazione")
-            document.InsertAtBookmark("fsdafsd", My.MySettings.Default.segnalibro_autore)
-            document.InsertAtBookmark("76876876787g8", My.MySettings.Default.segnalibro_intestazione1)
-
-            ' document.RemoveBookmark(My.MySettings.Default.segnalibro_autore)
+            feAction.wordInizializzaEcompila(document, WrapPanelImmagini)
 
             document.SaveAs(sPath & "NewCopy.doc")
 
         End If
 
     End Sub
+
+    Private Sub tb_altezzaimmagine_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_altezzaimmagine.TextChanged
+        'verifica che venga inserito un numero valido
+        Dim iValue As Integer = feAction.checkNumber(sender.text)
+        sender.text = iValue
+        My.Settings.fotoAltezzaCM = sender.text
+        My.Settings.Save()
+    End Sub
+
+    Private Sub tb_larghezzaimmagine_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_larghezzaimmagine.TextChanged
+        'verifica che venga inserito un numero valido
+        Dim iValue As Integer = feAction.checkNumber(sender.text)
+        sender.text = iValue
+        My.Settings.fotoLarghezzaCM = sender.text
+        My.Settings.Save()
+    End Sub
+
+    Private Sub tb_colonne_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_colonne.TextChanged
+        'verifica che venga inserito un numero valido
+        Dim iValue As Integer = feAction.checkNumber(sender.text)
+        sender.text = iValue
+        My.Settings.disposizioneColonne = sender.text
+        My.Settings.Save()
+    End Sub
+
+    Private Sub tb_righe_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_righe.TextChanged
+        'verifica che venga inserito un numero valido
+        Dim iValue As Integer = feAction.checkNumber(sender.text)
+        sender.text = iValue
+        My.Settings.disposizioneRighe = sender.text
+        My.Settings.Save()
+    End Sub
+
+
+
 End Class
 

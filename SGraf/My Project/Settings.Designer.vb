@@ -56,6 +56,18 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property dfsd() As String
+            Get
+                Return CType(Me("dfsd"),String)
+            End Get
+            Set
+                Me("dfsd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("prima riga intestazione")>  _
         Public Property intestazione1() As String
             Get
@@ -152,37 +164,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("11")>  _
-        Public Property carattereDimensioneBase() As String
-            Get
-                Return CType(Me("carattereDimensioneBase"),String)
-            End Get
-            Set
-                Me("carattereDimensioneBase") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("IL COMANDANTE")>  _
-        Public Property gruppoFirmaIRiga() As String
-            Get
-                Return CType(Me("gruppoFirmaIRiga"),String)
-            End Get
-            Set
-                Me("gruppoFirmaIRiga") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("20")>  _
-        Public Property carattereDimensioneTitoloFoto() As String
+        Public Property carattereDimensioneTitoloImmagine() As String
             Get
-                Return CType(Me("carattereDimensioneTitoloFoto"),String)
+                Return CType(Me("carattereDimensioneTitoloImmagine"),String)
             End Get
             Set
-                Me("carattereDimensioneTitoloFoto") = value
+                Me("carattereDimensioneTitoloImmagine") = value
             End Set
         End Property
         
@@ -272,7 +260,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Identificazione")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
         Public Property tipoFascicolo() As String
             Get
                 Return CType(Me("tipoFascicolo"),String)
@@ -519,6 +507,102 @@ Namespace My
             End Get
             Set
                 Me("segnalibro_intestazione1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("intestazione2")>  _
+        Public Property segnalibro_intestazione2() As String
+            Get
+                Return CType(Me("segnalibro_intestazione2"),String)
+            End Get
+            Set
+                Me("segnalibro_intestazione2") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("intestazione3")>  _
+        Public Property segnalibro_intestazione3() As String
+            Get
+                Return CType(Me("segnalibro_intestazione3"),String)
+            End Get
+            Set
+                Me("segnalibro_intestazione3") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("oggetto")>  _
+        Public Property segnalibro_oggetto() As String
+            Get
+                Return CType(Me("segnalibro_oggetto"),String)
+            End Get
+            Set
+                Me("segnalibro_oggetto") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("contenutoDettaglio")>  _
+        Public Property segnalibro_contenutoDettaglio() As String
+            Get
+                Return CType(Me("segnalibro_contenutoDettaglio"),String)
+            End Get
+            Set
+                Me("segnalibro_contenutoDettaglio") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("luogo_data")>  _
+        Public Property segnalibro_luogo_data() As String
+            Get
+                Return CType(Me("segnalibro_luogo_data"),String)
+            End Get
+            Set
+                Me("segnalibro_luogo_data") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("-1")>  _
+        Public Property carattereFont() As String
+            Get
+                Return CType(Me("carattereFont"),String)
+            End Get
+            Set
+                Me("carattereFont") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("12")>  _
+        Public Property carattereDimensioneNomeFile() As String
+            Get
+                Return CType(Me("carattereDimensioneNomeFile"),String)
+            End Get
+            Set
+                Me("carattereDimensioneNomeFile") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("8")>  _
+        Public Property carattereDimensioneDatiEXIF() As String
+            Get
+                Return CType(Me("carattereDimensioneDatiEXIF"),String)
+            End Get
+            Set
+                Me("carattereDimensioneDatiEXIF") = value
             End Set
         End Property
     End Class

@@ -350,6 +350,11 @@ Public Enum ExifDataTypes As Short
 End Enum
 
 
+Public Enum tipofascicolo As Short
+    descrittivo = 0
+    identificazione = 1
+End Enum
+
 ''' <summary>
 ''' Represents rational which is type of some Exif properties
 ''' </summary>

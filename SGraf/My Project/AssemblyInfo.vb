@@ -12,15 +12,12 @@ Imports System.Windows
 ' Controllare i valori degli attributi degli assembly
 
 <Assembly: AssemblyTitle("SGraf")>
-<Assembly: AssemblyDescription("Generatore Fascicoli Fotografici")>
-<Assembly: AssemblyCompany("Antonino Fazio")>
+<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("SGraf")>
 <Assembly: AssemblyCopyright("Copyright ©  2023")>
-<Assembly: AssemblyTrademark("AF")>
+<Assembly: AssemblyTrademark("")>
 <Assembly: ComVisible(false)>
-
-
-<Assembly: log4net.Config.XmlConfigurator>
 
 'Per iniziare a creare applicazioni localizzabili, impostare
 '<UICulture>CultureYouAreCodingWith</UICulture> nel file VBPROJ
@@ -45,7 +42,7 @@ Imports System.Windows
 
 
 'Se il progetto viene esposto a COM, il GUID seguente verrà usato come ID del typelib
-<Assembly: Guid("c2fd7505-28a1-4958-8dbe-3c536cf99b31")>
+<Assembly: Guid("82b54a48-ab26-447b-95c1-2c2103189be5")>
 
 ' Le informazioni sulla versione di un assembly sono costituite dai seguenti quattro valori:
 '

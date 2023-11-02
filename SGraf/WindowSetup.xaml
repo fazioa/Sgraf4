@@ -6,44 +6,75 @@
         xmlns:local="clr-namespace:SGraf"
         xmlns:My="clr-namespace:SGraf.My" x:Class="WindowSetup"
         mc:Ignorable="d"
-        Title="" Height="450" Width="921" Loaded="Window_Loaded" Closed="Window_Closed" >
+        Title="" Loaded="Window_Loaded" Closed="Window_Closed" Height="481" Width="744" >
     <Window.DataContext>
         <My:MySettings/>
     </Window.DataContext>
-    <StackPanel HorizontalAlignment="Left" Height="416" Margin="10,10,10,10" UseLayoutRounding="False" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="901" >
-        <DockPanel Height="34">
-            <Label Content="Intestazione Riga 1"  HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_intestazione1" Width="516" Height="25" HorizontalAlignment="Left" Text="{Binding intestazione1}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Intestazione Riga 2"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_intestazione2" Width="516" Height="25" Text="{Binding intestazione2}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Intestazione Riga 3"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_intestazione3" Width="516" Height="25" Text="{Binding intestazione3}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Autore Fascicolo"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_autorefascicolo" Width="516" Height="25" Text="{Binding autore}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Gruppo firma riga 1"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_gruppofirmariga1" Width="516" Height="25" Text="{Binding gruppoFirmaIRiga}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Gruppo firma riga 2"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_gruppofirmariga2" Width="516" Height="25" Text="{Binding gradoCognomeNome}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Luogo "  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_luogo" Width="516" Height="25" Text="{Binding luogo}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-        </DockPanel>
-        <DockPanel Height="34" LastChildFill="False">
-            <Label Content="Titolo immagine "  HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBox x:Name="tb_titoloimmagine" Width="516" Height="25" Text="{Binding titoloFoto}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label Content="+ nr. immagine "  HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </DockPanel>
-    </StackPanel>
+
+
+    <Grid>
+        <StackPanel>
+            <GroupBox Header="Dati frontespizio" Height="239">
+                <StackPanel>
+                    <DockPanel Height="34">
+                        <Label Content="Intestazione Riga 1"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_intestazione1" Width="516" Height="25" HorizontalAlignment="Left" Text="{Binding intestazione1}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Intestazione Riga 2"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_intestazione2" Width="516" Height="25" Text="{Binding intestazione2}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Intestazione Riga 3"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_intestazione3" Width="516" Height="25" Text="{Binding intestazione3}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Autore Fascicolo"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_autorefascicolo" Width="516" Height="25" Text="{Binding autore}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Luogo "  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_luogo" Width="516" Height="25" Text="{Binding luogo}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Titolo immagine "  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_titoloimmagine" Width="516" Height="25" Text="{Binding titoloFoto}" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <Label Content="+ nr. immagine "  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </DockPanel>
+
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Height="202" Header="Carattere">
+                <StackPanel>
+                    <DockPanel Height="34">
+                        <Label Content="Carattere"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    <ComboBox x:Name="ComboBoxFonts" Width="288" HorizontalAlignment="Left" VerticalAlignment="Center"  >
+                    </ComboBox>
+                    </DockPanel>
+
+                    <DockPanel Height="34">
+                        <Label Content="Titolo Immagine"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_carattereTitolo" Width="27" Height="26" Text="{Binding carattereDimensioneTitoloImmagine}" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center"/>
+                    </DockPanel>
+
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Didascalia"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_carattereNomeImmagine" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDidascalia}" TextAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Nome file"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_carattereNomeFile" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneNomeFile}" TextAlignment="Center" />
+                    </DockPanel>
+                    <DockPanel Height="34" LastChildFill="False">
+                        <Label Content="Dati EXIF"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox x:Name="tb_carattereDatiEXIF" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDatiEXIF}" TextAlignment="Center" />
+                    </DockPanel>
+                </StackPanel>
+
+            </GroupBox>
+        </StackPanel>
+
+    </Grid>
 
 </Window>
