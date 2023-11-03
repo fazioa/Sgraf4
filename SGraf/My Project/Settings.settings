@@ -63,10 +63,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="fotoAltezzaThumb" Type="System.String" Scope="User">
-      <Value Profile="(Default)">300</Value>
-    </Setting>
-    <Setting Name="fotoLarghezzaThumb" Type="System.String" Scope="User">
-      <Value Profile="(Default)">315</Value>
+      <Value Profile="(Default)">350</Value>
     </Setting>
     <Setting Name="bEXIFMarca" Type="System.String" Scope="User">
       <Value Profile="(Default)">True</Value>

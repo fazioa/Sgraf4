@@ -12,7 +12,7 @@
     </Window.DataContext>
 
 
-            <DockPanel Margin="0,0,0,0">
+            <DockPanel Margin="0,0,0,0" MouseWheel="event_MouseWheel">
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Apri immagini..." Click="MenuItem_Click" />
@@ -22,7 +22,7 @@
             <MenuItem Header="_Strumenti">
                 <MenuItem Header="_Genera fascicolo fotografico" Click="Genera_fascicolo_Click" />
                 <MenuItem Name="menu_setup" Header="_Setup..." Click="MenuSetupItem_Click"  />
-                <MenuItem Header="S_vuota" />
+                <MenuItem x:Name="menu_svuota" Header="S_vuota" />
             </MenuItem>
         </Menu>
 
@@ -78,7 +78,7 @@
         </DockPanel>
 
         <DockPanel DockPanel.Dock="Top">
-            <ScrollViewer Drop="ScrollViewer_Drop" AllowDrop="True" >
+            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" >
                 <WrapPanel x:Name="WrapPanelImmagini" AllowDrop="True"/>
             </ScrollViewer>
         </DockPanel>

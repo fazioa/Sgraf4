@@ -83,7 +83,10 @@ Class MainWindow
                 b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
                 b_image.EndInit()
 
-                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb, My.Settings.fotoAltezzaThumb)
+                ' Dim rate As Double = CSng(b_image.PixelWidth) / CSng(b_image.PixelHeight)
+
+                'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
+                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoAltezzaThumb)
                 WrapPanelImmagini.Children.Add(imageItem)
 
             Catch ex As Exception
@@ -95,8 +98,9 @@ Class MainWindow
             RemoveHandler child.MouseDown, AddressOf childs_MouseDown
             AddHandler child.MouseDown, AddressOf childs_MouseDown
 
-            'RemoveHandler child.MouseMove, AddressOf root_MouseMove
-            'AddHandler child.MouseMove, AddressOf root_MouseMove
+            ' RemoveHandler child.MouseWheel, AddressOf event_MouseWheel
+            '  AddHandler child.MouseWheel, AddressOf event_MouseWheel
+
             'RemoveHandler child.MouseLeftButtonDown, AddressOf root_MouseLeftButtonDown
             'AddHandler child.MouseLeftButtonDown, AddressOf root_MouseLeftButtonDown
             'RemoveHandler child.MouseLeftButtonUp, AddressOf root_MouseLeftButtonUp
@@ -192,40 +196,6 @@ Class MainWindow
     Dim anchorPoint As System.Windows.Point
     Dim currentPoint As System.Windows.Point
     Dim isInDrag As Boolean = False
-    '   Dim Transform = New TranslateTransform()
-    'Private Sub root_MouseMove(sender As Object, e As MouseEventArgs)
-    '    If isInDrag = True Then
-    '        Dim element As FrameworkElement = sender
-    '        currentPoint = e.GetPosition(Nothing)
-
-    '        Transform.X += currentPoint.X - anchorPoint.X
-    '        Transform.Y += currentPoint.Y - anchorPoint.Y
-
-    '        CType(sender, UserControlImg).RenderTransform = Transform
-    '        anchorPoint = currentPoint
-    '    End If
-
-
-    'End Sub
-
-    'Private Sub root_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs)
-    '    Dim element As FrameworkElement = sender
-    '    anchorPoint = e.GetPosition(Nothing)
-    '        element.CaptureMouse()
-
-    '        isInDrag = True
-    '        e.Handled = True
-    'End Sub
-    'Private Sub root_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs)
-    '    If isInDrag = True Then
-    '        Dim element As FrameworkElement = sender
-    '        element.ReleaseMouseCapture()
-
-    '        isInDrag = False
-    '        e.Handled = False
-    '    End If
-    'End Sub
-
 
     Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
         Dim o As OpenFileDialog = New OpenFileDialog
@@ -259,9 +229,6 @@ Class MainWindow
 
         Dim sPath As String = AppDomain.CurrentDomain.BaseDirectory & "modello\"
         Dim sFilename As String = sPath & My.MySettings.Default.nomeModello
-
-
-
 
         log.Info("Generazione fascicolo")
         Dim a = "Intestazione1 "
@@ -318,6 +285,59 @@ Class MainWindow
         My.Settings.Save()
     End Sub
 
+    Private Sub menu_svuota_Click(sender As Object, e As RoutedEventArgs) Handles menu_svuota.Click
+        WrapPanelImmagini.Children.Clear()
+    End Sub
+
+    Dim ZoomValue As Integer = My.Settings.zoomMiniaturaDefaultMouse
+    Dim CtrlIsDown As Boolean
+
+    'modifica dimensione miniature (solo quelle mostrate a video)
+    Dim intNuovaAltezzaThumb As Integer
+    Dim intNuovaLarghezzaThumb As Integer
+    Private Sub imgRedraw(zoomPercent As Double)
+        intNuovaAltezzaThumb = CInt(My.Settings.fotoAltezzaThumb * (1 + zoomPercent / 100))
+        '  intNuovaLarghezzaThumb = CInt(My.Settings.fotoLarghezzaThumb * (1 + zoomPercent / 100))
+
+        If (intNuovaAltezzaThumb > 100) Then
+            'se le nuove dimensioni rispettano i requisiti allora vengono salvate come predefinite
+            My.Settings.fotoAltezzaThumb = intNuovaAltezzaThumb
+            Dim rate As Double = 0
+
+            My.Settings.Save()
+            For Each child As UserControlImg In WrapPanelImmagini.Children
+                rate = CSng(child.Width) / CSng(child.Height)
+
+                'child.Height = intNuovaAltezzaThumb
+                ' child.Width = intNuovaAltezzaThumb * rate
+                child.PictureBox1.Height = intNuovaAltezzaThumb
+                ' child.PictureBox1.Width = intNuovaAltezzaThumb * rate
+            Next
+        End If
+
+    End Sub
+
+    Private Sub event_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles window.MouseWheel
+        'gestione mouse scroll - rotella mouse per zoom miniature
+
+        'check if control is being held down
+        If My.Computer.Keyboard.CtrlKeyDown Then
+            CtrlIsDown = True
+            'evaluate the delta's sign and call the appropriate zoom command
+            Select Case Math.Sign(e.Delta)
+                Case Is < 0
+                    ZoomValue = -2
+                Case Is > 0
+                    ZoomValue = 2
+            End Select
+            'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
+            log.Info("Zoom " & ZoomValue & "%")
+            'scrollWrapPanel.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden
+            imgRedraw(ZoomValue)
+            'scrollWrapPanel.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible
+        End If
+        CtrlIsDown = False
+    End Sub
 
 
 End Class

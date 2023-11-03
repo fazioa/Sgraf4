@@ -445,8 +445,6 @@ Public Class UserControlImg
 
 
     Public Property isSelected As Boolean = False
-    Public Property imageWidth As Single
-    Public Property imageHeight As Single
     Public Property sNomeFile As String
 
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
@@ -539,7 +537,7 @@ Public Class UserControlImg
     Public Property Orientation As Object
 
 
-    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
+    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlHeight As Integer)
         InitializeComponent()
 
 
@@ -549,20 +547,8 @@ Public Class UserControlImg
 
         PictureBox1.Source = _bi_image
 
-        'Dim imgWidth, imgHeight As Double
-        Dim ratio As Single = 0
-
-        Me.Width = _userCtrlWidth
-        'Me.Height = _userCtrlHeight
-        ' imageWidth = _image.Width
-        'imageWidth = _image.PhysicalDimension.Width
-        'imageHeight = _image.Height
-        'imageHeight = _image.PhysicalDimension.Height
-
-        ' ratio = CSng(imageHeight) / CSng(imageWidth)
-
-        'imgWidth = _userCtrlWidth
-        'imgHeight = _userCtrlWidth * ratio
+        PictureBox1.Height = _userCtrlHeight
+        '  _bi_image.DecodePixelHeight = _userCtrlHeight
 
         'If imgHeight > _userCtrlHeight Then
         '    imgHeight = _userCtrlHeight
