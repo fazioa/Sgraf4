@@ -310,7 +310,8 @@ Class MainWindow
 
                 'child.Height = intNuovaAltezzaThumb
                 ' child.Width = intNuovaAltezzaThumb * rate
-                child.PictureBox1.Height = intNuovaAltezzaThumb
+                child.Height = intNuovaAltezzaThumb
+                child.Width = child.Height * rate
                 ' child.PictureBox1.Width = intNuovaAltezzaThumb * rate
             Next
         End If

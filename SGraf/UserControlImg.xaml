@@ -8,15 +8,16 @@
              mc:Ignorable="d" VerticalAlignment="Top" BorderBrush="Black"
              DataContext="{Binding RelativeSource={RelativeSource Self}}" Height="387" Width="450">
 
-    <DockPanel x:Name="UsrControlDockPanel" >
-        <StackPanel DockPanel.Dock="Top">
-            <Label x:Name="LabelNumeroFoto" Content="Immagine" DockPanel.Dock="Top" Height="53" Margin="5,5,5,-20" Background="#FFFFDE00" Width="53" FontSize="24" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0,0,0,0" ScrollViewer.CanContentScroll="True" FontWeight="Black" FontFamily="Arial Black" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="2,2,2,2"/>
+    <StackPanel>
+        <DockPanel x:Name="UsrControlDockPanel" LastChildFill="False"  >
+        
+            <Label x:Name="LabelNumeroFoto" Content="Immagine" DockPanel.Dock="Top" Height="53" Margin="5,5,5,-20" Background="#FFFFDE00" Width="53" FontSize="24" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0,0,0,0" ScrollViewer.CanContentScroll="True" FontWeight="Black" FontFamily="Arial Black" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="2,2,2,2" VerticalAlignment="Top"/>
             <Image x:Name="ImgTickSelected" Source="/tick.png" DockPanel.Dock="Top" Margin="0,0,15,-60" Stretch="None" Width="52" Height="58" HorizontalAlignment="Right" VerticalAlignment="Top"  Panel.ZIndex="1">
                 <Image.Effect>
                     <DropShadowEffect Color="White" BlurRadius="40"/>
                 </Image.Effect>
             </Image>
-            <Image x:Name="PictureBox1" Margin="5,0,5,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False">
+            <Image x:Name="PictureBox1" Margin="5,0,5,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" DockPanel.Dock="Top">
                 <Image.ContextMenu>
                     <ContextMenu>
                         <MenuItem x:Name="context_img_Menu_Rotate90sx" Header="Ruota sinistra" />
@@ -24,11 +25,11 @@
                     </ContextMenu>
                 </Image.ContextMenu>
             </Image>
-            <Label x:Name="LinkNomeFile"  Foreground="Blue" DockPanel.Dock="Top" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Bottom" Panel.ZIndex="1" />
-            <TextBlock x:Name="LabelEXIF" DockPanel.Dock="Top" Height="33" Margin="5,0,5,0"  VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838" Panel.ZIndex="1"/>
-            <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
+            <Label x:Name="LinkNomeFile"  Foreground="Blue" DockPanel.Dock="Top" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Top" />
+            <TextBlock x:Name="LabelEXIF" DockPanel.Dock="Top" Height="33" Margin="5,0,5,0"  VerticalAlignment="Top" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
+            <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled"/>
 
-        </StackPanel>
+        
     </DockPanel>
-
+        </StackPanel>
 </UserControl>
