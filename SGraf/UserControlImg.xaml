@@ -16,9 +16,9 @@
                 <DropShadowEffect Color="White" BlurRadius="40"/>
             </Image.Effect>
         </Image>
-       
-          <Viewbox>
-             <Image x:Name="PictureBox1" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Stretch="UniformToFill"  >
+        <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            
+                <Image x:Name="PictureBox1" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualHeight}" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualWidth}" Stretch="UniformToFill">
             <Image.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="context_img_Menu_Rotate90sx" Header="Ruota sinistra" />
@@ -26,11 +26,11 @@
                 </ContextMenu>
             </Image.ContextMenu>
         </Image>
-        </Viewbox>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Width="451">
-            <Label x:Name="LinkNomeFile"  Foreground="Blue" DockPanel.Dock="Top" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Top" />
-            <TextBlock x:Name="LabelEXIF" DockPanel.Dock="Top" Height="33" Margin="5,0,5,0"  VerticalAlignment="Top" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
-            <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalScrollBarVisibility="Disabled"/>
+            
+            <Label x:Name="LinkNomeFile"  Foreground="Blue" DockPanel.Dock="Top" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Bottom" />
+            <TextBlock x:Name="LabelEXIF" DockPanel.Dock="Top" Height="33" Margin="5,0,5,0"  VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
+            <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalScrollBarVisibility="Disabled"/>
+        
         </StackPanel>
     </Grid>
 

@@ -299,9 +299,9 @@ Class MainWindow
         intNuovaAltezzaThumb = CInt(My.Settings.fotoAltezzaThumb * (1 + zoomPercent / 100))
         '  intNuovaLarghezzaThumb = CInt(My.Settings.fotoLarghezzaThumb * (1 + zoomPercent / 100))
 
-        If (intNuovaAltezzaThumb > 100) Then
-            'se le nuove dimensioni rispettano i requisiti allora vengono salvate come predefinite
-            My.Settings.fotoAltezzaThumb = intNuovaAltezzaThumb
+        'If (intNuovaAltezzaThumb > 100) Then
+        'se le nuove dimensioni rispettano i requisiti allora vengono salvate come predefinite
+        My.Settings.fotoAltezzaThumb = intNuovaAltezzaThumb
             Dim rate As Double = 0
 
             My.Settings.Save()
@@ -314,7 +314,7 @@ Class MainWindow
                 child.Width = child.Height * rate
                 ' child.PictureBox1.Width = intNuovaAltezzaThumb * rate
             Next
-        End If
+        ' End If
 
     End Sub
 

@@ -540,14 +540,13 @@ Public Class UserControlImg
     Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlHeight As Integer)
         InitializeComponent()
 
-
         log4net.Config.XmlConfigurator.Configure()
 
         sNomeFile = _sNomeFile
 
         PictureBox1.Source = _bi_image
 
-        PictureBox1.Height = _userCtrlHeight
+        ' PictureBox1.Height = _userCtrlHeight
         '  _bi_image.DecodePixelHeight = _userCtrlHeight
 
         'If imgHeight > _userCtrlHeight Then
@@ -566,8 +565,6 @@ Public Class UserControlImg
         Dim _img As System.Drawing.Bitmap = New System.Drawing.Bitmap(_sNomeFile)
         'lettura proprietà EXIF
         Dim propItems As System.Drawing.Imaging.PropertyItem() = _img.PropertyItems()
-
-        ' Dim encoding As New System.Text.ASCIIEncoding()
 
         Dim pic_data As System.Drawing.Imaging.PropertyItem
         Try
@@ -671,7 +668,6 @@ Public Class UserControlImg
         TextBoxTag.Text = leggiContenuto(_sNomeFile)
         LabelEXIF.ToolTip() = LabelEXIF.Text
 
-
         ImgTickSelected.Visibility = Visibility.Collapsed
 
     End Sub
@@ -702,8 +698,6 @@ Public Class UserControlImg
 
         'tiene traccia dell'orientamento dell'immagine
         imgRotation.nextDx()
-
-
     End Sub
 
     Private Sub context_img_Menu_Rotate90sx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90sx.Click
