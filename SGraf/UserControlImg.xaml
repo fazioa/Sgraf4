@@ -16,9 +16,10 @@
                 <DropShadowEffect Color="White" BlurRadius="40"/>
             </Image.Effect>
         </Image>
-        <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-            
-                <Image x:Name="PictureBox1" Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualHeight}" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Grid}}, Path=ActualWidth}" Stretch="UniformToFill">
+        
+        <StackPanel Orientation="Vertical" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <Viewbox x:Name="viewbox1" Margin="5,5,5,0" HorizontalAlignment="Center" VerticalAlignment="Top">
+         <Image x:Name="PictureBox1" >
             <Image.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="context_img_Menu_Rotate90sx" Header="Ruota sinistra" />
@@ -26,11 +27,10 @@
                 </ContextMenu>
             </Image.ContextMenu>
         </Image>
-            
-            <Label x:Name="LinkNomeFile"  Foreground="Blue" DockPanel.Dock="Top" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Bottom" />
-            <TextBlock x:Name="LabelEXIF" DockPanel.Dock="Top" Height="33" Margin="5,0,5,0"  VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
+            </Viewbox>
+        <Label x:Name="LinkNomeFile"  Foreground="Blue" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Bottom" />
+                <TextBlock x:Name="LabelEXIF" Height="33" Margin="5,0,5,0"  VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
             <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalScrollBarVisibility="Disabled"/>
-        
         </StackPanel>
     </Grid>
 

@@ -537,7 +537,7 @@ Public Class UserControlImg
     Public Property Orientation As Object
 
 
-    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlHeight As Integer)
+    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
         InitializeComponent()
 
         log4net.Config.XmlConfigurator.Configure()
@@ -546,13 +546,10 @@ Public Class UserControlImg
 
         PictureBox1.Source = _bi_image
 
-        ' PictureBox1.Height = _userCtrlHeight
-        '  _bi_image.DecodePixelHeight = _userCtrlHeight
+        'così funziona il ridimensionamento!!
+        Me.Height = Double.NaN
+        Me.Width = _userCtrlWidth
 
-        'If imgHeight > _userCtrlHeight Then
-        '    imgHeight = _userCtrlHeight
-        '    imgWidth = _userCtrlHeight / ratio
-        'End If
 
         LinkNomeFile.Content = System.IO.Path.GetFileName(_sNomeFile)
         LinkNomeFile.ToolTip = _sNomeFile

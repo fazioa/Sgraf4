@@ -296,7 +296,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("350")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("151")>  _
         Public Property fotoAltezzaThumb() As String
             Get
                 Return CType(Me("fotoAltezzaThumb"),String)
@@ -591,6 +591,18 @@ Namespace My
             End Get
             Set
                 Me("carattereDimensioneDatiEXIF") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("151")>  _
+        Public Property fotoLarghezzaThumb() As String
+            Get
+                Return CType(Me("fotoLarghezzaThumb"),String)
+            End Get
+            Set
+                Me("fotoLarghezzaThumb") = value
             End Set
         End Property
     End Class

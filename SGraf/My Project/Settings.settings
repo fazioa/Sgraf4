@@ -63,7 +63,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="fotoAltezzaThumb" Type="System.String" Scope="User">
-      <Value Profile="(Default)">350</Value>
+      <Value Profile="(Default)">151</Value>
     </Setting>
     <Setting Name="bEXIFMarca" Type="System.String" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -136,6 +136,9 @@
     </Setting>
     <Setting Name="carattereDimensioneDatiEXIF" Type="System.String" Scope="User">
       <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="fotoLarghezzaThumb" Type="System.String" Scope="User">
+      <Value Profile="(Default)">151</Value>
     </Setting>
   </Settings>
 </SettingsFile>

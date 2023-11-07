@@ -70,6 +70,7 @@ Class MainWindow
     Private Sub PopolaImmagini(arrayFileNames As String())
         Dim i As Integer = 0
         Dim sFile As String
+        'Dim imageItem As UserControlImg
         Dim imageItem As UserControlImg
         For Each sFile In arrayFileNames
             Try
@@ -81,12 +82,13 @@ Class MainWindow
 
                 ' la risoluzione della mininiatura può essere impostata nella configurazione
                 b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
+
                 b_image.EndInit()
 
                 ' Dim rate As Double = CSng(b_image.PixelWidth) / CSng(b_image.PixelHeight)
 
                 'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
-                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoAltezzaThumb)
+                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb, My.Settings.fotoAltezzaThumb)
                 WrapPanelImmagini.Children.Add(imageItem)
 
             Catch ex As Exception
@@ -295,27 +297,35 @@ Class MainWindow
     'modifica dimensione miniature (solo quelle mostrate a video)
     Dim intNuovaAltezzaThumb As Integer
     Dim intNuovaLarghezzaThumb As Integer
-    Private Sub imgRedraw(zoomPercent As Double)
-        intNuovaAltezzaThumb = CInt(My.Settings.fotoAltezzaThumb * (1 + zoomPercent / 100))
-        '  intNuovaLarghezzaThumb = CInt(My.Settings.fotoLarghezzaThumb * (1 + zoomPercent / 100))
-
-        'If (intNuovaAltezzaThumb > 100) Then
+    Private Sub imgRedrawZoom(zoomPercent As Double)
+        '   intNuovaAltezzaThumb = CInt(My.Settings.fotoAltezzaThumb * (1 + zoomPercent / 100))
+        Dim ratio As Double = 0
+        '   If (intNuovaAltezzaThumb > 200) Then
         'se le nuove dimensioni rispettano i requisiti allora vengono salvate come predefinite
-        My.Settings.fotoAltezzaThumb = intNuovaAltezzaThumb
-            Dim rate As Double = 0
+        'ratio = child.Width / child.Height
 
-            My.Settings.Save()
-            For Each child As UserControlImg In WrapPanelImmagini.Children
-                rate = CSng(child.Width) / CSng(child.Height)
-
-                'child.Height = intNuovaAltezzaThumb
-                ' child.Width = intNuovaAltezzaThumb * rate
-                child.Height = intNuovaAltezzaThumb
-                child.Width = child.Height * rate
-                ' child.PictureBox1.Width = intNuovaAltezzaThumb * rate
-            Next
+        '  If (My.Settings.fotoAltezzaThumb <> intNuovaAltezzaThumb) Then
+        '  My.Settings.fotoAltezzaThumb = intNuovaAltezzaThumb
+        '  My.Settings.fotoLarghezzaThumb = My.Settings.fotoAltezzaThumb * ratio
+        '  My.Settings.Save()
         ' End If
+        If Not IsNothing(WrapPanelImmagini) Then
+            For Each child As UserControlImg In WrapPanelImmagini.Children
+                '   child.Height = CInt(child.Height * (1 + zoomPercent / 100))
+                child.Width = CInt(child.Width * (1 + zoomPercent / 100))
 
+            Next
+        End If
+    End Sub
+
+    Private Sub imgRedraw()
+        Dim ratio As Double = 0
+        If Not IsNothing(WrapPanelImmagini) Then
+            For Each child As UserControlImg In WrapPanelImmagini.Children
+                '   child.Height = My.Settings.fotoAltezzaThumb
+                child.Width = My.Settings.fotoLarghezzaThumb
+            Next
+        End If
     End Sub
 
     Private Sub event_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles window.MouseWheel
@@ -334,12 +344,30 @@ Class MainWindow
             'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
             log.Info("Zoom " & ZoomValue & "%")
             'scrollWrapPanel.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden
-            imgRedraw(ZoomValue)
+            imgRedrawZoom(ZoomValue)
             'scrollWrapPanel.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible
         End If
         CtrlIsDown = False
     End Sub
 
+    Private Sub tb_altezzaThumbnail_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_altezzaThumbnail.TextChanged
+        'verifica che venga inserito un numero valido
+        Dim iValue As Integer = feAction.checkNumber(sender.text)
+        sender.text = iValue
+        My.Settings.fotoAltezzaThumb = sender.text
+        My.Settings.Save()
 
+        imgRedraw()
+    End Sub
+
+    Private Sub tb_larghezzaThumbnail_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_larghezzaThumbnail.TextChanged
+        'verifica che venga inserito un numero valido
+        Dim iValue As Integer = feAction.checkNumber(sender.text)
+        sender.text = iValue
+        My.Settings.fotoLarghezzaThumb = sender.text
+        My.Settings.Save()
+
+        imgRedraw()
+    End Sub
 End Class
 
