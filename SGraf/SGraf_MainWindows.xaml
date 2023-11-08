@@ -16,8 +16,8 @@
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Apri immagini..." Click="MenuItem_Click" />
-                <MenuItem Header="Apri _progetto..." />
-                <MenuItem Header="_Salva progetto..." />
+                <MenuItem x:Name="menu_apriprogetto" Header="Apri _progetto..." />
+                <MenuItem x:Name="menu_salvaprogetto" Header="_Salva progetto..."/>
             </MenuItem>
             <MenuItem Header="_Strumenti">
                 <MenuItem Header="_Genera fascicolo fotografico" Click="Genera_fascicolo_Click" />

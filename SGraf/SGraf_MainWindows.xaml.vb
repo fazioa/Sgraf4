@@ -6,6 +6,7 @@ Imports System.Web.UI
 Imports log4net
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
+Imports Newtonsoft.Json
 Imports Xceed.Words.NET
 Imports Xceed.Wpf.Toolkit
 
@@ -370,6 +371,116 @@ Class MainWindow
         My.Settings.Save()
 
         imgRedraw()
+    End Sub
+
+    Private Sub menu_salvaprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_salvaprogetto.Click
+        log.Info("Salvataggio progetto")
+        Dim progetto As New ImagesProjectClass
+
+        'leggo le preferenze
+        progetto.sOggetto = My.Settings.oggetto
+        progetto.sTitoloFoto = My.Settings.titoloFoto
+        progetto.sDettagliocontenuto = My.Settings.contenutoDettaglio
+        progetto.sTipoFascicolo = My.Settings.tipoFascicolo
+
+        progetto.iColonne = My.Settings.disposizioneColonne
+        progetto.iRighe = My.Settings.disposizioneRighe
+
+        progetto.iImmagineAltezzaCM = My.Settings.fotoAltezzaCM
+        progetto.iImmagineLarghezzaCM = My.Settings.fotoLarghezzaCM
+
+        progetto.iDimensioneNomeFile = My.Settings.carattereDimensioneNomeFile
+        progetto.iDimensioneDidascalia = My.Settings.carattereDimensioneDidascalia
+        progetto.iDimensioneTitolo = My.Settings.carattereDimensioneTitoloImmagine
+        progetto.iDimensioneDatiExif = My.Settings.carattereDimensioneDatiEXIF
+
+        progetto.sFileNames = New List(Of String)()
+        For Each child As UserControlImg In WrapPanelImmagini.Children
+            progetto.sFileNames.Add(child.sNomeFile)
+        Next
+
+        'serializza
+        Dim jsonTxt As String = JsonConvert.SerializeObject(progetto, Formatting.Indented)
+
+        ' Configure save file dialog box
+        Dim dialog As New Microsoft.Win32.SaveFileDialog()
+        dialog.FileName = "project" ' Default file name
+        dialog.DefaultExt = ".sgraf" ' Default file extension
+        dialog.Filter = "Text documents (.sgraf)|*.sgraf" ' Filter files by extension
+
+        ' Show save file dialog box
+        Dim result As Boolean? = dialog.ShowDialog()
+
+        ' Process save file dialog box results
+        If result = True Then
+            ' Save document
+            Dim filename As String = dialog.FileName
+            'salva file testo
+            feAction.salvaTxtFile(filename, jsonTxt)
+            log.Info("Progetto Salvato")
+        End If
+
+    End Sub
+
+    Private Sub menu_apriprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_apriprogetto.Click
+        log.Info("Apertura progetto")
+
+        ' Configure open file dialog box
+        Dim dialog As New Microsoft.Win32.OpenFileDialog()
+        dialog.FileName = "project" ' Default file name
+        dialog.DefaultExt = ".sgraf" ' Default file extension
+        dialog.Filter = "Text documents (.sgraf)|*.sgraf" ' Filter files by extension
+
+        ' Show open file dialog box
+        Dim result As Boolean = dialog.ShowDialog()
+
+        ' Process open file dialog box results
+        If result = True Then
+            ' Open document
+            Dim filename As String = dialog.FileName
+
+            'dialog apertura file
+            Dim sTxtResult = feAction.openTxtFile(filename)
+            'procede solo se il file non è vuoto
+            If sTxtResult.Length <= 0 Then
+                MsgBox("File vuoto", MsgBoxStyle.DefaultButton1, "Apertura progetto")
+                log.Warn("File non valido: " & filename)
+            Else
+                Dim progetto As New ImagesProjectClass
+
+                Try
+                    'deserializza
+                    progetto = JsonConvert.DeserializeObject(Of ImagesProjectClass)(sTxtResult)
+
+                    'leggo le preferenze
+                    My.Settings.oggetto = progetto.sOggetto
+                    My.Settings.titoloFoto = progetto.sTitoloFoto
+                    My.Settings.contenutoDettaglio = progetto.sDettagliocontenuto
+                    My.Settings.tipoFascicolo = progetto.sTipoFascicolo
+
+                    My.Settings.disposizioneColonne = progetto.iColonne
+                    My.Settings.disposizioneRighe = progetto.iRighe
+
+                    My.Settings.fotoAltezzaCM = progetto.iImmagineAltezzaCM
+                    My.Settings.fotoLarghezzaCM = progetto.iImmagineLarghezzaCM
+
+                    My.Settings.carattereDimensioneNomeFile = progetto.iDimensioneNomeFile
+                    My.Settings.carattereDimensioneDidascalia = progetto.iDimensioneDidascalia
+                    My.Settings.carattereDimensioneTitoloImmagine = progetto.iDimensioneTitolo
+                    My.Settings.carattereDimensioneDatiEXIF = progetto.iDimensioneDatiExif
+
+                    'elimina tutte le immagini presenti
+                    WrapPanelImmagini.Children.Clear()
+
+                    'ripopola la lista immagini
+                    PopolaImmagini(progetto.sFileNames.ToArray)
+                Catch ex As Exception
+                    MsgBox("File non valido - " & ex.Message, MsgBoxStyle.DefaultButton1, "Apertura progetto")
+                    log.Error("Errore di apertura file: " & ex.Message)
+                End Try
+
+            End If
+        End If
     End Sub
 End Class
 

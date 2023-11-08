@@ -113,5 +113,51 @@ Public Class WindowSetup
         My.Settings.Save()
     End Sub
 
+    Private Sub cb_dataora_Click(sender As Object, e As RoutedEventArgs) Handles cb_dataora.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFDataOra = cb.IsChecked
+        My.Settings.Save()
+    End Sub
 
+    Private Sub cb_esposizione_Click(sender As Object, e As RoutedEventArgs) Handles cb_esposizione.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFEsposizione = cb.IsChecked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub cb_marca_Click(sender As Object, e As RoutedEventArgs) Handles cb_marca.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFMarca = cb.IsChecked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub cb_diaframma_Click(sender As Object, e As RoutedEventArgs) Handles cb_diaframma.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFDiaframma = cb.IsChecked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub cb_flash_Click(sender As Object, e As RoutedEventArgs) Handles cb_flash.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFFlash = cb.IsChecked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub cb_iso_Click(sender As Object, e As RoutedEventArgs) Handles cb_iso.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFISO = cb.IsChecked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub cb_nomefile_Click(sender As Object, e As RoutedEventArgs) Handles cb_nomefile.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bNomeFile = cb.IsChecked
+        My.Settings.Save()
+    End Sub
+
+    Private Sub cb_modello_Click(sender As Object, e As RoutedEventArgs) Handles cb_modello.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bEXIFModello = cb.IsChecked
+        My.Settings.Save()
+    End Sub
 End Class

@@ -1,4 +1,5 @@
 ﻿Imports System.Data
+Imports System.IO
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
 Imports log4net
@@ -142,15 +143,8 @@ Public Class ActionLibrary
         Dim p = t.Rows(iRig).Cells(iCol).Paragraphs(0).Append(My.Settings.titoloFoto & " " & usrCtrlImg.LabelNumeroFoto.Content.ToString)
         t.Rows(iRig).Cells(iCol).Paragraphs(0).Alignment = Alignment.center
 
-
         p.Font(My.Settings.carattereFont)
-
-        'p.Font(New Xceed.Document.NET.Font("Arial"))
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
-        '  p.Bold()
-        ' p.Alignment = Alignment.center
-
-
 
         'inserisce immagine
         Dim Image = document.AddImage(usrCtrlImg.sNomeFile)
@@ -201,11 +195,12 @@ Public Class ActionLibrary
             End If
 
             'inserisce il nome file
-            p = p.InsertParagraphAfterSelf(System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
-            p.Alignment = Alignment.center
-            p.Font(My.Settings.carattereFont)
-            p.FontSize(My.Settings.carattereDimensioneNomeFile)
-
+            If My.Settings.bNomeFile Then
+                p = p.InsertParagraphAfterSelf(System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
+                p.Alignment = Alignment.center
+                p.Font(My.Settings.carattereFont)
+                p.FontSize(My.Settings.carattereDimensioneNomeFile)
+            End If
 
             'inserisce i dati EXIF
             p = p.InsertParagraphAfterSelf(sEXIF)
@@ -219,11 +214,7 @@ Public Class ActionLibrary
             p.Alignment = Alignment.center
             p.Font(My.Settings.carattereFont)
             p.FontSize(My.Settings.carattereDimensioneDidascalia)
-
-
         End If
-
-
     End Sub
 
     Private Function creaTabella(ByRef document As DocX)
@@ -239,4 +230,43 @@ Public Class ActionLibrary
         t.SetBorder(TableBorderType.Top, brd)
         Return t
     End Function
+
+
+    Public Sub salvaTxtFile(sNomeFile As String, sValore As String)
+        Dim file As New StreamWriter(sNomeFile)
+        file.Write(sValore)
+        file.Flush()
+        file.Close()
+    End Sub
+
+    Friend Function openTxtFile(filename As String) As Object
+
+        Dim sTxtFile As String = ""
+        Try
+            Dim file As New StreamReader(filename)
+            sTxtFile = file.ReadToEnd
+            file.Close()
+        Catch ex As Exception
+            log.Error("Errore di lettura del file pro """ & filename)
+        End Try
+        Return sTxtFile
+
+    End Function
+End Class
+
+
+Public Class ImagesProjectClass
+    Public Property sOggetto As String
+    Public Property sTitoloFoto As String
+    Public Property sTipoFascicolo As String
+    Public Property sDettagliocontenuto As String
+    Public Property iColonne As String
+    Public Property iRighe As String
+    Public Property iImmagineAltezzaCM As String
+    Public Property iImmagineLarghezzaCM As String
+    Public Property iDimensioneNomeFile As String
+    Public Property iDimensioneDidascalia As String
+    Public Property iDimensioneTitolo As String
+    Public Property iDimensioneDatiExif As String
+    Public Property sFileNames As List(Of String)
 End Class

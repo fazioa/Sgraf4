@@ -45,34 +45,90 @@
                 </StackPanel>
             </GroupBox>
 
-            <GroupBox Height="202" Header="Carattere">
-                <StackPanel>
-                    <DockPanel Height="34">
-                        <Label Content="Carattere"  HorizontalAlignment="Left" VerticalAlignment="Center" />
-                    <ComboBox x:Name="ComboBoxFonts" Width="288" HorizontalAlignment="Left" VerticalAlignment="Center"  >
-                    </ComboBox>
-                    </DockPanel>
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Height="202" Header="Carattere">
+                    <StackPanel>
+                        <DockPanel Height="34">
+                            <Label Content="Carattere"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <ComboBox x:Name="ComboBoxFonts" Width="288" HorizontalAlignment="Left" VerticalAlignment="Center"  >
+                            </ComboBox>
+                        </DockPanel>
 
-                    <DockPanel Height="34">
-                        <Label Content="Titolo Immagine"  HorizontalAlignment="Left" VerticalAlignment="Center" />
-                        <TextBox x:Name="tb_carattereTitolo" Width="27" Height="26" Text="{Binding carattereDimensioneTitoloImmagine}" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center"/>
-                    </DockPanel>
+                        <DockPanel Height="34">
+                            <Label Content="Titolo Immagine"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                            <TextBox x:Name="tb_carattereTitolo" Width="27" Height="26" Text="{Binding carattereDimensioneTitoloImmagine}" VerticalContentAlignment="Center" HorizontalAlignment="Left" TextAlignment="Center"/>
+                        </DockPanel>
 
-                    <DockPanel Height="34" LastChildFill="False">
-                        <Label Content="Didascalia"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <TextBox x:Name="tb_carattereNomeImmagine" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDidascalia}" TextAlignment="Center" />
-                    </DockPanel>
-                    <DockPanel Height="34" LastChildFill="False">
-                        <Label Content="Nome file"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <TextBox x:Name="tb_carattereNomeFile" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneNomeFile}" TextAlignment="Center" />
-                    </DockPanel>
-                    <DockPanel Height="34" LastChildFill="False">
-                        <Label Content="Dati EXIF"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <TextBox x:Name="tb_carattereDatiEXIF" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDatiEXIF}" TextAlignment="Center" />
-                    </DockPanel>
-                </StackPanel>
+                        <DockPanel Height="34" LastChildFill="False">
+                            <Label Content="Didascalia"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox x:Name="tb_carattereNomeImmagine" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDidascalia}" TextAlignment="Center" />
+                        </DockPanel>
+                        <DockPanel Height="34" LastChildFill="False">
+                            <Label Content="Nome file"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox x:Name="tb_carattereNomeFile" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneNomeFile}" TextAlignment="Center" />
+                        </DockPanel>
+                        <DockPanel Height="34" LastChildFill="False">
+                            <Label Content="Dati EXIF"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox x:Name="tb_carattereDatiEXIF" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDatiEXIF}" TextAlignment="Center" />
+                        </DockPanel>
+                    </StackPanel>
 
-            </GroupBox>
+                </GroupBox>
+                <GroupBox  Header="Dati da inserire">
+                    <StackPanel Orientation="Horizontal" >
+                        <GroupBox Header="Dati EXIF">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,10,0">
+                                        <DockPanel Height="34" HorizontalAlignment="Right">
+                                            <Label Content="Data/ora"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            <CheckBox x:Name="cb_dataora" VerticalAlignment="Center" IsChecked="{Binding bEXIFDataOra}" />
+                                        </DockPanel>
+                                        <DockPanel Height="34" HorizontalAlignment="Right">
+                                            <Label Content="Marca"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            <CheckBox x:Name="cb_marca" VerticalAlignment="Center" IsChecked="{Binding bEXIFMarca}" />
+                                        </DockPanel>
+                                        <DockPanel Height="34" HorizontalAlignment="Right">
+                                            <Label Content="Modello"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            <CheckBox x:Name="cb_modello" VerticalAlignment="Center" IsChecked="{Binding bEXIFModello}" />
+                                        </DockPanel>
+
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <DockPanel Height="34" HorizontalAlignment="Right" VerticalAlignment="Center">
+
+                                            <CheckBox x:Name="cb_esposizione" VerticalAlignment="Center" IsChecked="{Binding bEXIFEsposizione}" />
+                                            <Label Content="Esposizione"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        </DockPanel>
+                                        <DockPanel Height="34" HorizontalAlignment="Left" VerticalAlignment="Center">
+
+                                            <CheckBox x:Name="cb_diaframma" VerticalAlignment="Center" IsChecked="{Binding bEXIFDiaframma}" HorizontalAlignment="Left" />
+                                            <Label Content="Diaframma"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        </DockPanel>
+                                        <DockPanel Height="34" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                            <CheckBox x:Name="cb_iso" VerticalAlignment="Center" IsChecked="{Binding bEXIFISO}" />
+                                            <Label Content="ISO"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        </DockPanel>
+                                        <DockPanel Height="34" HorizontalAlignment="Left">
+
+                                            <CheckBox x:Name="cb_flash" VerticalAlignment="Center" IsChecked="{Binding bEXIFFlash}" />
+                                            <Label Content="Flash"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        </DockPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Height="202" Header="Dati file">
+                            <DockPanel Height="34" LastChildFill="False" VerticalAlignment="Top">
+                                <Label Content="Nome file"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <CheckBox x:Name="cb_nomefile" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding bNomeFile}" />
+                            </DockPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
+
+
+            </StackPanel>
         </StackPanel>
 
     </Grid>
