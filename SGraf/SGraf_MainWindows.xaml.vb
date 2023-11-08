@@ -88,7 +88,7 @@ Class MainWindow
                 ' Dim rate As Double = CSng(b_image.PixelWidth) / CSng(b_image.PixelHeight)
 
                 'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
-                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb, My.Settings.fotoAltezzaThumb)
+                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb)
                 WrapPanelImmagini.Children.Add(imageItem)
 
             Catch ex As Exception
@@ -298,35 +298,25 @@ Class MainWindow
     Dim intNuovaAltezzaThumb As Integer
     Dim intNuovaLarghezzaThumb As Integer
     Private Sub imgRedrawZoom(zoomPercent As Double)
-        '   intNuovaAltezzaThumb = CInt(My.Settings.fotoAltezzaThumb * (1 + zoomPercent / 100))
+        intNuovaLarghezzaThumb = CInt(My.Settings.fotoLarghezzaThumb * (1 + zoomPercent / 100))
         Dim ratio As Double = 0
-        '   If (intNuovaAltezzaThumb > 200) Then
-        'se le nuove dimensioni rispettano i requisiti allora vengono salvate come predefinite
-        'ratio = child.Width / child.Height
+        If (intNuovaLarghezzaThumb > My.Settings.fotoLarghezzaThumbMin) Then
+            'se le nuove dimensioni rispettano i requisiti allora vengono salvate come predefinite
+            If (My.Settings.fotoLarghezzaThumb <> intNuovaLarghezzaThumb) Then
+                My.Settings.fotoLarghezzaThumb = intNuovaLarghezzaThumb
+                My.Settings.Save()
+            End If
+            If Not IsNothing(WrapPanelImmagini) Then
+                For Each child As UserControlImg In WrapPanelImmagini.Children
+                    '   child.Height = CInt(child.Height * (1 + zoomPercent / 100))
+                    child.Width = CInt(child.Width * (1 + zoomPercent / 100))
 
-        '  If (My.Settings.fotoAltezzaThumb <> intNuovaAltezzaThumb) Then
-        '  My.Settings.fotoAltezzaThumb = intNuovaAltezzaThumb
-        '  My.Settings.fotoLarghezzaThumb = My.Settings.fotoAltezzaThumb * ratio
-        '  My.Settings.Save()
-        ' End If
-        If Not IsNothing(WrapPanelImmagini) Then
-            For Each child As UserControlImg In WrapPanelImmagini.Children
-                '   child.Height = CInt(child.Height * (1 + zoomPercent / 100))
-                child.Width = CInt(child.Width * (1 + zoomPercent / 100))
-
-            Next
+                Next
+            End If
         End If
     End Sub
 
-    Private Sub imgRedraw()
-        Dim ratio As Double = 0
-        If Not IsNothing(WrapPanelImmagini) Then
-            For Each child As UserControlImg In WrapPanelImmagini.Children
-                '   child.Height = My.Settings.fotoAltezzaThumb
-                child.Width = My.Settings.fotoLarghezzaThumb
-            Next
-        End If
-    End Sub
+
 
     Private Sub event_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles window.MouseWheel
         'gestione mouse scroll - rotella mouse per zoom miniature
@@ -350,6 +340,18 @@ Class MainWindow
         CtrlIsDown = False
     End Sub
 
+
+    'procedure temporanee
+
+    Private Sub imgRedraw()
+        Dim ratio As Double = 0
+        If Not IsNothing(WrapPanelImmagini) Then
+            For Each child As UserControlImg In WrapPanelImmagini.Children
+                '   child.Height = My.Settings.fotoAltezzaThumb
+                child.Width = My.Settings.fotoLarghezzaThumb
+            Next
+        End If
+    End Sub
     Private Sub tb_altezzaThumbnail_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_altezzaThumbnail.TextChanged
         'verifica che venga inserito un numero valido
         Dim iValue As Integer = feAction.checkNumber(sender.text)

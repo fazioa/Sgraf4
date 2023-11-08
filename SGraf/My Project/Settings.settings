@@ -138,7 +138,10 @@
       <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="fotoLarghezzaThumb" Type="System.String" Scope="User">
-      <Value Profile="(Default)">151</Value>
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="fotoLarghezzaThumbMin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">180</Value>
     </Setting>
   </Settings>
 </SettingsFile>

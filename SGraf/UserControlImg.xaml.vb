@@ -537,7 +537,7 @@ Public Class UserControlImg
     Public Property Orientation As Object
 
 
-    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer, _userCtrlHeight As Integer)
+    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer)
         InitializeComponent()
 
         log4net.Config.XmlConfigurator.Configure()

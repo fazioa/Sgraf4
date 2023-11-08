@@ -27,7 +27,7 @@
         </Menu>
 
         <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Background="WhiteSmoke" >
-            <Expander Header="Dati fascicolo" IsExpanded="True">
+            <Expander Header="Dati fascicolo" IsExpanded="True" HorizontalContentAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="-7,5,0,0" Margin="10,5,0,0" ToolTip="ZOOM: Tasto Ctrl + rotella mouse">
                 <DockPanel LastChildFill="False" DockPanel.Dock="Top" Height="169" Margin="10,10,10,10" >
                     <GroupBox Header="Oggetto" DockPanel.Dock="Top" Height="45">
                         <TextBox x:Name="tb_oggetto" TextWrapping="Wrap" Margin="0,0,0,0" VerticalAlignment="Top" AllowDrop="True" Text="{Binding oggetto}"/>
@@ -71,7 +71,7 @@
                                 </Canvas>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Miniature" Width="126">
+                        <GroupBox Header="Miniature - TEMP" Width="126">
                             <StackPanel Margin="0,0,-2,0" HorizontalAlignment="Left">
                                 <Canvas Width="92" Height="26">
                                     <Label Content="Altezza" Canvas.Top="-2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="48"/>
@@ -89,7 +89,7 @@
         </DockPanel>
 
         <DockPanel DockPanel.Dock="Top">
-            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" >
+            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" ToolTip="Trascinare le immagini qui." >
                 <WrapPanel x:Name="WrapPanelImmagini" AllowDrop="True"/>
             </ScrollViewer>
         </DockPanel>

@@ -28,8 +28,8 @@
             </Image.ContextMenu>
         </Image>
             </Viewbox>
-        <Label x:Name="LinkNomeFile"  Foreground="Blue" Height="28" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Bottom" />
-                <TextBlock x:Name="LabelEXIF" Height="33" Margin="5,0,5,0"  VerticalAlignment="Bottom" TextWrapping="WrapWithOverflow" FontSize="10" Foreground="#FF383838"/>
+        <Label x:Name="LinkNomeFile"  Foreground="Blue" Height="22" Margin="5,0,5,0" Content="" Cursor="Hand" ToolTip="" FontSize="10" VerticalAlignment="Bottom" />
+                <TextBlock x:Name="LabelEXIF" Height="18" Margin="5,0,5,0"  VerticalAlignment="Bottom" FontSize="10" Foreground="#FF383838" LineHeight="6"/>
             <TextBox x:Name="TextBoxTag" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="60" DockPanel.Dock="Top" VerticalAlignment="Bottom" HorizontalScrollBarVisibility="Disabled"/>
         </StackPanel>
     </Grid>

@@ -596,13 +596,25 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("151")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("400")>  _
         Public Property fotoLarghezzaThumb() As String
             Get
                 Return CType(Me("fotoLarghezzaThumb"),String)
             End Get
             Set
                 Me("fotoLarghezzaThumb") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("180")>  _
+        Public Property fotoLarghezzaThumbMin() As String
+            Get
+                Return CType(Me("fotoLarghezzaThumbMin"),String)
+            End Get
+            Set
+                Me("fotoLarghezzaThumbMin") = value
             End Set
         End Property
     End Class
