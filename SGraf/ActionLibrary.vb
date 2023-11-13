@@ -137,6 +137,38 @@ Public Class ActionLibrary
         End If
     End Sub
 
+    Private Sub insertVerticalImage(usrCtrlImg As UserControlImg, picture As Picture)
+        'immagine in verticale
+        'allora porto l'altezza al valore impostato nelle preferenze mentre la larghezza è un valore calcolato in base al rapporto larghezza / altezza 
+
+        Dim larghezzaCm = My.Settings.fotoAltezzaCM * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+        'se la larghezza che risulta dal calcolo è maggiore di quella impostata nei parametri allora ridimensiono
+        If (larghezzaCm < My.Settings.fotoLarghezzaCM) Then
+            picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
+            picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+        Else
+            picture.WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
+            picture.HeightInches = picture.WidthInches * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+        End If
+
+    End Sub
+
+    Private Sub insertOrizzontalImage(usrCtrlImg As UserControlImg, picture As Picture)
+        'immagine in orizzontale
+        'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
+
+        Dim altezzaCm = My.Settings.fotoLarghezzaCM * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+
+        'se l'altezza che risulta dal calcolo è maggiore di quella impostata nei parametri allora ridimensiono
+        If (altezzaCm < My.Settings.fotoAltezzaCM) Then
+            picture.WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
+            picture.HeightInches = picture.WidthInches * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+        Else
+            picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
+            picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+        End If
+    End Sub
+
     Private Sub inserisciImmagineInCella(ByRef document As DocX, ByRef t As Xceed.Document.NET.Table, iRig As Integer, iCol As Integer, usrCtrlImg As UserControlImg)
 
         'inserisce numerazione immagine
@@ -152,34 +184,19 @@ Public Class ActionLibrary
 
         'conver ct to inch
         Dim R = picture.Rotation
-        If = usrCtrlImg.imgRotation.rotation = Rotation.Rotate90 Or usrCtrlImg.imgRotation.rotation.r270 Then
-            'sistema da qui
-            prendere dato di orientamento della figura ed adeguare l'immagine mandata in stampa
+        If usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate0 Or usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate180 Then
+            'adegua la dimensione in base all'orientamento che è stato memorizzato nel controllo utente usrCtrlImg
 
             If usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height Then
-                'immagine in orizzontale
-                'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
-                picture.WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
-                picture.HeightInches = picture.WidthInches * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+                insertOrizzontalImage(usrCtrlImg, picture)
             Else
-                'foto in verticale
-                'allora porto l'altezza al valore impostato nelle preferenze mentre la larghezza è un valore calcolato in base al rapporto larghezza / altezza 
-                picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
-                picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+                insertVerticalImage(usrCtrlImg, picture)
             End If
-
         Else
             If usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height Then
-                'foto in verticale
-                'allora porto l'altezza al valore impostato nelle preferenze mentre la larghezza è un valore calcolato in base al rapporto larghezza / altezza 
-                picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
-                picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+                insertVerticalImage(usrCtrlImg, picture)
             Else
-                'immagine in orizzontale
-                'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
-                picture.WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
-                picture.HeightInches = picture.WidthInches * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
-
+                insertOrizzontalImage(usrCtrlImg, picture)
             End If
         End If
 

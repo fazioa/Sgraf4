@@ -398,30 +398,35 @@ Public Structure Rational
 End Structure
 
 Public Class ImageRotation
-    Public Enum rotation As Short
+    Sub New()
+        actualrotation = rotation.r0
+    End Sub
+
+    Private Enum rotation As Short
         r0 = 0
         r90 = 1
         r180 = 2
         r270 = 3
     End Enum
 
-    Dim _rotation = New rotation
+    Property actualrotation = New rotation
+
     Public Sub nextDx()
-        If _rotation = rotation.r0 Then
-            _rotation = rotation.r90
-        ElseIf _rotation = rotation.r90 Then
-            _rotation = rotation.r180
-        ElseIf _rotation = rotation.r180 Then
-            _rotation = rotation.r270
+        If actualrotation = rotation.r0 Then
+            actualrotation = rotation.r90
+        ElseIf actualrotation = rotation.r90 Then
+            actualrotation = rotation.r180
+        ElseIf actualrotation = rotation.r180 Then
+            actualrotation = rotation.r270
         End If
     End Sub
     Public Sub nextSx()
-        If _rotation = rotation.r0 Then
-            _rotation = rotation.r270
-        ElseIf _rotation = rotation.r270 Then
-            _rotation = rotation.r180
-        ElseIf _rotation = rotation.r180 Then
-            _rotation = rotation.r0
+        If actualrotation = rotation.r0 Then
+            actualrotation = rotation.r270
+        ElseIf actualrotation = rotation.r270 Then
+            actualrotation = rotation.r180
+        ElseIf actualrotation = rotation.r180 Then
+            actualrotation = rotation.r0
         End If
     End Sub
 End Class
