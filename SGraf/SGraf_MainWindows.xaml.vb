@@ -3,6 +3,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Web.UI
+Imports System.Web.UI.WebControls
 Imports log4net
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
@@ -30,8 +31,7 @@ Class MainWindow
     End Sub
 
     Private Sub MenuSetupItem_Click(sender As Object, e As RoutedEventArgs)
-
-        Dim w As WindowSetup = New WindowSetup()
+        Dim w As New WindowSetup(Me)
         w.Show()
 
     End Sub
@@ -158,6 +158,13 @@ Class MainWindow
         Next
     End Sub
 
+    Public Sub rewriteEXIF_allImages()
+        log.Info("Aggiornamento dati EXIF")
+        For Each child As UserControlImg In WrapPanelImmagini.Children
+            child.update_label_from_EXIF()
+        Next
+
+    End Sub
 
 
     Private Sub childs_MouseDown(ByVal sender As System.Object, ByVal e As MouseEventArgs)

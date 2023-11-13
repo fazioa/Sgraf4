@@ -406,7 +406,6 @@ Public Class ImageRotation
     End Enum
 
     Dim _rotation = New rotation
-
     Public Sub nextDx()
         If _rotation = rotation.r0 Then
             _rotation = rotation.r90
@@ -438,7 +437,7 @@ Public Class UserControlImg
     Private sDiaframma As String
     Private sFlash As String
 
-    Public imgRotation As New ImageRotation
+    Public imgRotation As New ImageRotation()
 
     Dim pixelColor As Color
     Dim r, g, b As Byte
@@ -550,11 +549,25 @@ Public Class UserControlImg
         Me.Height = Double.NaN
         Me.Width = _userCtrlWidth
 
+        readEXIF()
+        update_label_from_EXIF()
 
         LinkNomeFile.Content = System.IO.Path.GetFileName(_sNomeFile)
         LinkNomeFile.ToolTip = _sNomeFile
         PictureBox1.ToolTip = _sNomeFile
 
+        log.Info("Lettura didascalia " & _sNomeFile)
+        TextBoxTag.Text = leggiContenuto(_sNomeFile)
+
+
+
+        ImgTickSelected.Visibility = Visibility.Collapsed
+
+    End Sub
+
+
+
+    Private Sub readEXIF()
         'LETTURA DATI EXIF
         log.Info("Lettura dati EXIF immagine" & _sNomeFile)
         Dim count As Integer = 0
@@ -632,18 +645,22 @@ Public Class UserControlImg
 
         Catch ex As Exception
         End Try
+    End Sub
+    Public Sub update_label_from_EXIF()
+
         LabelEXIF.Text = ""
+        If My.Settings.bEXIFDataOra Then
+            LabelEXIF.Text = LabelEXIF.Text & Trim(sDataScatto)
+        End If
         If My.Settings.bEXIFMarca Then
+            If LabelEXIF.Text <> "" And sMarca IsNot Nothing Then LabelEXIF.Text += ", "
             LabelEXIF.Text = LabelEXIF.Text & Trim(sMarca)
         End If
         If My.Settings.bEXIFModello Then
             If LabelEXIF.Text <> "" And sModello IsNot Nothing Then LabelEXIF.Text += ", "
             LabelEXIF.Text = LabelEXIF.Text & Trim(sModello)
         End If
-        If My.Settings.bEXIFDataOra Then
-            If LabelEXIF.Text <> "" And sDataScatto IsNot Nothing Then LabelEXIF.Text += ", "
-            LabelEXIF.Text = LabelEXIF.Text & Trim(sDataScatto)
-        End If
+
         If My.Settings.bEXIFEsposizione And sEsposizione IsNot Nothing Then
             If LabelEXIF.Text <> "" Then LabelEXIF.Text += ", "
             LabelEXIF.Text = LabelEXIF.Text & Trim(sEsposizione)
@@ -661,12 +678,8 @@ Public Class UserControlImg
             LabelEXIF.Text = LabelEXIF.Text & Trim(sFlash)
         End If
 
-        log.Info("Lettura didascalia " & _sNomeFile)
-        TextBoxTag.Text = leggiContenuto(_sNomeFile)
+        'aggiorna il tooltip con il testo del label
         LabelEXIF.ToolTip() = LabelEXIF.Text
-
-        ImgTickSelected.Visibility = Visibility.Collapsed
-
     End Sub
 
     Public Sub toggleSelected()
@@ -680,7 +693,6 @@ Public Class UserControlImg
 
     Private Sub context_img_Menu_Rotate90dx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90dx.Click
 
-        log.Info("Rotazione immagine")
         log.Info("Rotazione immagine")
 
         Dim tb As TransformedBitmap = New TransformedBitmap()
@@ -718,9 +730,11 @@ Public Class UserControlImg
 
     Private Function leggiContenuto(sNomeFile As String)
         Try
-            Dim file As New StreamReader(sNomeFile & ".txt")
-            Return file.ReadToEnd
-            file.Close()
+            If System.IO.File.Exists(sNomeFile & ".txt") Then
+                Dim file As New StreamReader(sNomeFile & ".txt")
+                Return file.ReadToEnd
+                file.Close()
+            End If
         Catch ex As Exception
             log.Error("File commento """ & sNomeFile & ".txt" & """ non presente")
         End Try

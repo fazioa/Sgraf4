@@ -147,8 +147,41 @@ Public Class ActionLibrary
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
 
         'inserisce immagine
-        Dim Image = document.AddImage(usrCtrlImg.sNomeFile)
-        Dim picture = Image.CreatePicture(150, 150)
+        Dim image = document.AddImage(usrCtrlImg.sNomeFile)
+        Dim picture = image.CreatePicture()
+
+        'conver ct to inch
+        Dim R = picture.Rotation
+        If = usrCtrlImg.imgRotation.rotation = Rotation.Rotate90 Or usrCtrlImg.imgRotation.rotation.r270 Then
+            'sistema da qui
+            prendere dato di orientamento della figura ed adeguare l'immagine mandata in stampa
+
+            If usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height Then
+                'immagine in orizzontale
+                'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
+                picture.WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
+                picture.HeightInches = picture.WidthInches * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+            Else
+                'foto in verticale
+                'allora porto l'altezza al valore impostato nelle preferenze mentre la larghezza è un valore calcolato in base al rapporto larghezza / altezza 
+                picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
+                picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+            End If
+
+        Else
+            If usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height Then
+                'foto in verticale
+                'allora porto l'altezza al valore impostato nelle preferenze mentre la larghezza è un valore calcolato in base al rapporto larghezza / altezza 
+                picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
+                picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+            Else
+                'immagine in orizzontale
+                'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
+                picture.WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
+                picture.HeightInches = picture.WidthInches * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+
+            End If
+        End If
 
         p = p.InsertParagraphAfterSelf(" ")
         p.Alignment = Alignment.center
@@ -159,7 +192,12 @@ Public Class ActionLibrary
         If My.Settings.tipoFascicolo = tipofascicolo.descrittivo Then
             'costruisce la stringa dei dati EXIF
             Dim bFlag As Boolean = False
+            If My.Settings.bEXIFDataOra Then
+                sEXIF += Trim(usrCtrlImg.dataScatto)
+                bFlag = True
+            End If
             If My.Settings.bEXIFMarca Then
+                If sEXIF <> "" And usrCtrlImg.marca IsNot Nothing Then sEXIF += ", "
                 sEXIF += Trim(usrCtrlImg.marca)
                 bFlag = True
             End If
@@ -168,11 +206,7 @@ Public Class ActionLibrary
                 sEXIF += Trim(usrCtrlImg.modello)
                 bFlag = True
             End If
-            If My.Settings.bEXIFDataOra Then
-                If sEXIF <> "" And usrCtrlImg.dataScatto IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.dataScatto)
-                bFlag = True
-            End If
+
             If My.Settings.bEXIFEsposizione Then
                 If sEXIF <> "" And usrCtrlImg.esposizione IsNot Nothing Then sEXIF += ", "
                 sEXIF += Trim(usrCtrlImg.esposizione)
@@ -216,6 +250,7 @@ Public Class ActionLibrary
             p.FontSize(My.Settings.carattereDimensioneDidascalia)
         End If
     End Sub
+
 
     Private Function creaTabella(ByRef document As DocX)
         Dim t = document.AddTable(My.Settings.disposizioneRighe, My.Settings.disposizioneColonne)

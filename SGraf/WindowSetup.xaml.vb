@@ -6,6 +6,19 @@ Imports Microsoft.VisualBasic.Logging
 Public Class WindowSetup
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
     Private Shared feAction As New ActionLibrary
+    Private mainW
+
+    Public Sub New(_mainW As MainWindow)
+
+        ' La chiamata è richiesta dalla finestra di progettazione.
+        InitializeComponent()
+
+        mainW = _mainW
+        ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
+
+    End Sub
+
+    Public ReadOnly Property MainWindow As MainWindow
 
     Private Sub Window_Loaded(sender As Object, e As RoutedEventArgs)
         Me.Title = System.Reflection.Assembly.GetExecutingAssembly.GetName().Name
@@ -117,47 +130,59 @@ Public Class WindowSetup
         Dim cb As CheckBox = sender
         My.Settings.bEXIFDataOra = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_esposizione_Click(sender As Object, e As RoutedEventArgs) Handles cb_esposizione.Click
         Dim cb As CheckBox = sender
         My.Settings.bEXIFEsposizione = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_marca_Click(sender As Object, e As RoutedEventArgs) Handles cb_marca.Click
         Dim cb As CheckBox = sender
         My.Settings.bEXIFMarca = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_diaframma_Click(sender As Object, e As RoutedEventArgs) Handles cb_diaframma.Click
         Dim cb As CheckBox = sender
         My.Settings.bEXIFDiaframma = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_flash_Click(sender As Object, e As RoutedEventArgs) Handles cb_flash.Click
         Dim cb As CheckBox = sender
         My.Settings.bEXIFFlash = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_iso_Click(sender As Object, e As RoutedEventArgs) Handles cb_iso.Click
         Dim cb As CheckBox = sender
         My.Settings.bEXIFISO = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_nomefile_Click(sender As Object, e As RoutedEventArgs) Handles cb_nomefile.Click
         Dim cb As CheckBox = sender
         My.Settings.bNomeFile = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
     End Sub
 
     Private Sub cb_modello_Click(sender As Object, e As RoutedEventArgs) Handles cb_modello.Click
         Dim cb As CheckBox = sender
         My.Settings.bEXIFModello = cb.IsChecked
         My.Settings.Save()
+        updateEXIF_allimages()
+    End Sub
+
+    Public Sub updateEXIF_allimages()
+        mainW.rewriteEXIF_allImages()
     End Sub
 End Class

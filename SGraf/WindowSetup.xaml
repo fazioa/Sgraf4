@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:SGraf"
         xmlns:My="clr-namespace:SGraf.My" x:Class="WindowSetup"
         mc:Ignorable="d"
-        Title="" Loaded="Window_Loaded" Closed="Window_Closed" Height="481" Width="744" >
+        Title="" Loaded="Window_Loaded" Closed="Window_Closed" Height="508" Width="732" ResizeMode="NoResize" SizeToContent="WidthAndHeight" >
     <Window.DataContext>
         <My:MySettings/>
     </Window.DataContext>
 
 
     <Grid>
-        <StackPanel>
+        <StackPanel Margin="6,0,6,19">
             <GroupBox Header="Dati frontespizio" Height="239">
                 <StackPanel>
                     <DockPanel Height="34">
@@ -46,7 +46,7 @@
             </GroupBox>
 
             <StackPanel Orientation="Horizontal">
-                <GroupBox Height="202" Header="Carattere">
+                <GroupBox Header="Carattere">
                     <StackPanel>
                         <DockPanel Height="34">
                             <Label Content="Carattere"  HorizontalAlignment="Left" VerticalAlignment="Center" />
@@ -72,9 +72,8 @@
                             <TextBox x:Name="tb_carattereDatiEXIF" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDatiEXIF}" TextAlignment="Center" />
                         </DockPanel>
                     </StackPanel>
-
                 </GroupBox>
-                <GroupBox  Header="Dati da inserire">
+                <GroupBox  Header="Dati da inserire" Height="224">
                     <StackPanel Orientation="Horizontal" >
                         <GroupBox Header="Dati EXIF">
                             <StackPanel Orientation="Vertical">
@@ -126,11 +125,8 @@
                         </GroupBox>
                     </StackPanel>
                 </GroupBox>
-
-
             </StackPanel>
         </StackPanel>
-
     </Grid>
 
 </Window>
