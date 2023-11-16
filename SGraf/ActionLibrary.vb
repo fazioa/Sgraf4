@@ -142,6 +142,7 @@ Public Class ActionLibrary
         'allora porto l'altezza al valore impostato nelle preferenze mentre la larghezza è un valore calcolato in base al rapporto larghezza / altezza 
 
         Dim larghezzaCm = My.Settings.fotoAltezzaCM * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
+
         'se la larghezza che risulta dal calcolo è maggiore di quella impostata nei parametri allora ridimensiono
         If (larghezzaCm < My.Settings.fotoLarghezzaCM) Then
             picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
@@ -156,8 +157,8 @@ Public Class ActionLibrary
     Private Sub insertOrizzontalImage(usrCtrlImg As UserControlImg, picture As Picture)
         'immagine in orizzontale
         'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
-
         Dim altezzaCm = My.Settings.fotoLarghezzaCM * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
+        ' altezzaCm = My.Settings.fotoLarghezzaCM * (picture.Height / picture.Width)
 
         'se l'altezza che risulta dal calcolo è maggiore di quella impostata nei parametri allora ridimensiono
         If (altezzaCm < My.Settings.fotoAltezzaCM) Then
@@ -182,23 +183,15 @@ Public Class ActionLibrary
         Dim image = document.AddImage(usrCtrlImg.sNomeFile)
         Dim picture = image.CreatePicture()
 
-        'conver ct to inch
-        Dim R = picture.Rotation
-        If usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate0 Or usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate180 Then
-            'adegua la dimensione in base all'orientamento che è stato memorizzato nel controllo utente usrCtrlImg
+        picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
+        '  If usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate0 Or usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate180 Then
+        '  'adegua la dimensione in base all'orientamento che è stato memorizzato nel controllo utente usrCtrlImg
 
-            If usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height Then
-                insertOrizzontalImage(usrCtrlImg, picture)
-            Else
-                insertVerticalImage(usrCtrlImg, picture)
-            End If
+        If (usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height) Then
+            insertOrizzontalImage(usrCtrlImg, picture)
         Else
-            If usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height Then
-                insertVerticalImage(usrCtrlImg, picture)
-            Else
-                insertOrizzontalImage(usrCtrlImg, picture)
+            insertVerticalImage(usrCtrlImg, picture)
             End If
-        End If
 
         p = p.InsertParagraphAfterSelf(" ")
         p.Alignment = Alignment.center
@@ -303,6 +296,12 @@ Public Class ActionLibrary
         End Try
         Return sTxtFile
 
+    End Function
+
+    'restituisce una stringa costituita da anno mese giorno ora minuti secondi
+    Public Shared Function getTimeStamp() As String
+        Dim d As Date = DateTime.Now
+        getTimeStamp = d.Year & Format(d.Month, "d2") & Format(d.Day, "d2") & Format(d.Hour, "d2") & Format(d.Minute, "d2") & Format(d.Second, "d2")
     End Function
 End Class
 

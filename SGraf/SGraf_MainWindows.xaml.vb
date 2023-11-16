@@ -257,7 +257,7 @@ Class MainWindow
             log.Info("Compilazione")
             feAction.wordInizializzaEcompila(document, WrapPanelImmagini)
 
-            document.SaveAs(sPath & "NewCopy.doc")
+            document.SaveAs(sPath & ActionLibrary.getTimeStamp() & " document.doc")
 
         End If
 

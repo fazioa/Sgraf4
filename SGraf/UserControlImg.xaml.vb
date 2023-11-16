@@ -398,6 +398,7 @@ Public Structure Rational
 End Structure
 
 Public Class ImageRotation
+    Property actualrotation = New rotation
     Sub New()
         actualrotation = rotation.r0
     End Sub
@@ -409,8 +410,6 @@ Public Class ImageRotation
         r270 = 3
     End Enum
 
-    Property actualrotation = New rotation
-
     Public Sub nextDx()
         If actualrotation = rotation.r0 Then
             actualrotation = rotation.r90
@@ -418,6 +417,8 @@ Public Class ImageRotation
             actualrotation = rotation.r180
         ElseIf actualrotation = rotation.r180 Then
             actualrotation = rotation.r270
+        ElseIf actualrotation = rotation.r270 Then
+            actualrotation = rotation.r0
         End If
     End Sub
     Public Sub nextSx()
@@ -426,9 +427,22 @@ Public Class ImageRotation
         ElseIf actualrotation = rotation.r270 Then
             actualrotation = rotation.r180
         ElseIf actualrotation = rotation.r180 Then
+            actualrotation = rotation.r90
+        ElseIf actualrotation = rotation.r90 Then
             actualrotation = rotation.r0
         End If
     End Sub
+
+    Friend Function actualAngularRotation() As UInteger
+        If actualrotation = rotation.r90 Then
+            Return 90
+        ElseIf actualrotation = rotation.r270 Then
+            Return 270
+        ElseIf actualrotation = rotation.r180 Then
+            Return 180
+        End If
+        Return 0
+    End Function
 End Class
 
 
@@ -700,37 +714,38 @@ Public Class UserControlImg
 
         log.Info("Rotazione immagine")
 
-        Dim tb As TransformedBitmap = New TransformedBitmap()
-        tb.BeginInit()
-        tb.Source = PictureBox1.Source
+        ' Dim tb As TransformedBitmap = New TransformedBitmap()
+        '  tb.BeginInit()
+        '  tb.Source = PictureBox1.Source
         Dim Transform As RotateTransform = Nothing
-
-        Transform = New RotateTransform(90)
-        tb.Transform = Transform
-        tb.EndInit()
-        PictureBox1.Source = tb
-
-        'tiene traccia dell'orientamento dell'immagine
         imgRotation.nextDx()
+        Transform = New RotateTransform(imgRotation.actualAngularRotation)
+        ' tb.Transform = Transform
+        ' tb.EndInit()
+        ' PictureBox1.Source = tb
+        PictureBox1.LayoutTransform = Transform
+        'tiene traccia dell'orientamento dell'immagine
+        ' imgRotation.nextDx()
     End Sub
 
     Private Sub context_img_Menu_Rotate90sx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90sx.Click
 
         log.Info("Rotazione immagine")
 
-        Dim tb As TransformedBitmap = New TransformedBitmap()
-        tb.BeginInit()
-        tb.Source = PictureBox1.Source
+        '   Dim tb As TransformedBitmap = New TransformedBitmap()
+        '   tb.BeginInit()
+        '  tb.Source = PictureBox1.Source
         Dim Transform As RotateTransform = Nothing
-
-        Transform = New RotateTransform(270)
-
-        tb.Transform = Transform
-        tb.EndInit()
-        PictureBox1.Source = tb
-
         'tiene traccia dell'orientamento dell'immagine
         imgRotation.nextSx()
+        Transform = New RotateTransform(imgRotation.actualAngularRotation)
+        PictureBox1.LayoutTransform = Transform
+
+        ' tb.Transform = Transform
+        '  tb.EndInit()
+        ' PictureBox1.Source = tb
+
+
     End Sub
 
     Private Function leggiContenuto(sNomeFile As String)
