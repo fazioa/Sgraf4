@@ -101,17 +101,11 @@ Class MainWindow
             RemoveHandler child.MouseDown, AddressOf childs_MouseDown
             AddHandler child.MouseDown, AddressOf childs_MouseDown
 
-            ' RemoveHandler child.MouseWheel, AddressOf event_MouseWheel
-            '  AddHandler child.MouseWheel, AddressOf event_MouseWheel
-
-            'RemoveHandler child.MouseLeftButtonDown, AddressOf root_MouseLeftButtonDown
-            'AddHandler child.MouseLeftButtonDown, AddressOf root_MouseLeftButtonDown
-            'RemoveHandler child.MouseLeftButtonUp, AddressOf root_MouseLeftButtonUp
-            'AddHandler child.MouseLeftButtonUp, AddressOf root_MouseLeftButtonUp
+            RemoveHandler child.DragOver, AddressOf childs_DragOver
+            AddHandler child.DragOver, AddressOf childs_DragOver
 
             RemoveHandler child.Drop, AddressOf childs_Drop
             AddHandler child.Drop, AddressOf childs_Drop
-
 
             child.LabelNumeroFoto.Content = WrapPanelImmagini.Children.IndexOf(child).ToString + 1
 
@@ -150,6 +144,38 @@ Class MainWindow
         End If
 
     End Sub
+
+
+    Dim objPrecFinal As UserControlImg = Nothing
+    Private Sub childs_DragOver(sender As Object, e As DragEventArgs)
+        'sposta visivamente l'immagine durante il drag
+        If (e.Data.GetDataPresent(dragtype)) Then
+            Dim source As UserControlImg = CType(e.Data.GetData(dragtype), UserControlImg)
+
+            Dim final As UserControlImg = sender
+
+            Dim wpanel As WrapPanel = source.Parent
+
+            Dim i_source = wpanel.Children.IndexOf(source)
+
+            'estrare il numero di posizione finale
+            Dim i_final = wpanel.Children.IndexOf(final)
+            'salva l'indice dell'elemento di destinazione finale precedente
+            Dim i_PrecFinal = wpanel.Children.IndexOf(objPrecFinal)
+
+            If Not IsNothing(objPrecFinal) Then
+                If (i_PrecFinal <> i_final) Then
+                    'inserisce l'elelento nella nuova posizione
+                    wpanel.Children.Remove(source)
+                    wpanel.Children.Insert(i_final, source)
+                End If
+            End If
+            'aggiorna l'elemento di destinazione finale precedente
+            objPrecFinal = final
+        End If
+
+    End Sub
+
 
     Private Sub renumber(wpanel As WrapPanel)
         log.Info("Assegnazione numeri immagini")
@@ -257,7 +283,8 @@ Class MainWindow
             log.Info("Compilazione")
             feAction.wordInizializzaEcompila(document, WrapPanelImmagini)
 
-            document.SaveAs(sPath & ActionLibrary.getTimeStamp() & " document.doc")
+            log.Info("Salva documento " & sPath & ActionLibrary.getTimeStamp() & " " & My.Settings.savedDocumentName)
+            document.SaveAs(sPath & ActionLibrary.getTimeStamp() & " " & My.Settings.savedDocumentName)
 
         End If
 
@@ -359,25 +386,6 @@ Class MainWindow
                 child.Width = My.Settings.fotoLarghezzaThumb
             Next
         End If
-    End Sub
-    Private Sub tb_altezzaThumbnail_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_altezzaThumbnail.TextChanged
-        'verifica che venga inserito un numero valido
-        Dim iValue As Integer = feAction.checkNumber(sender.text)
-        sender.text = iValue
-        My.Settings.fotoAltezzaThumb = sender.text
-        My.Settings.Save()
-
-        imgRedraw()
-    End Sub
-
-    Private Sub tb_larghezzaThumbnail_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_larghezzaThumbnail.TextChanged
-        'verifica che venga inserito un numero valido
-        Dim iValue As Integer = feAction.checkNumber(sender.text)
-        sender.text = iValue
-        My.Settings.fotoLarghezzaThumb = sender.text
-        My.Settings.Save()
-
-        imgRedraw()
     End Sub
 
     Private Sub menu_salvaprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_salvaprogetto.Click

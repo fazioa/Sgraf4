@@ -2,6 +2,8 @@
 Imports log4net
 Imports Microsoft.VisualBasic.Logging
 Imports System.IO
+Imports System.Web.UI.WebControls
+Imports System.Windows.Media.Effects
 Imports Xceed.Wpf.AvalonDock.Layout
 
 Public Enum ExifProperty
@@ -767,4 +769,20 @@ Public Class UserControlImg
         file.Close()
     End Sub
 
+    Friend Sub enhance()
+        Dim img = PictureBox1.Source
+
+        Dim myBlurEffect As Effects.BlurEffect = New Effects.BlurEffect()
+        myBlurEffect.Radius = 10
+        PictureBox1.Effect = myBlurEffect
+
+    End Sub
+
+    Friend Sub deEnhance()
+        Dim img = PictureBox1.Source
+
+        Dim myBlurEffect As Effects.BlurEffect = New Effects.BlurEffect()
+        myBlurEffect.Radius = -10
+        PictureBox1.Effect = myBlurEffect
+    End Sub
 End Class

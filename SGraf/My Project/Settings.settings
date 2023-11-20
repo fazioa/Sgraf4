@@ -140,5 +140,8 @@
     <Setting Name="fotoLarghezzaThumbMin" Type="System.String" Scope="User">
       <Value Profile="(Default)">180</Value>
     </Setting>
+    <Setting Name="savedDocumentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">documento.doc</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
