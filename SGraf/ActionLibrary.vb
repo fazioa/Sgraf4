@@ -1,4 +1,5 @@
 ﻿Imports System.Data
+Imports System.Drawing
 Imports System.IO
 Imports System.Web.UI
 Imports System.Web.UI.WebControls
@@ -133,7 +134,14 @@ Public Class ActionLibrary
 
             p.InsertTableAfterSelf(t)
             'document.InsertTable(t)
-
+        Else
+            document.InsertSectionPageBreak()
+            'scansione di tutti gli elementi immagine
+            For Each element As UserControlImg In wpanel.Children
+                inserisciImmagine(document, element)
+                'inserisco un'interruzione di pagina
+                document.InsertSectionPageBreak()
+            Next
         End If
     End Sub
 
@@ -172,20 +180,27 @@ Public Class ActionLibrary
 
     Private Sub inserisciImmagineInCella(ByRef document As DocX, ByRef t As Xceed.Document.NET.Table, iRig As Integer, iCol As Integer, usrCtrlImg As UserControlImg)
 
+
         'inserisce numerazione immagine
-        Dim p = t.Rows(iRig).Cells(iCol).Paragraphs(0).Append(My.Settings.titoloFoto & " " & usrCtrlImg.LabelNumeroFoto.Content.ToString)
+        Dim p = t.Rows(iRig).Cells(iCol).Paragraphs(0).Append(" ")
         t.Rows(iRig).Cells(iCol).Paragraphs(0).Alignment = Alignment.center
+
+        p = p.InsertParagraphAfterSelf(My.Settings.titoloFoto & " " & usrCtrlImg.LabelNumeroFoto.Content.ToString)
+        p.Alignment = Alignment.center
+
+
+
 
         p.Font(My.Settings.carattereFont)
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
+
+
 
         'inserisce immagine
         Dim image = document.AddImage(usrCtrlImg.sNomeFile)
         Dim picture = image.CreatePicture()
 
         picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
-        '  If usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate0 Or usrCtrlImg.imgRotation.actualrotation = Rotation.Rotate180 Then
-        '  'adegua la dimensione in base all'orientamento che è stato memorizzato nel controllo utente usrCtrlImg
 
         If (usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height) Then
             insertOrizzontalImage(usrCtrlImg, picture)
@@ -198,69 +213,119 @@ Public Class ActionLibrary
         p.InsertPicture(picture)
 
         'solo se il fascicolo è descrittivo
-        Dim sEXIF As String = ""
         If My.Settings.tipoFascicolo = tipofascicolo.descrittivo Then
-            'costruisce la stringa dei dati EXIF
-            Dim bFlag As Boolean = False
-            If My.Settings.bEXIFDataOra Then
-                sEXIF += Trim(usrCtrlImg.dataScatto)
-                bFlag = True
-            End If
-            If My.Settings.bEXIFMarca Then
-                If sEXIF <> "" And usrCtrlImg.marca IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.marca)
-                bFlag = True
-            End If
-            If My.Settings.bEXIFModello Then
-                If sEXIF <> "" And usrCtrlImg.modello IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.modello)
-                bFlag = True
-            End If
 
-            If My.Settings.bEXIFEsposizione Then
-                If sEXIF <> "" And usrCtrlImg.esposizione IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.esposizione)
-                bFlag = True
-            End If
-            If My.Settings.bEXIFDiaframma Then
-                If sEXIF <> "" And usrCtrlImg.diaframma IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.diaframma)
-                bFlag = True
-            End If
-            If My.Settings.bEXIFISO Then
-                If sEXIF <> "" And usrCtrlImg.ISO IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.ISO)
-                bFlag = True
-            End If
-            If My.Settings.bEXIFFlash Then
-                If sEXIF <> "" And usrCtrlImg.flash IsNot Nothing Then sEXIF += ", "
-                sEXIF += Trim(usrCtrlImg.flash)
-                bFlag = True
-            End If
+            Dim sEXIF = buildEXIFString(usrCtrlImg)
+            inserisceNomeFile(p, System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
+            inserisceDatiEXIF(p, sEXIF)
+            inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
 
-            'inserisce il nome file
-            If My.Settings.bNomeFile Then
-                p = p.InsertParagraphAfterSelf(System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
-                p.Alignment = Alignment.center
-                p.Font(My.Settings.carattereFont)
-                p.FontSize(My.Settings.carattereDimensioneNomeFile)
-            End If
-
-            'inserisce i dati EXIF
-            p = p.InsertParagraphAfterSelf(sEXIF)
-            p.Alignment = Alignment.center
-            p.Font(My.Settings.carattereFont)
-            p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
-
-
-            'inserisce la didascalia
-            p = p.InsertParagraphAfterSelf(usrCtrlImg.TextBoxTag.Text)
-            p.Alignment = Alignment.center
-            p.Font(My.Settings.carattereFont)
-            p.FontSize(My.Settings.carattereDimensioneDidascalia)
         End If
     End Sub
 
+    Private Sub inserisceDidascalia(p As Paragraph, sDidascalia As String)
+        'inserisce la didascalia
+        p = p.InsertParagraphAfterSelf(sDidascalia)
+        p.Alignment = Alignment.center
+        p.Font(My.Settings.carattereFont)
+        p.FontSize(My.Settings.carattereDimensioneDidascalia)
+    End Sub
+
+    Private Sub inserisceDatiEXIF(p As Paragraph, sEXIF As Object)
+        'inserisce i dati EXIF
+        p = p.InsertParagraphAfterSelf(sEXIF)
+        p.Alignment = Alignment.center
+        p.Font(My.Settings.carattereFont)
+        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+    End Sub
+
+    Private Sub inserisceNomeFile(ByRef p As Paragraph, sNomeFile As String)
+        'inserisce il nome file
+        If My.Settings.bNomeFile Then
+            p = p.InsertParagraphAfterSelf(sNomeFile)
+            p.Alignment = Alignment.center
+            p.Font(My.Settings.carattereFont)
+            p.FontSize(My.Settings.carattereDimensioneNomeFile)
+        End If
+    End Sub
+
+    Private Function buildEXIFString(usrCtrlImg As UserControlImg) As Object
+        'costruisce la stringa dei dati EXIF
+        Dim sEXIF As String = ""
+        Dim bFlag As Boolean = False
+        If My.Settings.bEXIFDataOra Then
+            sEXIF += Trim(usrCtrlImg.dataScatto)
+            bFlag = True
+        End If
+        If My.Settings.bEXIFMarca Then
+            If sEXIF <> "" And usrCtrlImg.marca IsNot Nothing Then sEXIF += ", "
+            sEXIF += Trim(usrCtrlImg.marca)
+            bFlag = True
+        End If
+        If My.Settings.bEXIFModello Then
+            If sEXIF <> "" And usrCtrlImg.modello IsNot Nothing Then sEXIF += ", "
+            sEXIF += Trim(usrCtrlImg.modello)
+            bFlag = True
+        End If
+
+        If My.Settings.bEXIFEsposizione Then
+            If sEXIF <> "" And usrCtrlImg.esposizione IsNot Nothing Then sEXIF += ", "
+            sEXIF += Trim(usrCtrlImg.esposizione)
+            bFlag = True
+        End If
+        If My.Settings.bEXIFDiaframma Then
+            If sEXIF <> "" And usrCtrlImg.diaframma IsNot Nothing Then sEXIF += ", "
+            sEXIF += Trim(usrCtrlImg.diaframma)
+            bFlag = True
+        End If
+        If My.Settings.bEXIFISO Then
+            If sEXIF <> "" And usrCtrlImg.ISO IsNot Nothing Then sEXIF += ", "
+            sEXIF += Trim(usrCtrlImg.ISO)
+            bFlag = True
+        End If
+        If My.Settings.bEXIFFlash Then
+            If sEXIF <> "" And usrCtrlImg.flash IsNot Nothing Then sEXIF += ", "
+            sEXIF += Trim(usrCtrlImg.flash)
+            bFlag = True
+        End If
+        Return sEXIF
+    End Function
+
+    Private Sub inserisciImmagine(ByRef document As DocX, usrCtrlImg As UserControlImg)
+        'inserisce numerazione immagine
+        Dim p = document.InsertParagraph(My.Settings.titoloFoto & " " & usrCtrlImg.LabelNumeroFoto.Content.ToString)
+        p.Alignment = Alignment.center
+        p.Font(My.Settings.carattereFont)
+        p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
+
+
+        'inserisce immagine
+        Dim image = document.AddImage(usrCtrlImg.sNomeFile)
+        Dim picture = image.CreatePicture()
+
+        picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
+
+        If (usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height) Then
+            insertOrizzontalImage(usrCtrlImg, picture)
+        Else
+            insertVerticalImage(usrCtrlImg, picture)
+        End If
+
+        p = p.InsertParagraphAfterSelf(" ")
+        p.Alignment = Alignment.center
+        p.InsertPicture(picture)
+
+
+
+        'solo se il fascicolo è descrittivo
+        If My.Settings.tipoFascicolo = tipofascicolo.descrittivo Then
+
+            Dim sEXIF = buildEXIFString(usrCtrlImg)
+            inserisceNomeFile(p, System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
+            inserisceDatiEXIF(p, sEXIF)
+            inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
+        End If
+    End Sub
 
     Private Function creaTabella(ByRef document As DocX)
         Dim t = document.AddTable(My.Settings.disposizioneRighe, My.Settings.disposizioneColonne)
