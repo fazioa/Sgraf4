@@ -1,19 +1,19 @@
 ﻿
-
-Imports System.Drawing
-Imports System.IO
-Imports System.Web.UI
-Imports System.Web.UI.WebControls
+Imports System.ComponentModel
+Imports System.Threading
 Imports log4net
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.Win32
 Imports Newtonsoft.Json
+Imports Xceed.Document.NET
 Imports Xceed.Words.NET
 Imports Xceed.Wpf.Toolkit
 
 Class MainWindow
     Private Shared ReadOnly log As ILog = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType)
     Private Shared feAction As New ActionLibrary
+
+    Property isBusy As Boolean
+
     Private Sub tb_oggetto_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tb_oggetto.TextChanged
         My.Settings.oggetto = sender.text
         My.Settings.Save()
@@ -59,10 +59,10 @@ Class MainWindow
 
             ' Note that you can have more than one file.
             Dim files() As String = e.Data.GetData(DataFormats.FileDrop)
-
             PopolaImmagini(files)
         End If
     End Sub
+
 
     Private Sub ScrollViewer_Drop(sender As Object, e As DragEventArgs)
         WrapPanelImmagini_Drop(sender, e)
@@ -71,8 +71,16 @@ Class MainWindow
     Private Sub PopolaImmagini(arrayFileNames As String())
         Dim i As Integer = 0
         Dim sFile As String
-        'Dim imageItem As UserControlImg
         Dim imageItem As UserControlImg
+
+        ''faccio partire la misura del tempo
+        Dim sw As Stopwatch = Stopwatch.StartNew()
+
+        Dim iCount = arrayFileNames.Count
+        ptest.Maximum = iCount
+        ptest.Value = 0
+        log.Info("Start - Caricamento immagini")
+
         For Each sFile In arrayFileNames
             Try
                 log.Info("Inserimento immagine " & sFile)
@@ -91,6 +99,10 @@ Class MainWindow
                 'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
                 imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb)
                 WrapPanelImmagini.Children.Add(imageItem)
+                ptest.Value += 1
+
+
+
 
             Catch ex As Exception
                 log.Error("Inserimento immagine fallito - " & ex.Message)
@@ -110,6 +122,12 @@ Class MainWindow
             child.LabelNumeroFoto.Content = WrapPanelImmagini.Children.IndexOf(child).ToString + 1
 
         Next
+
+        'fermo la misura del tempo
+        sw.Stop()
+        'visualizza il tempo di esecuzione
+        log.Info("End - Caricamento immagini - Tempo " & sw.Elapsed.ToString)
+        Console.WriteLine($"Elapsed: {sw.Elapsed}")
     End Sub
 
     Private Sub childs_Drop(sender As Object, e As DragEventArgs)
@@ -415,7 +433,7 @@ Class MainWindow
         Next
 
         'serializza
-        Dim jsonTxt As String = JsonConvert.SerializeObject(progetto, Formatting.Indented)
+        Dim jsonTxt As String = JsonConvert.SerializeObject(progetto, Newtonsoft.Json.Formatting.Indented)
 
         ' Configure save file dialog box
         Dim dialog As New Microsoft.Win32.SaveFileDialog()
@@ -498,4 +516,5 @@ Class MainWindow
         End If
     End Sub
 End Class
+
 

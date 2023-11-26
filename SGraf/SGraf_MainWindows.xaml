@@ -7,12 +7,12 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:My="clr-namespace:SGraf.My" x:Name="window" x:Class="MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="591" Width="800">
+    
     <Window.DataContext>
         <My:MySettings/>
     </Window.DataContext>
 
-
-            <DockPanel Margin="0,0,0,0" MouseWheel="event_MouseWheel">
+    <DockPanel Margin="0,0,0,0" MouseWheel="event_MouseWheel">
         <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Apri immagini..." Click="MenuItem_Click" />
@@ -25,6 +25,7 @@
                 <MenuItem x:Name="menu_svuota" Header="S_vuota" />
             </MenuItem>
         </Menu>
+
 
         <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Background="WhiteSmoke" >
             <Expander Header="Dati fascicolo" IsExpanded="True" HorizontalContentAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="-7,5,0,0" Margin="10,5,0,0" ToolTip="ZOOM: Tasto Ctrl + rotella mouse">
@@ -76,13 +77,26 @@
             </Expander>
         </DockPanel>
 
-        <DockPanel DockPanel.Dock="Top">
-            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" ToolTip="Trascinare le immagini qui." >
-                <WrapPanel x:Name="WrapPanelImmagini" AllowDrop="True"/>
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+       
+            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" ToolTip="Trascinare le immagini qui." DockPanel.Dock="Top" >
+                    <WrapPanel x:Name="WrapPanelImmagini" AllowDrop="True"/>
             </ScrollViewer>
-        </DockPanel>
+        
+        <ProgressBar x:Name="ptest" DockPanel.Dock="Bottom" Height="9" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled" LargeChange="0" />
+
+ </Grid>
+
+
+
+
+
+
     </DockPanel>
-
-
-
+   
+    
 </Window>

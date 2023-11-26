@@ -124,25 +124,24 @@ Public Class ActionLibrary
                         iRig = iRig + 1
                         iCol = 0
                     End If
+
                 End If
             Next
 
-
             'inserisce tabella nel documento
-            Dim p = document.InsertParagraph(" ")
-            p.Alignment = Alignment.center
+            document.InsertTable(t)
 
-            p.InsertTableAfterSelf(t)
-            'document.InsertTable(t)
         Else
-            document.InsertSectionPageBreak()
+            'CASO DI UNA SOLA IMMAGINE PER PAGINA
             'scansione di tutti gli elementi immagine
             For Each element As UserControlImg In wpanel.Children
-                inserisciImmagine(document, element)
                 'inserisco un'interruzione di pagina
                 document.InsertSectionPageBreak()
+                inserisciImmagine(document, element)
+
             Next
         End If
+
     End Sub
 
     Private Sub insertVerticalImage(usrCtrlImg As UserControlImg, picture As Picture)
@@ -188,13 +187,8 @@ Public Class ActionLibrary
         p = p.InsertParagraphAfterSelf(My.Settings.titoloFoto & " " & usrCtrlImg.LabelNumeroFoto.Content.ToString)
         p.Alignment = Alignment.center
 
-
-
-
         p.Font(My.Settings.carattereFont)
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
-
-
 
         'inserisce immagine
         Dim image = document.AddImage(usrCtrlImg.sNomeFile)
@@ -315,8 +309,6 @@ Public Class ActionLibrary
         p.Alignment = Alignment.center
         p.InsertPicture(picture)
 
-
-
         'solo se il fascicolo è descrittivo
         If My.Settings.tipoFascicolo = tipofascicolo.descrittivo Then
 
@@ -325,6 +317,13 @@ Public Class ActionLibrary
             inserisceDatiEXIF(p, sEXIF)
             inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
         End If
+
+        'se si tratta di un fascicolo per l'identificazione aggiungo la legenda all'ultima pagina
+        If My.Settings.tipoFascicolo = tipofascicolo.identificazione Then
+
+        End If
+
+
     End Sub
 
     Private Function creaTabella(ByRef document As DocX)
