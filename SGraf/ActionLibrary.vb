@@ -142,6 +142,26 @@ Public Class ActionLibrary
             Next
         End If
 
+        'se si tratta di un fascicolo per l'identificazione aggiungo la legenda all'ultima pagina
+        If My.Settings.tipoFascicolo = tipofascicolo.identificazione Then
+            'inserisco un'interruzione di pagina
+            document.InsertSectionPageBreak()
+
+            'inserisce titolo legenda
+            Dim p = document.InsertParagraph(My.Settings.titoloLegenda)
+            p.Alignment = Alignment.center
+            p.Font(My.Settings.carattereFont)
+            p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
+
+            'inserisce didascalie
+            'scansione di tutti gli elementi immagine
+            p = document.InsertParagraph("")
+            For Each element As UserControlImg In wpanel.Children
+                p = document.InsertParagraph(element.LabelNumeroFoto.Content & ") " & element.TextBoxTag.Text)
+            Next
+
+        End If
+
     End Sub
 
     Private Sub insertVerticalImage(usrCtrlImg As UserControlImg, picture As Picture)
@@ -208,12 +228,10 @@ Public Class ActionLibrary
 
         'solo se il fascicolo è descrittivo
         If My.Settings.tipoFascicolo = tipofascicolo.descrittivo Then
-
             Dim sEXIF = buildEXIFString(usrCtrlImg)
             inserisceNomeFile(p, System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
             inserisceDatiEXIF(p, sEXIF)
             inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
-
         End If
     End Sub
 
@@ -292,10 +310,11 @@ Public Class ActionLibrary
         p.Font(My.Settings.carattereFont)
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
 
+        'DA FARE - resize immagini prima dell'inserimento nel documento
 
         'inserisce immagine
-        Dim image = document.AddImage(usrCtrlImg.sNomeFile)
-        Dim picture = image.CreatePicture()
+        Dim image As Xceed.Document.NET.Image = document.AddImage(usrCtrlImg.sNomeFile)
+        Dim picture As Picture = image.CreatePicture()
 
         picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
 
@@ -316,11 +335,6 @@ Public Class ActionLibrary
             inserisceNomeFile(p, System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
             inserisceDatiEXIF(p, sEXIF)
             inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
-        End If
-
-        'se si tratta di un fascicolo per l'identificazione aggiungo la legenda all'ultima pagina
-        If My.Settings.tipoFascicolo = tipofascicolo.identificazione Then
-
         End If
 
 

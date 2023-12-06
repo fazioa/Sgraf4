@@ -453,12 +453,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("fascicolo fotografico.dotx")>  _
-        Public Property nomeModello() As String
+        Public Property doc_nomeModello() As String
             Get
-                Return CType(Me("nomeModello"),String)
+                Return CType(Me("doc_nomeModello"),String)
             End Get
             Set
-                Me("nomeModello") = value
+                Me("doc_nomeModello") = value
             End Set
         End Property
         
@@ -608,13 +608,61 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("documento.doc")>  _
-        Public Property savedDocumentName() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("fascicolo.doc")>  _
+        Public Property doc_savedDocumentName() As String
             Get
-                Return CType(Me("savedDocumentName"),String)
+                Return CType(Me("doc_savedDocumentName"),String)
             End Get
             Set
-                Me("savedDocumentName") = value
+                Me("doc_savedDocumentName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Legenda")>  _
+        Public Property titoloLegenda() As String
+            Get
+                Return CType(Me("titoloLegenda"),String)
+            End Get
+            Set
+                Me("titoloLegenda") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("12")>  _
+        Public Property carattereDimensioneLegenda() As String
+            Get
+                Return CType(Me("carattereDimensioneLegenda"),String)
+            End Get
+            Set
+                Me("carattereDimensioneLegenda") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("modello")>  _
+        Public Property doc_modelPath() As String
+            Get
+                Return CType(Me("doc_modelPath"),String)
+            End Get
+            Set
+                Me("doc_modelPath") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("result")>  _
+        Public Property doc_resultPath() As String
+            Get
+                Return CType(Me("doc_resultPath"),String)
+            End Get
+            Set
+                Me("doc_resultPath") = value
             End Set
         End Property
     End Class

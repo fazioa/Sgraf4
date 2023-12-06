@@ -1,6 +1,8 @@
 ﻿
 Imports System.ComponentModel
+Imports System.IO
 Imports System.Threading
+Imports System.Web.UI.WebControls
 Imports log4net
 Imports Microsoft.Win32
 Imports Newtonsoft.Json
@@ -93,8 +95,6 @@ Class MainWindow
                 b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
 
                 b_image.EndInit()
-
-                ' Dim rate As Double = CSng(b_image.PixelWidth) / CSng(b_image.PixelHeight)
 
                 'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
                 imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb)
@@ -281,8 +281,9 @@ Class MainWindow
 
     Private Sub Genera_fascicolo_Click(sender As Object, e As RoutedEventArgs)
 
-        Dim sPath As String = AppDomain.CurrentDomain.BaseDirectory & "modello\"
-        Dim sFilename As String = sPath & My.MySettings.Default.nomeModello
+        Dim sPath As String = AppDomain.CurrentDomain.BaseDirectory & My.MySettings.Default.doc_modelPath & "\"
+        Dim sResultPath As String = AppDomain.CurrentDomain.BaseDirectory & My.MySettings.Default.doc_resultPath & "\"
+        Dim sFilename As String = sPath & My.MySettings.Default.doc_nomeModello
 
         log.Info("Generazione fascicolo")
         Dim a = "Intestazione1 "
@@ -301,8 +302,30 @@ Class MainWindow
             log.Info("Compilazione")
             feAction.wordInizializzaEcompila(document, WrapPanelImmagini)
 
-            log.Info("Salva documento " & sPath & ActionLibrary.getTimeStamp() & " " & My.Settings.savedDocumentName)
-            document.SaveAs(sPath & ActionLibrary.getTimeStamp() & " " & My.Settings.savedDocumentName)
+            'rimuove il contenuto della cartella dei risultati
+            Try
+                log.Info("Pulizia cartella " & sResultPath)
+                Dim di As DirectoryInfo = New DirectoryInfo(sResultPath)
+                For Each f In di.GetFiles
+                    f.Delete()
+                Next
+            Catch ex As Exception
+                log.Info("Errore " & ex.Message)
+            End Try
+
+            'salva il nuovo documento
+            log.Info("Salva documento " & sResultPath & ActionLibrary.getTimeStamp() & " " & My.Settings.doc_savedDocumentName)
+            Dim sDocPath As String = sResultPath & ActionLibrary.getTimeStamp() & " " & My.Settings.doc_savedDocumentName
+            document.SaveAs(sDocPath)
+
+            'apre il nuovo documento
+            Try
+                log.Info("Apertura documento " & sDocPath)
+                Process.Start(sDocPath)
+
+            Catch ex As Exception
+                log.Error("Errore" & ex.Message)
+            End Try
 
         End If
 

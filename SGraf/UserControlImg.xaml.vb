@@ -540,7 +540,7 @@ Public Class UserControlImg
 
 
     Private Sub TextBoxTag_LostFocus(sender As Object, e As RoutedEventArgs) Handles TextBoxTag.LostFocus
-        Dim tb As TextBox = sender
+        Dim tb As System.Windows.Controls.TextBox = sender
         'memorizza la didascalia solo se la relativa opzione è abilitata e se la casella non è vuota
         If My.Settings.bMemorizzaDidascalia And Not tb.Text = "" Then salvaContenuto(sNomeFile, tb.Text)
     End Sub

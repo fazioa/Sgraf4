@@ -71,6 +71,10 @@
                             <Label Content="Dati EXIF"  HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <TextBox x:Name="tb_carattereDatiEXIF" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneDatiEXIF}" TextAlignment="Center" />
                         </DockPanel>
+                        <DockPanel Height="34" LastChildFill="False">
+                            <Label Content="Legenda"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox x:Name="tb_carattereLegenda" Width="24" Height="26" VerticalContentAlignment="Center" Text="{Binding carattereDimensioneLegenda}" TextAlignment="Center" />
+                        </DockPanel>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox  Header="Dati da inserire" Height="224">

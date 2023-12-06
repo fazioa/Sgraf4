@@ -101,7 +101,7 @@
     <Setting Name="thumbnailDisplayResolution" Type="System.String" Scope="User">
       <Value Profile="(Default)">200</Value>
     </Setting>
-    <Setting Name="nomeModello" Type="System.String" Scope="User">
+    <Setting Name="doc_nomeModello" Type="System.String" Scope="User">
       <Value Profile="(Default)">fascicolo fotografico.dotx</Value>
     </Setting>
     <Setting Name="segnalibro_autore" Type="System.String" Scope="User">
@@ -140,8 +140,20 @@
     <Setting Name="fotoLarghezzaThumbMin" Type="System.String" Scope="User">
       <Value Profile="(Default)">180</Value>
     </Setting>
-    <Setting Name="savedDocumentName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">documento.doc</Value>
+    <Setting Name="doc_savedDocumentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fascicolo.doc</Value>
+    </Setting>
+    <Setting Name="titoloLegenda" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Legenda</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneLegenda" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="doc_modelPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">modello</Value>
+    </Setting>
+    <Setting Name="doc_resultPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">result</Value>
     </Setting>
   </Settings>
 </SettingsFile>
