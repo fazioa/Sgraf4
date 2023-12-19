@@ -5,6 +5,7 @@ Imports System.IO
 Imports System.Web.UI.WebControls
 Imports System.Windows.Media.Effects
 Imports Xceed.Wpf.AvalonDock.Layout
+Imports Xceed.Wpf.Toolkit
 
 Public Enum ExifProperty
     Title = &H9C9B              ' 40091
@@ -464,6 +465,7 @@ Public Class UserControlImg
     Dim r, g, b As Byte
 
 
+    Public Property goingToDrag As Boolean = False
     Public Property isSelected As Boolean = False
     Public Property sNomeFile As String
 
@@ -580,10 +582,7 @@ Public Class UserControlImg
         log.Info("Lettura didascalia " & _sNomeFile)
         TextBoxTag.Text = leggiContenuto(_sNomeFile)
 
-
-
         ImgTickSelected.Visibility = Visibility.Collapsed
-
     End Sub
 
 
@@ -713,40 +712,23 @@ Public Class UserControlImg
     End Sub
 
     Private Sub context_img_Menu_Rotate90dx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90dx.Click
-
         log.Info("Rotazione immagine")
-
-        ' Dim tb As TransformedBitmap = New TransformedBitmap()
-        '  tb.BeginInit()
-        '  tb.Source = PictureBox1.Source
         Dim Transform As RotateTransform = Nothing
         imgRotation.nextDx()
         Transform = New RotateTransform(imgRotation.actualAngularRotation)
-        ' tb.Transform = Transform
-        ' tb.EndInit()
-        ' PictureBox1.Source = tb
         PictureBox1.LayoutTransform = Transform
-        'tiene traccia dell'orientamento dell'immagine
-        ' imgRotation.nextDx()
+
     End Sub
 
     Private Sub context_img_Menu_Rotate90sx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90sx.Click
 
         log.Info("Rotazione immagine")
 
-        '   Dim tb As TransformedBitmap = New TransformedBitmap()
-        '   tb.BeginInit()
-        '  tb.Source = PictureBox1.Source
         Dim Transform As RotateTransform = Nothing
         'tiene traccia dell'orientamento dell'immagine
         imgRotation.nextSx()
         Transform = New RotateTransform(imgRotation.actualAngularRotation)
         PictureBox1.LayoutTransform = Transform
-
-        ' tb.Transform = Transform
-        '  tb.EndInit()
-        ' PictureBox1.Source = tb
-
 
     End Sub
 
@@ -768,6 +750,7 @@ Public Class UserControlImg
         file.Flush()
         file.Close()
     End Sub
+
 
     Friend Sub enhance()
         Dim img = PictureBox1.Source

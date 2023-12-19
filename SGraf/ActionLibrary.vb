@@ -310,10 +310,39 @@ Public Class ActionLibrary
         p.Font(My.Settings.carattereFont)
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
 
-        'DA FARE - resize immagini prima dell'inserimento nel documento
+        Dim fs As FileStream = File.OpenRead(usrCtrlImg.sNomeFile)
 
-        'inserisce immagine
-        Dim image As Xceed.Document.NET.Image = document.AddImage(usrCtrlImg.sNomeFile)
+
+        'DA FARE - resize immagini prima dell'inserimento nel documento
+        Dim wOriginale = usrCtrlImg.PictureBox1.Height
+        Dim wFinale = wOriginale / 2
+
+
+        'ridimensiona l'immagine
+        Dim encoder As BmpBitmapEncoder = New BmpBitmapEncoder()
+        Dim memStream As MemoryStream = New MemoryStream()
+        Dim bImg As BitmapImage = New BitmapImage()
+
+        encoder.Frames.Add(BitmapFrame.Create(fs))
+        encoder.Save(memStream)
+
+        bImg.BeginInit()
+        bImg.StreamSource = New MemoryStream(memStream.ToArray())
+        bImg.DecodePixelWidth = 1417
+
+
+
+        bImg.EndInit()
+        memStream.Close()
+
+        encoder = New BmpBitmapEncoder()
+        memStream = New MemoryStream()
+        encoder.Frames.Add(BitmapFrame.Create(bImg))
+        encoder.Save(memStream)
+
+        Dim image As Xceed.Document.NET.Image = document.AddImage(memStream)
+        memStream.Close()
+
         Dim picture As Picture = image.CreatePicture()
 
         picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation

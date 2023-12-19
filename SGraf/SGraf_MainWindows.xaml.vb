@@ -101,9 +101,6 @@ Class MainWindow
                 WrapPanelImmagini.Children.Add(imageItem)
                 ptest.Value += 1
 
-
-
-
             Catch ex As Exception
                 log.Error("Inserimento immagine fallito - " & ex.Message)
             End Try
@@ -130,39 +127,26 @@ Class MainWindow
         Console.WriteLine($"Elapsed: {sw.Elapsed}")
     End Sub
 
-    Private Sub childs_Drop(sender As Object, e As DragEventArgs)
-
-        If (e.Data.GetDataPresent(dragtype)) Then
-            Dim source As UserControlImg = CType(e.Data.GetData(dragtype), UserControlImg)
-
-            Dim final As UserControlImg = sender
-
-            Dim wpanel As WrapPanel = source.Parent
-
-            'estrare il numero di posizione finale
-            Dim i_final = wpanel.Children.IndexOf(final)
-            Dim i_source = wpanel.Children.IndexOf(source)
-
-            If (i_final <> i_source) Then
-                'se l'immagine non è stata spostata
-                'visto che si tratta di un drag&drop e l'operazione di selezione immagine è stata stata eseguita, inverto per ripristinare lo stato
-                source.toggleSelected()
-            End If
-
-
-            log.Info("Sposta immagine alla posizione " & i_final)
-            'inserisce l'elelento nella nuova posizione
-            wpanel.Children.Remove(source)
-            wpanel.Children.Insert(i_final, source)
-
-            'rinumera
-            log.Info("Aggiorna la numerazione delle immagini")
-            renumber(wpanel)
-
-        End If
+    Private Sub childs_MouseUp(sender As Object, e As MouseButtonEventArgs)
+        Console.WriteLine("Mouse up")
 
     End Sub
 
+    Private Sub childs_Drop(sender As Object, e As DragEventArgs)
+        Dim final As UserControlImg = sender
+        Dim wpanel As WrapPanel = final.Parent
+        'estrare il numero di posizione finale
+        i_final = wpanel.Children.IndexOf(final)
+
+        'se l'indice iniziale e quello finale coincidono dopo il drag&drop allora si tratta di un click, quindi seleziono/deseleziono l'immagine
+        If i_final = i_source Then
+            final.toggleSelected()
+        End If
+
+        'rinumera
+        log.Info("Aggiorna la numerazione delle immagini")
+        renumber(wpanel)
+    End Sub
 
     Dim objPrecFinal As UserControlImg = Nothing
     Private Sub childs_DragOver(sender As Object, e As DragEventArgs)
@@ -210,11 +194,11 @@ Class MainWindow
 
     End Sub
 
+    Dim i_source, i_final
 
     Private Sub childs_MouseDown(ByVal sender As System.Object, ByVal e As MouseEventArgs)
 
         If e.LeftButton = MouseButtonState.Pressed Then
-
             Me.dragtype = sender.GetType
             'Package the data.
             Dim Data As DataObject = New DataObject()
@@ -234,22 +218,19 @@ Class MainWindow
             '    End If
             'Next
 
+            Dim source As UserControlImg = sender
+
+            Dim wpanel As WrapPanel = source.Parent
+
+            'estrae e salva il numero di posizione finale. Servirà al momento del drop, per capire  se si tratta di un click oppure di un trascinamento.
+            i_source = wpanel.Children.IndexOf(source)
+
             Data.SetData(sender)
             ' Initiate the drag-And-drop operation.
             log.Info("Avvia spostamento immagine")
             DragDrop.DoDragDrop(Me, Data, DragDropEffects.Move)
-
-            'tratta l'evento come un click e selezione l'immagine
-            sender.toggleSelected()
         End If
     End Sub
-
-
-
-
-    Dim anchorPoint As System.Windows.Point
-    Dim currentPoint As System.Windows.Point
-    Dim isInDrag As Boolean = False
 
     Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
         Dim o As OpenFileDialog = New OpenFileDialog
@@ -409,9 +390,7 @@ Class MainWindow
             End Select
             'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
             log.Info("Zoom " & ZoomValue & "%")
-            'scrollWrapPanel.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Hidden
             imgRedrawZoom(ZoomValue)
-            'scrollWrapPanel.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Visible
         End If
         CtrlIsDown = False
     End Sub
@@ -478,6 +457,7 @@ Class MainWindow
 
     End Sub
 
+
     Private Sub menu_apriprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_apriprogetto.Click
         log.Info("Apertura progetto")
 
@@ -538,6 +518,8 @@ Class MainWindow
             End If
         End If
     End Sub
+
+
 End Class
 
 
