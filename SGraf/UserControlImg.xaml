@@ -22,8 +22,8 @@
          <Image x:Name="PictureBox1" >
             <Image.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="context_img_Menu_Rotate90sx" Header="Ruota sinistra" />
-                    <MenuItem x:Name="context_img_Menu_Rotate90dx" Header="Ruota destra" />
+                    <MenuItem x:Name="context_img_Menu_Rotate90sx" Header="Ruota a sinistra" />
+                    <MenuItem x:Name="context_img_Menu_Rotate90dx" Header="Ruota a destra" />
                 </ContextMenu>
             </Image.ContextMenu>
         </Image>

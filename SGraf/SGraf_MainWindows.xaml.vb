@@ -260,6 +260,32 @@ Class MainWindow
         End If
     End Sub
 
+    Private Sub RotateDx_Click(sender As Object, e As RoutedEventArgs)
+        log.Info("Rotazione selezionate Dx ")
+        Dim index As Integer
+        Dim usrCtrl As UserControlImg
+        For index = WrapPanelImmagini.Children.Count - 1 To 0 Step -1
+            usrCtrl = WrapPanelImmagini.Children.Item(index)
+            If usrCtrl.isSelected Then
+                log.Info("Ruota Dx " & index)
+                usrCtrl.rotateDx()
+            End If
+        Next
+    End Sub
+
+    Private Sub RotateSx_Click(sender As Object, e As RoutedEventArgs)
+        log.Info("Rotazione selezionate Dx ")
+        Dim index As Integer
+        Dim usrCtrl As UserControlImg
+        For index = WrapPanelImmagini.Children.Count - 1 To 0 Step -1
+            usrCtrl = WrapPanelImmagini.Children.Item(index)
+            If usrCtrl.isSelected Then
+                log.Info("Ruota Sx " & index)
+                usrCtrl.rotateSx()
+            End If
+        Next
+    End Sub
+
     Private Sub Genera_fascicolo_Click(sender As Object, e As RoutedEventArgs)
 
         Dim sPath As String = AppDomain.CurrentDomain.BaseDirectory & My.MySettings.Default.doc_modelPath & "\"
@@ -373,29 +399,6 @@ Class MainWindow
         End If
     End Sub
 
-
-
-    Private Sub event_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles window.MouseWheel
-        'gestione mouse scroll - rotella mouse per zoom miniature
-
-        'check if control is being held down
-        If My.Computer.Keyboard.CtrlKeyDown Then
-            CtrlIsDown = True
-            'evaluate the delta's sign and call the appropriate zoom command
-            Select Case Math.Sign(e.Delta)
-                Case Is < 0
-                    ZoomValue = -2
-                Case Is > 0
-                    ZoomValue = 2
-            End Select
-            'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
-            log.Info("Zoom " & ZoomValue & "%")
-            imgRedrawZoom(ZoomValue)
-        End If
-        CtrlIsDown = False
-    End Sub
-
-
     'procedure temporanee
 
     Private Sub imgRedraw()
@@ -457,6 +460,31 @@ Class MainWindow
 
     End Sub
 
+
+
+    Private Sub WrapPanelImmagini_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles WrapPanelImmagini.MouseWheel
+        'gestione mouse scroll - rotella mouse per zoom miniature
+
+        'check if control is being held down
+        If My.Computer.Keyboard.CtrlKeyDown Then
+            CtrlIsDown = True
+            'evaluate the delta's sign and call the appropriate zoom command
+            Select Case Math.Sign(e.Delta)
+                Case Is < 0
+                    ZoomValue = -2
+                Case Is > 0
+                    ZoomValue = 2
+            End Select
+            'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
+            log.Info("Zoom " & ZoomValue & "%")
+            imgRedrawZoom(ZoomValue)
+        End If
+        CtrlIsDown = False
+    End Sub
+
+    Private Sub Expander_MouseRightButtonDown(sender As Object, e As MouseButtonEventArgs)
+
+    End Sub
 
     Private Sub menu_apriprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_apriprogetto.Click
         log.Info("Apertura progetto")

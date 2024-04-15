@@ -712,24 +712,29 @@ Public Class UserControlImg
     End Sub
 
     Private Sub context_img_Menu_Rotate90dx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90dx.Click
+        rotateDx()
+    End Sub
+
+    Public Sub rotateDx()
         log.Info("Rotazione immagine")
         Dim Transform As RotateTransform = Nothing
         imgRotation.nextDx()
         Transform = New RotateTransform(imgRotation.actualAngularRotation)
         PictureBox1.LayoutTransform = Transform
-
     End Sub
 
+
     Private Sub context_img_Menu_Rotate90sx_Click(sender As Object, e As RoutedEventArgs) Handles context_img_Menu_Rotate90sx.Click
+        rotateSx()
+    End Sub
 
+    Public Sub rotateSx()
         log.Info("Rotazione immagine")
-
         Dim Transform As RotateTransform = Nothing
         'tiene traccia dell'orientamento dell'immagine
         imgRotation.nextSx()
         Transform = New RotateTransform(imgRotation.actualAngularRotation)
         PictureBox1.LayoutTransform = Transform
-
     End Sub
 
     Private Function leggiContenuto(sNomeFile As String)
