@@ -11,9 +11,9 @@ Imports System.Windows
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("SGraf")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("SGraf - Generatore di Fascicoli Fotografici")>
+<Assembly: AssemblyDescription("Generatore di Fascicoli Fotografici - Genera bozze in formato Microsoft Word di fascicoli fotografici")>
+<Assembly: AssemblyCompany("Antonino Fazio")>
 <Assembly: AssemblyProduct("SGraf")>
 <Assembly: AssemblyCopyright("Copyright ©  2023")>
 <Assembly: AssemblyTrademark("")>
@@ -55,5 +55,6 @@ Imports System.Windows
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("4.0.0.0")>
+<Assembly: AssemblyFileVersion("4.0.0.0")>
+<Assembly: NeutralResourcesLanguage("it")>

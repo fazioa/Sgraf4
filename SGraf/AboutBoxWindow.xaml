@@ -1,0 +1,25 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGraf"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="AboutBoxWindow"
+        mc:Ignorable="d"
+        Title="SGraf About Box" Height="168" Width="415" Activated="Window_Activated" ScrollViewer.VerticalScrollBarVisibility="Disabled" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0,0">
+        <Rectangle Height="155" VerticalAlignment="Center" OpacityMask="#FFE61A1A" Fill="#FFE2DCDC"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="81" Margin="19,17,0,0" VerticalAlignment="Top" Width="90" Source="/sgrafSoloCamera.ico"/>
+
+
+        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="121,2,0,0">
+            <Label Content="SGgraf" Background="#00000000" FontFamily="Arial Black" FontSize="45"/>
+            <TextBlock Text="GENERATORE DI FASCICOLI FOTOGRAFICI" FontSize="14"/>
+            <TextBlock x:Name="labelVersion" Text="Version " FontSize="14"/>
+            <TextBlock Text="Copyright © 2024 - Tonino Fazio" FontSize="12"/>
+            <!-- Add any other relevant information here -->
+        </StackPanel>
+
+    </Grid>
+
+</Window>

@@ -27,7 +27,7 @@ Public Class ActionLibrary
     End Function
 
     'riceve in ingresso il documento del tipo DocX ed il contenitore degli oggetti UserControlImg del tipo userControl
-    Public Sub wordInizializzaEcompila(ByRef document As DocX, wpanel As WrapPanel)
+    Public Sub wordInizializzaEcompila(ByRef document As DocX, wpanel As WrapPanel, ptest As ProgressBar)
         Try
             log.Info("Compila intestazione")
             wordScriviSegnalibro(document, My.Settings.segnalibro_intestazione1, My.Settings.intestazione1)
@@ -49,7 +49,7 @@ Public Class ActionLibrary
 
         Try
             log.Info("Compila pagine immagini")
-            wordscriviPagineImmagini(document, wpanel)
+            wordscriviPagineImmagini(document, wpanel, ptest)
         Catch ex As Exception
             log.Error("Errore pagine immagini: " & ex.Message)
         End Try
@@ -62,7 +62,7 @@ Public Class ActionLibrary
     Private Sub wordScriviSegnalibro(ByRef document As DocX, sSegnalibro As String, sContenuto As String)
         document.InsertAtBookmark(sContenuto, sSegnalibro)
     End Sub
-    Private Sub wordscriviPagineImmagini(document As DocX, wpanel As WrapPanel)
+    Private Async Sub wordscriviPagineImmagini(document As DocX, wpanel As WrapPanel, ptest As ProgressBar)
 
         If My.Settings.disposizioneColonne <= 0 Then
             My.Settings.disposizioneColonne = 1
@@ -90,7 +90,17 @@ Public Class ActionLibrary
             iCol = 0
             iCountCella = 0
 
+
+            Dim iRate As Double = 100 / (wpanel.Children.Count + 1)
+            ptest.Value = 0
+            ' Visualizza la ProgressBar :
+            ptest.Visibility = Visibility.Visible
+
+
             For Each element As UserControlImg In wpanel.Children
+                ptest.Value += iRate
+                Await Task.Delay(100)
+
                 If iCountCella < My.Settings.disposizioneRighe * My.Settings.disposizioneColonne Then
                     inserisciImmagineInCella(document, t, iRig, iCol, element)
 
@@ -161,7 +171,8 @@ Public Class ActionLibrary
             Next
 
         End If
-
+        ' Nasconti la ProgressBar :
+        ptest.Visibility = Visibility.Hidden
     End Sub
 
     Private Sub insertVerticalImage(usrCtrlImg As UserControlImg, picture As Picture)

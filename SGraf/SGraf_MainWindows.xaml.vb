@@ -35,7 +35,11 @@ Class MainWindow
     Private Sub MenuSetupItem_Click(sender As Object, e As RoutedEventArgs)
         Dim w As New WindowSetup(Me)
         w.Show()
+    End Sub
 
+    Private Sub AboutBoxWindow_Click(sender As Object, e As RoutedEventArgs)
+        Dim w As New AboutBoxWindow()
+        w.Show()
     End Sub
 
     Private Sub window_Loaded(sender As Object, e As RoutedEventArgs) Handles window.Loaded
@@ -70,7 +74,7 @@ Class MainWindow
         WrapPanelImmagini_Drop(sender, e)
     End Sub
 
-    Private Sub PopolaImmagini(arrayFileNames As String())
+    Private Async Sub PopolaImmagini(arrayFileNames As String())
         Dim i As Integer = 0
         Dim sFile As String
         Dim imageItem As UserControlImg
@@ -79,8 +83,11 @@ Class MainWindow
         Dim sw As Stopwatch = Stopwatch.StartNew()
 
         Dim iCount = arrayFileNames.Count
-        ptest.Maximum = iCount
+        Dim iRate As Double = 100 / iCount
         ptest.Value = 0
+        ' Visualizza la ProgressBar :
+        ptest.Visibility = Visibility.Visible
+
         log.Info("Start - Caricamento immagini")
 
         For Each sFile In arrayFileNames
@@ -99,12 +106,19 @@ Class MainWindow
                 'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
                 imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb)
                 WrapPanelImmagini.Children.Add(imageItem)
-                ptest.Value += 1
+                ptest.Value += iRate
+                ' Attendi un breve intervallo per consentire all'interfaccia utente di aggiornarsi:
+                Await Task.Delay(1)
 
             Catch ex As Exception
                 log.Error("Inserimento immagine fallito - " & ex.Message)
             End Try
+
+
         Next
+        ' Nasconde la ProgressBar :
+        ptest.Visibility = Visibility.Hidden
+
 
         For Each child As UserControlImg In WrapPanelImmagini.Children
             RemoveHandler child.MouseDown, AddressOf childs_MouseDown
@@ -307,7 +321,8 @@ Class MainWindow
 
         If document IsNot Nothing Then
             log.Info("Compilazione")
-            feAction.wordInizializzaEcompila(document, WrapPanelImmagini)
+            'passa alla funzione il contenitore delle immagini ed anche un riferimento alla progress bar
+            feAction.wordInizializzaEcompila(document, WrapPanelImmagini, ptest)
 
             'rimuove il contenuto della cartella dei risultati
             Try

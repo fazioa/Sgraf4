@@ -28,6 +28,8 @@
                 <MenuItem Name="menu_setup" Header="_Setup..." Click="MenuSetupItem_Click"  />
                 <MenuItem x:Name="menu_svuota" Header="S_vuota" />
             </MenuItem>
+            <MenuItem Header="?" Click="AboutBoxWindow_Click" />
+
         </Menu>
 
 
