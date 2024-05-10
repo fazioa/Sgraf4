@@ -62,7 +62,7 @@ Public Class ActionLibrary
     Private Sub wordScriviSegnalibro(ByRef document As DocX, sSegnalibro As String, sContenuto As String)
         document.InsertAtBookmark(sContenuto, sSegnalibro)
     End Sub
-    Private Async Sub wordscriviPagineImmagini(document As DocX, wpanel As WrapPanel, ptest As ProgressBar)
+    Private Sub wordscriviPagineImmagini(document As DocX, wpanel As WrapPanel, ptest As ProgressBar)
 
         If My.Settings.disposizioneColonne <= 0 Then
             My.Settings.disposizioneColonne = 1
@@ -99,7 +99,6 @@ Public Class ActionLibrary
 
             For Each element As UserControlImg In wpanel.Children
                 ptest.Value += iRate
-                Await Task.Delay(100)
 
                 If iCountCella < My.Settings.disposizioneRighe * My.Settings.disposizioneColonne Then
                     inserisciImmagineInCella(document, t, iRig, iCol, element)

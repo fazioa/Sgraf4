@@ -482,6 +482,10 @@ Class MainWindow
 
         'check if control is being held down
         If My.Computer.Keyboard.CtrlKeyDown Then
+            'disabilita momentaneamente lo scroll
+            e.Handled = True
+            scrollWrapPanel.IsEnabled = False
+
             CtrlIsDown = True
             'evaluate the delta's sign and call the appropriate zoom command
             Select Case Math.Sign(e.Delta)
@@ -493,12 +497,18 @@ Class MainWindow
             'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
             log.Info("Zoom " & ZoomValue & "%")
             imgRedrawZoom(ZoomValue)
+
+            scrollWrapPanel.IsEnabled = True
         End If
         CtrlIsDown = False
     End Sub
 
-    Private Sub Expander_MouseRightButtonDown(sender As Object, e As MouseButtonEventArgs)
+    Private Sub DockPanel_MouseWheel(sender As Object, e As MouseWheelEventArgs)
+        WrapPanelImmagini_MouseWheel(sender, e)
+    End Sub
 
+    Private Sub window_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles window.MouseWheel
+        WrapPanelImmagini_MouseWheel(sender, e)
     End Sub
 
     Private Sub menu_apriprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_apriprogetto.Click

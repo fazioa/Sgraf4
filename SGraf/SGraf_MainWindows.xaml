@@ -34,7 +34,7 @@
 
 
         <DockPanel DockPanel.Dock="Top" VerticalAlignment="Top" Background="WhiteSmoke" >
-            <Expander Header="Dati fascicolo" IsExpanded="True" HorizontalContentAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="-7,5,0,0" Margin="10,5,0,0" ToolTip="ZOOM: Tasto Ctrl + rotella mouse" MouseRightButtonDown="Expander_MouseRightButtonDown">
+            <Expander Header="Dati fascicolo" IsExpanded="True" HorizontalContentAlignment="Left" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="-7,5,0,0" Margin="10,5,0,0" ToolTip="ZOOM: Tasto Ctrl + rotella mouse">
                 <DockPanel LastChildFill="False" DockPanel.Dock="Top" Height="169" Margin="10,10,10,10" >
                     <GroupBox Header="Oggetto" DockPanel.Dock="Top" Height="45">
                         <TextBox x:Name="tb_oggetto" TextWrapping="Wrap" Margin="0,0,0,0" VerticalAlignment="Top" AllowDrop="True" Text="{Binding oggetto}"/>
