@@ -5,8 +5,6 @@ VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SGraf", "SGraf.vbproj", "{417D4B5D-9C07-4E7A-8559-DDE2CF38241A}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BindingTest", "..\BindingTest\BindingTest.vbproj", "{4484A3D8-62B8-43E8-9031-6426584CF098}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{417D4B5D-9C07-4E7A-8559-DDE2CF38241A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{417D4B5D-9C07-4E7A-8559-DDE2CF38241A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{417D4B5D-9C07-4E7A-8559-DDE2CF38241A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4484A3D8-62B8-43E8-9031-6426584CF098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4484A3D8-62B8-43E8-9031-6426584CF098}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4484A3D8-62B8-43E8-9031-6426584CF098}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4484A3D8-62B8-43E8-9031-6426584CF098}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

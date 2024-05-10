@@ -23,6 +23,10 @@
                 <MenuItem Header="Ruota selezionate e _destra" Click="RotateDx_Click" />
                 <MenuItem Header="Ruota selezionate e _sinistra" Click="RotateSx_Click" />
             </MenuItem>
+            <MenuItem Header="_Visualizza">
+                <MenuItem Header="_Aumenta miniatura" Click="aumentaMiniatura_Click" />
+                <MenuItem Header="_Riduci miniatura" Click="riduciMiniatura_Click" />
+            </MenuItem>
             <MenuItem Header="_Strumenti">
                 <MenuItem Header="_Genera fascicolo fotografico" Click="Genera_fascicolo_Click" />
                 <MenuItem Name="menu_setup" Header="_Setup..." Click="MenuSetupItem_Click"  />
@@ -96,13 +100,7 @@
         <ProgressBar x:Name="ptest" DockPanel.Dock="Bottom" Height="9" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled" LargeChange="0" />
 
  </Grid>
-
-
-
-
-
-
-    </DockPanel>
+  </DockPanel>
    
     
 </Window>

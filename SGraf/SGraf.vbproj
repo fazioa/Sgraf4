@@ -185,9 +185,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="result\null">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -204,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="sgrafSoloCamera.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="result\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

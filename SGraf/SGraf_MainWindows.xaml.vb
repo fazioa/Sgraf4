@@ -311,6 +311,20 @@ Class MainWindow
         Dim b = "nuovo testo"
         Dim document As DocX
 
+        'controlla cartella risultati. Se non esiste allora la crea
+        Dim cartellaPercorso As String = My.MySettings.Default.doc_resultPath
+
+        ' Controllare se la cartella esiste
+        If Not Directory.Exists(cartellaPercorso) Then
+            ' Creare la cartella
+            Directory.CreateDirectory(cartellaPercorso)
+            log.Info("Cartella creata: " & cartellaPercorso)
+        Else
+            log.Info("Cartella già esistente: " & cartellaPercorso)
+        End If
+
+
+
         Try
             log.Info("Apertura modello ")
             document = DocX.Load(sFilename)
@@ -490,9 +504,10 @@ Class MainWindow
             'evaluate the delta's sign and call the appropriate zoom command
             Select Case Math.Sign(e.Delta)
                 Case Is < 0
-                    ZoomValue = -2
+                    ZoomValue = -My.Settings.zoomMiniaturaDefaultMouse
+
                 Case Is > 0
-                    ZoomValue = 2
+                    ZoomValue = My.Settings.zoomMiniaturaDefaultMouse
             End Select
             'ridimensiona i controlli immagine. Lo scorrimento automatico viene momentaneamente disabilitato
             log.Info("Zoom " & ZoomValue & "%")
@@ -509,6 +524,22 @@ Class MainWindow
 
     Private Sub window_MouseWheel(sender As Object, e As MouseWheelEventArgs) Handles window.MouseWheel
         WrapPanelImmagini_MouseWheel(sender, e)
+    End Sub
+
+    Private Sub aumentaMiniatura_Click(sender As Object, e As RoutedEventArgs)
+        ZoomValue = My.Settings.zoomMiniaturaDefaultMenu
+
+        'ridimensiona i controlli immagine
+        log.Info("Zoom " & ZoomValue & "%")
+        imgRedrawZoom(ZoomValue)
+    End Sub
+
+    Private Sub riduciMiniatura_Click(sender As Object, e As RoutedEventArgs)
+        ZoomValue = -My.Settings.zoomMiniaturaDefaultMenu
+
+        'ridimensiona i controlli immagine
+        log.Info("Zoom " & ZoomValue & "%")
+        imgRedrawZoom(ZoomValue)
     End Sub
 
     Private Sub menu_apriprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_apriprogetto.Click
