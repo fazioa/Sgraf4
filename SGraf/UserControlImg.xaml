@@ -9,7 +9,7 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}" Height="386" Width="450">
 
     <Grid>
-        <Label x:Name="LabelNumeroFoto" Content="Immagine" DockPanel.Dock="Top" Height="30" Margin="5,5,5,-20" Background="#FFFFDE00" Width="40" FontSize="16" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0,0,0,0" ScrollViewer.CanContentScroll="True" FontWeight="Black" FontFamily="Arial Black" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="2,2,2,2" VerticalAlignment="Top"/>
+        <Label x:Name="LabelNumeroFoto" Content="#" DockPanel.Dock="Top" Height="30" Margin="5,5,5,-20" Background="#FFFFDE00" Width="40" FontSize="16" HorizontalAlignment="Left" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Disabled" Padding="0,0,0,0" ScrollViewer.CanContentScroll="True" FontWeight="Black" FontFamily="Arial Black" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="2,2,2,2" VerticalAlignment="Top"/>
 
         <Image x:Name="ImgTickSelected" Source="/tick.png" DockPanel.Dock="Top" Margin="0,0,15,-60" Stretch="None" Width="52" Height="58" HorizontalAlignment="Right" VerticalAlignment="Top"  Panel.ZIndex="1">
             <Image.Effect>

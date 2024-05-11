@@ -1,9 +1,12 @@
 ﻿
 Imports log4net
 Imports Microsoft.VisualBasic.Logging
+Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Web.UI.WebControls
 Imports System.Windows.Media.Effects
+Imports System.Xml
 Imports Xceed.Wpf.AvalonDock.Layout
 Imports Xceed.Wpf.Toolkit
 
@@ -758,19 +761,47 @@ Public Class UserControlImg
 
 
     Friend Sub enhance()
-        Dim img = PictureBox1.Source
+        Dim img = PictureBox1
 
-        Dim myBlurEffect As Effects.BlurEffect = New Effects.BlurEffect()
-        myBlurEffect.Radius = 10
-        PictureBox1.Effect = myBlurEffect
+        ' Dim myBlurEffect As Effects.BlurEffect = New Effects.BlurEffect()
+        ' myBlurEffect.Radius = 10
+        'PictureBox1.Effect = myBlurEffect
+
+        Dim myEffect As DropShadowEffect = New DropShadowEffect
+        myEffect.BlurRadius = 150
+        myEffect.Color = Colors.Gray
+        myEffect.Opacity = 50
+        img.Effect = myEffect
+
+
+
+        ' Dim newFormatedBitmapSource As New FormatConvertedBitmap()
+
+        ' newFormatedBitmapSource.BeginInit()
+        '  newFormatedBitmapSource.Source = img
+        ' Set the New format to Gray32Float (grayscale).
+        ' newFormatedBitmapSource.DestinationFormat = PixelFormats.Gray32Float
+        '    newFormatedBitmapSource.EndInit()
+
+        '    PictureBox1.Source = newFormatedBitmapSource
 
     End Sub
 
     Friend Sub deEnhance()
-        Dim img = PictureBox1.Source
+        Dim img = PictureBox1
+        img.Effect = Nothing
 
-        Dim myBlurEffect As Effects.BlurEffect = New Effects.BlurEffect()
-        myBlurEffect.Radius = -10
-        PictureBox1.Effect = myBlurEffect
+        '  Dim myBlurEffect As Effects.BlurEffect = New Effects.BlurEffect()
+        '  myBlurEffect.Radius = -10
+        '  PictureBox1.Effect = myBlurEffect
+    End Sub
+
+    Friend Sub markPicture()
+        enhance()
+    End Sub
+
+    Friend Sub unmarkPicture()
+        deEnhance()
     End Sub
 End Class
+

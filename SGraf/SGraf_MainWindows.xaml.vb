@@ -1,6 +1,9 @@
 ﻿
 Imports System.ComponentModel
+Imports System.Drawing
+Imports System.Drawing.Imaging
 Imports System.IO
+Imports System.Reflection
 Imports System.Threading
 Imports System.Web.UI.WebControls
 Imports log4net
@@ -159,11 +162,35 @@ Class MainWindow
 
         'rinumera
         log.Info("Aggiorna la numerazione delle immagini")
+        final.unmarkPicture()
         renumber(wpanel)
     End Sub
 
     Dim objPrecFinal As UserControlImg = Nothing
     Private Sub childs_DragOver(sender As Object, e As DragEventArgs)
+
+        'carica l'immagine del separatore
+        log.Info("Inserimento immagine separatore")
+
+
+
+        '        'Legge l'immagine del separatore da mostrare durante lo spostamento di un'immagine
+        '        Dim b_image As BitmapImage = Resources.Item(My.Resources.separator)
+        'b_image.BeginInit()
+        ' la risoluzione della mininiatura può essere impostata nella configurazione
+        'b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
+
+        'b_image.EndInit()
+
+
+        'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
+        'imageItem = New UserControlImg(b_image, ".", My.Settings.fotoLarghezzaThumb)
+        'WrapPanelImmagini.Children.Add(imageItem)
+
+        'da compleatare
+
+
+
         'sposta visivamente l'immagine durante il drag
         If (e.Data.GetDataPresent(dragtype)) Then
             Dim source As UserControlImg = CType(e.Data.GetData(dragtype), UserControlImg)
@@ -173,6 +200,10 @@ Class MainWindow
             Dim wpanel As WrapPanel = source.Parent
 
             Dim i_source = wpanel.Children.IndexOf(source)
+
+
+            Dim element As UserControlImg = wpanel.Children.Item(i_source)
+            element.markPicture()
 
             'estrare il numero di posizione finale
             Dim i_final = wpanel.Children.IndexOf(final)

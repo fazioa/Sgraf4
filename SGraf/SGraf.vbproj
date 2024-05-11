@@ -205,5 +205,8 @@
   <ItemGroup>
     <Folder Include="result\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Senza titolo-2.tif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
