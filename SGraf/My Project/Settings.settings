@@ -1,0 +1,159 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="intestazione1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">prima riga intestazione</Value>
+    </Setting>
+    <Setting Name="intestazione2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">seconda riga intestazione</Value>
+    </Setting>
+    <Setting Name="intestazione3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">terza riga intestazione</Value>
+    </Setting>
+    <Setting Name="oggetto" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Indagini relative a....</Value>
+    </Setting>
+    <Setting Name="contenutoDettaglio" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Contiene fotografie di....</Value>
+    </Setting>
+    <Setting Name="autore" Type="System.String" Scope="User">
+      <Value Profile="(Default)">nome e cognome autore</Value>
+    </Setting>
+    <Setting Name="luogo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">comune</Value>
+    </Setting>
+    <Setting Name="gradoCognomeNome" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="carattereDimensioneTitoloImmagine" Type="System.String" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="titoloFoto" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Immagine nr.</Value>
+    </Setting>
+    <Setting Name="bIncorporaImmagini" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="disposizioneColonne" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="disposizioneRighe" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneDidascalia" Type="System.String" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
+    <Setting Name="fotoLarghezzaCM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="fotoAltezzaCM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="tipoFascicolo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="newVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="bMemorizzaDidascalia" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="fotoAltezzaThumb" Type="System.String" Scope="User">
+      <Value Profile="(Default)">151</Value>
+    </Setting>
+    <Setting Name="bEXIFMarca" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bEXIFModello" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bEXIFEsposizione" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bEXIFDiaframma" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bEXIFDataOra" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bEXIFFlash" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bEXIFISO" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="coloreSelezione" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192, 255, 255</Value>
+    </Setting>
+    <Setting Name="trasparenzaImmagine" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-40</Value>
+    </Setting>
+    <Setting Name="bNomeFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="zoomMiniaturaDefaultMenu" Type="System.String" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+    <Setting Name="zoomMiniaturaDefaultMouse" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="thumbnailDisplayResolution" Type="System.String" Scope="User">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="doc_nomeModello" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fascicolo fotografico.dotx</Value>
+    </Setting>
+    <Setting Name="segnalibro_autore" Type="System.String" Scope="User">
+      <Value Profile="(Default)">autore</Value>
+    </Setting>
+    <Setting Name="segnalibro_intestazione1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">intestazione1</Value>
+    </Setting>
+    <Setting Name="segnalibro_intestazione2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">intestazione2</Value>
+    </Setting>
+    <Setting Name="segnalibro_intestazione3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">intestazione3</Value>
+    </Setting>
+    <Setting Name="segnalibro_oggetto" Type="System.String" Scope="User">
+      <Value Profile="(Default)">oggetto</Value>
+    </Setting>
+    <Setting Name="segnalibro_contenutoDettaglio" Type="System.String" Scope="User">
+      <Value Profile="(Default)">contenutoDettaglio</Value>
+    </Setting>
+    <Setting Name="segnalibro_luogo_data" Type="System.String" Scope="User">
+      <Value Profile="(Default)">luogo_data</Value>
+    </Setting>
+    <Setting Name="carattereFont" Type="System.String" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneNomeFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneDatiEXIF" Type="System.String" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="fotoLarghezzaThumb" Type="System.String" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="fotoLarghezzaThumbMin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="doc_savedDocumentName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fascicolo.doc</Value>
+    </Setting>
+    <Setting Name="titoloLegenda" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Legenda</Value>
+    </Setting>
+    <Setting Name="carattereDimensioneLegenda" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="doc_modelPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">modello</Value>
+    </Setting>
+    <Setting Name="doc_resultPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">result</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
