@@ -7,7 +7,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:My="clr-namespace:SGraf.My" x:Name="window" x:Class="MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="591" Width="800">
-    
+
     <Window.DataContext>
         <My:MySettings/>
     </Window.DataContext>
@@ -51,7 +51,7 @@
                         <GroupBox Header="Tipo Fascicolo" Width="159">
                             <Canvas Width="150" Height="25" HorizontalAlignment="Left">
                                 <ComboBox x:Name="cb_tipofascicolo" Width="150"  HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex ="{Binding tipoFascicolo}" >
-                                    
+
                                     <ComboBoxItem Content="Descrittivo" />
                                     <ComboBoxItem Content="Identificazione"/>
                                 </ComboBox>
@@ -82,6 +82,13 @@
                                 </Canvas>
                             </StackPanel>
                         </GroupBox>
+
+                        <GroupBox Header="Risoluzione (DPI)" Width="135">
+                            <StackPanel Margin="0,0,0,0" HorizontalAlignment="Left">
+                                <ComboBox x:Name="dpi_combobox" Canvas.Left="0" Canvas.Top="0" Width="120" IsReadOnly="True"/>
+                            </StackPanel>
+                        </GroupBox>
+
                     </DockPanel>
                 </DockPanel>
             </Expander>
@@ -92,15 +99,15 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
-       
-            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" ToolTip="Trascinare le immagini qui." DockPanel.Dock="Top" >
-                    <WrapPanel x:Name="WrapPanelImmagini" AllowDrop="True"/>
-            </ScrollViewer>
-        
-        <ProgressBar x:Name="ptest" DockPanel.Dock="Bottom" Height="9" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled" LargeChange="0" />
 
- </Grid>
-  </DockPanel>
-   
-    
+            <ScrollViewer x:Name="scrollWrapPanel" Drop="ScrollViewer_Drop" AllowDrop="True" ToolTip="Trascinare le immagini qui." DockPanel.Dock="Top" >
+                <WrapPanel x:Name="WrapPanelImmagini" AllowDrop="True"/>
+            </ScrollViewer>
+
+            <ProgressBar x:Name="ptest" DockPanel.Dock="Bottom" Height="9" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Disabled" LargeChange="0" />
+
+        </Grid>
+    </DockPanel>
+
+
 </Window>

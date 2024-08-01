@@ -155,5 +155,8 @@
     <Setting Name="doc_resultPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">result</Value>
     </Setting>
+    <Setting Name="print_dpi" Type="System.String" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -467,6 +467,8 @@ Public Class UserControlImg
     Dim pixelColor As Color
     Dim r, g, b As Byte
 
+    Public img_width As Integer
+    Public img_height As Integer
 
     Public Property goingToDrag As Boolean = False
     Public Property isSelected As Boolean = False
@@ -562,14 +564,30 @@ Public Class UserControlImg
     Public Property Orientation As Object
 
 
-    Sub New(_bi_image As BitmapImage, _sNomeFile As String, _userCtrlWidth As Integer)
+    Sub New(_sNomeFile As String, _userCtrlWidth As Integer)
         InitializeComponent()
 
         log4net.Config.XmlConfigurator.Configure()
 
         sNomeFile = _sNomeFile
 
-        PictureBox1.Source = _bi_image
+        Dim img As System.Drawing.Image = System.Drawing.Image.FromFile(sNomeFile)
+        img_height = img.Height
+        img_width = img.Width
+
+        'BitmapImage è la miniatura
+        Dim b_image As BitmapImage = New BitmapImage()
+        b_image.BeginInit()
+        b_image.UriSource = New Uri(_sNomeFile, UriKind.RelativeOrAbsolute)
+
+
+
+        ' la risoluzione della mininiatura può essere impostata nella configurazione
+        b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
+
+        b_image.EndInit()
+
+        PictureBox1.Source = b_image
 
         'così funziona il ridimensionamento!!
         Me.Height = Double.NaN
@@ -772,18 +790,6 @@ Public Class UserControlImg
         myEffect.Color = Colors.Gray
         myEffect.Opacity = 50
         img.Effect = myEffect
-
-
-
-        ' Dim newFormatedBitmapSource As New FormatConvertedBitmap()
-
-        ' newFormatedBitmapSource.BeginInit()
-        '  newFormatedBitmapSource.Source = img
-        ' Set the New format to Gray32Float (grayscale).
-        ' newFormatedBitmapSource.DestinationFormat = PixelFormats.Gray32Float
-        '    newFormatedBitmapSource.EndInit()
-
-        '    PictureBox1.Source = newFormatedBitmapSource
 
     End Sub
 

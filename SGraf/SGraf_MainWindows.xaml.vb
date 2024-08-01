@@ -1,4 +1,5 @@
 ﻿
+Imports System.Collections.Specialized
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Imaging
@@ -96,18 +97,10 @@ Class MainWindow
         For Each sFile In arrayFileNames
             Try
                 log.Info("Inserimento immagine " & sFile)
-                'BitmapImage è la miniatura
-                Dim b_image As BitmapImage = New BitmapImage()
-                b_image.BeginInit()
-                b_image.UriSource = New Uri(sFile, UriKind.RelativeOrAbsolute)
 
-                ' la risoluzione della mininiatura può essere impostata nella configurazione
-                b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
 
-                b_image.EndInit()
-
-                'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
-                imageItem = New UserControlImg(b_image, sFile, My.Settings.fotoLarghezzaThumb)
+                'la dimensione dell'oggetto viene impostata in funzione della larghezza 
+                imageItem = New UserControlImg(sFile, My.Settings.fotoLarghezzaThumb)
                 WrapPanelImmagini.Children.Add(imageItem)
                 ptest.Value += iRate
                 ' Attendi un breve intervallo per consentire all'interfaccia utente di aggiornarsi:
@@ -171,25 +164,6 @@ Class MainWindow
 
         'carica l'immagine del separatore
         log.Info("Inserimento immagine separatore")
-
-
-
-        '        'Legge l'immagine del separatore da mostrare durante lo spostamento di un'immagine
-        '        Dim b_image As BitmapImage = Resources.Item(My.Resources.separator)
-        'b_image.BeginInit()
-        ' la risoluzione della mininiatura può essere impostata nella configurazione
-        'b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
-
-        'b_image.EndInit()
-
-
-        'la dimensione dell'oggetto viene impostata in funzione dell'altezza 
-        'imageItem = New UserControlImg(b_image, ".", My.Settings.fotoLarghezzaThumb)
-        'WrapPanelImmagini.Children.Add(imageItem)
-
-        'da compleatare
-
-
 
         'sposta visivamente l'immagine durante il drag
         If (e.Data.GetDataPresent(dragtype)) Then
@@ -440,6 +414,35 @@ Class MainWindow
     'modifica dimensione miniature (solo quelle mostrate a video)
     Dim intNuovaAltezzaThumb As Integer
     Dim intNuovaLarghezzaThumb As Integer
+
+    Public Sub New()
+
+        ' La chiamata è richiesta dalla finestra di progettazione.
+        InitializeComponent()
+
+        ' Aggiungere le eventuali istruzioni di inizializzazione dopo la chiamata a InitializeComponent().
+        FillDPIComboBox(dpi_combobox)
+
+    End Sub
+
+
+    Public Sub FillDPIComboBox(comboBoxDpi As ComboBox)
+
+
+        Dim stringcoll = New StringCollection()
+        stringcoll.Add("50")
+        stringcoll.Add("100")
+        stringcoll.Add("150")
+        stringcoll.Add("300")
+        stringcoll.Add("600")
+
+        For Each element In stringcoll
+            comboBoxDpi.Items.Add(element.ToString)
+        Next
+
+        comboBoxDpi.SelectedValue = My.Settings.print_dpi
+    End Sub
+
     Private Sub imgRedrawZoom(zoomPercent As Double)
         intNuovaLarghezzaThumb = CInt(My.Settings.fotoLarghezzaThumb * (1 + zoomPercent / 100))
         Dim ratio As Double = 0
@@ -571,6 +574,12 @@ Class MainWindow
         'ridimensiona i controlli immagine
         log.Info("Zoom " & ZoomValue & "%")
         imgRedrawZoom(ZoomValue)
+    End Sub
+
+    Private Sub dpi_combobox_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles dpi_combobox.SelectionChanged
+        Dim s As ComboBox = sender
+        My.Settings.print_dpi = s.SelectedValue
+        My.Settings.Save()
     End Sub
 
     Private Sub menu_apriprogetto_Click(sender As Object, e As RoutedEventArgs) Handles menu_apriprogetto.Click

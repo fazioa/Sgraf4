@@ -665,6 +665,18 @@ Namespace My
                 Me("doc_resultPath") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("150")>  _
+        Public Property print_dpi() As String
+            Get
+                Return CType(Me("print_dpi"),String)
+            End Get
+            Set
+                Me("print_dpi") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

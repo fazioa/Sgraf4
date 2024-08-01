@@ -195,7 +195,6 @@ Public Class ActionLibrary
         'immagine in orizzontale
         'allora porto la larghezza al valore impostato nelle preferenze mentre l'altezza è un valore calcolato in base al rapporto larghezza / altezza 
         Dim altezzaCm = My.Settings.fotoLarghezzaCM * (usrCtrlImg.PictureBox1.Source.Height / usrCtrlImg.PictureBox1.Source.Width)
-        ' altezzaCm = My.Settings.fotoLarghezzaCM * (picture.Height / picture.Width)
 
         'se l'altezza che risulta dal calcolo è maggiore di quella impostata nei parametri allora ridimensiono
         If (altezzaCm < My.Settings.fotoAltezzaCM) Then
@@ -205,6 +204,8 @@ Public Class ActionLibrary
             picture.HeightInches = My.Settings.fotoAltezzaCM * 0.39370078740157483
             picture.WidthInches = picture.HeightInches * (usrCtrlImg.PictureBox1.Source.Width / usrCtrlImg.PictureBox1.Source.Height)
         End If
+
+
     End Sub
 
     Private Sub inserisciImmagineInCella(ByRef document As DocX, ByRef t As Xceed.Document.NET.Table, iRig As Integer, iCol As Integer, usrCtrlImg As UserControlImg)
@@ -221,8 +222,15 @@ Public Class ActionLibrary
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
 
         'inserisce immagine
-        Dim image = document.AddImage(usrCtrlImg.sNomeFile)
-        Dim picture = image.CreatePicture()
+        '  Dim image = document.AddImage(usrCtrlImg.sNomeFile)
+        '  Dim picture = image.CreatePicture()
+
+        'apertura file
+        Dim fs As FileStream = File.OpenRead(usrCtrlImg.sNomeFile)
+        'ridimensiona l'immagine prima dell'inserimento del documento in base alla risoluzione DPI scelta 
+        Dim picture As Picture = encode(document, fs)
+        'chiusura file
+        fs.Close()
 
         picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
 
@@ -234,6 +242,8 @@ Public Class ActionLibrary
 
         p = p.InsertParagraphAfterSelf(" ")
         p.Alignment = Alignment.center
+
+
         p.InsertPicture(picture)
 
         'solo se il fascicolo è descrittivo
@@ -320,40 +330,12 @@ Public Class ActionLibrary
         p.Font(My.Settings.carattereFont)
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
 
+        'apertura file
         Dim fs As FileStream = File.OpenRead(usrCtrlImg.sNomeFile)
-
-
-        'DA FARE - resize immagini prima dell'inserimento nel documento
-        Dim wOriginale = usrCtrlImg.PictureBox1.Height
-        Dim wFinale = wOriginale / 2
-
-
-        'ridimensiona l'immagine
-        Dim encoder As BmpBitmapEncoder = New BmpBitmapEncoder()
-        Dim memStream As MemoryStream = New MemoryStream()
-        Dim bImg As BitmapImage = New BitmapImage()
-
-        encoder.Frames.Add(BitmapFrame.Create(fs))
-        encoder.Save(memStream)
-
-        bImg.BeginInit()
-        bImg.StreamSource = New MemoryStream(memStream.ToArray())
-        bImg.DecodePixelWidth = 1417
-
-
-
-        bImg.EndInit()
-        memStream.Close()
-
-        encoder = New BmpBitmapEncoder()
-        memStream = New MemoryStream()
-        encoder.Frames.Add(BitmapFrame.Create(bImg))
-        encoder.Save(memStream)
-
-        Dim image As Xceed.Document.NET.Image = document.AddImage(memStream)
-        memStream.Close()
-
-        Dim picture As Picture = image.CreatePicture()
+        'ridimensiona l'immagine prima dell'inserimento del documento in base alla risoluzione DPI scelta 
+        Dim picture As Picture = encode(document, fs)
+        'chiusura file
+        fs.Close()
 
         picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
 
@@ -378,6 +360,39 @@ Public Class ActionLibrary
 
 
     End Sub
+
+    Private Function encode(document As DocX, fs As FileStream) As Picture
+
+        'resize immagini prima dell'inserimento nel documento
+        Dim WidthInches = My.Settings.fotoLarghezzaCM * 0.39370078740157483
+        Dim wFinale = WidthInches * My.Settings.print_dpi
+
+        'ridimensiona l'immagine
+        Dim encoder As BmpBitmapEncoder = New BmpBitmapEncoder()
+        Dim memStream As MemoryStream = New MemoryStream()
+        Dim bImg As BitmapImage = New BitmapImage()
+
+        encoder.Frames.Add(BitmapFrame.Create(fs))
+        encoder.Save(memStream)
+
+        bImg.BeginInit()
+        bImg.StreamSource = New MemoryStream(memStream.ToArray())
+        bImg.DecodePixelWidth = wFinale
+
+        bImg.EndInit()
+        memStream.Close()
+
+        encoder = New BmpBitmapEncoder()
+        memStream = New MemoryStream()
+        encoder.Frames.Add(BitmapFrame.Create(bImg))
+
+        encoder.Save(memStream)
+
+        Dim image As Xceed.Document.NET.Image = document.AddImage(memStream)
+        memStream.Close()
+
+        Return image.CreatePicture()
+    End Function
 
     Private Function creaTabella(ByRef document As DocX)
         Dim t = document.AddTable(My.Settings.disposizioneRighe, My.Settings.disposizioneColonne)
