@@ -121,12 +121,34 @@
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Height="202" Header="Dati file">
-                            <DockPanel Height="34" LastChildFill="False" VerticalAlignment="Top">
-                                <Label Content="Nome file"  HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                <CheckBox x:Name="cb_nomefile" VerticalAlignment="Center" HorizontalAlignment="Left" IsChecked="{Binding bNomeFile}" />
-                            </DockPanel>
-                        </GroupBox>
+                        <StackPanel Orientation="Vertical">
+                        <GroupBox Header="Dati File">
+                            <StackPanel>
+                                <DockPanel Height="53" LastChildFill="False"  HorizontalAlignment="Right">
+                                    <Label Content="Nome file"  HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                    <CheckBox x:Name="cb_nomefile" VerticalAlignment="Center" HorizontalAlignment="Right" IsChecked="{Binding bNomeFile}" />
+                                </DockPanel>
+                               
+                            </StackPanel>
+</GroupBox>
+                            <GroupBox Header="Hash">
+                                <StackPanel>
+                                    <DockPanel Height="34" LastChildFill="False"  HorizontalAlignment="Right">
+                                        <Label Content="Hash SHA1"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        <CheckBox x:Name="cb_hashsha1" VerticalAlignment="Center" IsChecked="{Binding bHashSHA1}" />
+                                    </DockPanel>
+                                    <DockPanel Height="34" HorizontalAlignment="Right">
+                                        <Label Content="Hash SHA256"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        <CheckBox x:Name="cb_hashsha256" VerticalAlignment="Center" IsChecked="{Binding bHashSHA256}" />
+                                    </DockPanel>
+                                    <DockPanel Height="34" HorizontalAlignment="Right">
+                                        <Label Content="Hash MD5"  HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                        <CheckBox x:Name="cb_hashMD5" VerticalAlignment="Center" IsChecked="{Binding bHashMD5}" />
+                                    </DockPanel>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                        
                     </StackPanel>
                 </GroupBox>
             </StackPanel>

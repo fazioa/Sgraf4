@@ -158,5 +158,26 @@
     <Setting Name="print_dpi" Type="System.String" Scope="User">
       <Value Profile="(Default)">150</Value>
     </Setting>
+    <Setting Name="bHashSHA1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="bHashSHA256" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="bHashMD5" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="fotoAltezzaThumbMin" Type="System.String" Scope="User">
+      <Value Profile="(Default)">180</Value>
+    </Setting>
+    <Setting Name="bHashSHA1_name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hash SHA1:</Value>
+    </Setting>
+    <Setting Name="bHashSHA256_name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hash SHA256:</Value>
+    </Setting>
+    <Setting Name="bHashMD5_name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hash MD5:</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

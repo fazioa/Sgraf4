@@ -5,6 +5,9 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Reflection
+Imports System.Security.Cryptography
+Imports System.Security.Policy
+Imports System.Text
 Imports System.Threading
 Imports System.Web.UI.WebControls
 Imports log4net
@@ -424,6 +427,8 @@ Class MainWindow
         FillDPIComboBox(dpi_combobox)
 
     End Sub
+
+
 
 
     Public Sub FillDPIComboBox(comboBoxDpi As ComboBox)

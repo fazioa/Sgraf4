@@ -677,6 +677,90 @@ Namespace My
                 Me("print_dpi") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property bHashSHA1() As Boolean
+            Get
+                Return CType(Me("bHashSHA1"),Boolean)
+            End Get
+            Set
+                Me("bHashSHA1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property bHashSHA256() As Boolean
+            Get
+                Return CType(Me("bHashSHA256"),Boolean)
+            End Get
+            Set
+                Me("bHashSHA256") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property bHashMD5() As Boolean
+            Get
+                Return CType(Me("bHashMD5"),Boolean)
+            End Get
+            Set
+                Me("bHashMD5") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("180")>  _
+        Public Property fotoAltezzaThumbMin() As String
+            Get
+                Return CType(Me("fotoAltezzaThumbMin"),String)
+            End Get
+            Set
+                Me("fotoAltezzaThumbMin") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Hash SHA1:")>  _
+        Public Property bHashSHA1_name() As String
+            Get
+                Return CType(Me("bHashSHA1_name"),String)
+            End Get
+            Set
+                Me("bHashSHA1_name") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Hash SHA256:")>  _
+        Public Property bHashSHA256_name() As String
+            Get
+                Return CType(Me("bHashSHA256_name"),String)
+            End Get
+            Set
+                Me("bHashSHA256_name") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Hash MD5:")>  _
+        Public Property bHashMD5_name() As String
+            Get
+                Return CType(Me("bHashMD5_name"),String)
+            End Get
+            Set
+                Me("bHashMD5_name") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

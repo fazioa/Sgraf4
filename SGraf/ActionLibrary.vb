@@ -1,12 +1,9 @@
-﻿Imports System.Data
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.IO
-Imports System.Web.UI
+Imports System.Security.Cryptography
+Imports System.Text
 Imports System.Web.UI.WebControls
 Imports log4net
-Imports Microsoft.VisualBasic.Logging
-Imports MS.Internal
-Imports Xceed
 Imports Xceed.Document.NET
 Imports Xceed.Words.NET
 
@@ -221,10 +218,6 @@ Public Class ActionLibrary
         p.Font(My.Settings.carattereFont)
         p.FontSize(My.Settings.carattereDimensioneTitoloImmagine)
 
-        'inserisce immagine
-        '  Dim image = document.AddImage(usrCtrlImg.sNomeFile)
-        '  Dim picture = image.CreatePicture()
-
         'apertura file
         Dim fs As FileStream = File.OpenRead(usrCtrlImg.sNomeFile)
         'ridimensiona l'immagine prima dell'inserimento del documento in base alla risoluzione DPI scelta 
@@ -233,12 +226,11 @@ Public Class ActionLibrary
         fs.Close()
 
         picture.Rotation = usrCtrlImg.imgRotation.actualAngularRotation
-
-        If (usrCtrlImg.PictureBox1.Source.Width > usrCtrlImg.PictureBox1.Source.Height) Then
+        If (usrCtrlImg.img_width > usrCtrlImg.img_height) Then
             insertOrizzontalImage(usrCtrlImg, picture)
         Else
             insertVerticalImage(usrCtrlImg, picture)
-            End If
+        End If
 
         p = p.InsertParagraphAfterSelf(" ")
         p.Alignment = Alignment.center
@@ -250,6 +242,7 @@ Public Class ActionLibrary
         If My.Settings.tipoFascicolo = tipofascicolo.descrittivo Then
             Dim sEXIF = buildEXIFString(usrCtrlImg)
             inserisceNomeFile(p, System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
+            inserisceHash(p, usrCtrlImg.sNomeFile)
             inserisceDatiEXIF(p, sEXIF)
             inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
         End If
@@ -284,41 +277,33 @@ Public Class ActionLibrary
     Private Function buildEXIFString(usrCtrlImg As UserControlImg) As Object
         'costruisce la stringa dei dati EXIF
         Dim sEXIF As String = ""
-        Dim bFlag As Boolean = False
         If My.Settings.bEXIFDataOra Then
             sEXIF += Trim(usrCtrlImg.dataScatto)
-            bFlag = True
         End If
         If My.Settings.bEXIFMarca Then
             If sEXIF <> "" And usrCtrlImg.marca IsNot Nothing Then sEXIF += ", "
             sEXIF += Trim(usrCtrlImg.marca)
-            bFlag = True
         End If
         If My.Settings.bEXIFModello Then
             If sEXIF <> "" And usrCtrlImg.modello IsNot Nothing Then sEXIF += ", "
             sEXIF += Trim(usrCtrlImg.modello)
-            bFlag = True
         End If
 
         If My.Settings.bEXIFEsposizione Then
             If sEXIF <> "" And usrCtrlImg.esposizione IsNot Nothing Then sEXIF += ", "
             sEXIF += Trim(usrCtrlImg.esposizione)
-            bFlag = True
         End If
         If My.Settings.bEXIFDiaframma Then
             If sEXIF <> "" And usrCtrlImg.diaframma IsNot Nothing Then sEXIF += ", "
             sEXIF += Trim(usrCtrlImg.diaframma)
-            bFlag = True
         End If
         If My.Settings.bEXIFISO Then
             If sEXIF <> "" And usrCtrlImg.ISO IsNot Nothing Then sEXIF += ", "
             sEXIF += Trim(usrCtrlImg.ISO)
-            bFlag = True
         End If
         If My.Settings.bEXIFFlash Then
             If sEXIF <> "" And usrCtrlImg.flash IsNot Nothing Then sEXIF += ", "
             sEXIF += Trim(usrCtrlImg.flash)
-            bFlag = True
         End If
         Return sEXIF
     End Function
@@ -354,12 +339,63 @@ Public Class ActionLibrary
 
             Dim sEXIF = buildEXIFString(usrCtrlImg)
             inserisceNomeFile(p, System.IO.Path.GetFileName(usrCtrlImg.sNomeFile))
+            inserisceHash(p, usrCtrlImg.sNomeFile)
             inserisceDatiEXIF(p, sEXIF)
             inserisceDidascalia(p, usrCtrlImg.TextBoxTag.Text)
         End If
 
 
     End Sub
+
+
+    Public Class HashContainer
+        Public Property HashSHA1 As String
+        Public Property HashSHA256 As String
+        Public Property HashMD5 As String
+    End Class
+
+    Private Sub inserisceHash(p As Paragraph, sNomeFile As String)
+
+        'calcola di valori hash SHA1, SHA256 e MD5 solo se è stato scelto di farlo nella pagina di setup
+
+        'verifico che il valore impostato nelle variabili di sistema sia di tipo booleano
+        ' se non lo è imposto il parametro a false
+        Dim myVariable As Object = My.Settings.bHashSHA1
+        If Not TypeOf myVariable Is Boolean Then
+            My.Settings.bHashSHA1 = False
+        End If
+
+        myVariable = My.Settings.bHashSHA256
+        If Not TypeOf myVariable Is Boolean Then
+            My.Settings.bHashSHA256 = False
+        End If
+
+        myVariable = My.Settings.bHashMD5
+        If Not TypeOf myVariable Is Boolean Then
+            My.Settings.bHashMD5 = False
+        End If
+
+        Dim hashVal As HashContainer = CalcolaHash(sNomeFile, My.Settings.bHashSHA1, My.Settings.bHashSHA256, My.Settings.bHashMD5)
+
+        'inserisce i dati EXIF
+        p = p.InsertParagraphAfterSelf(My.Settings.bHashSHA256_name & " " & hashVal.HashSHA256)
+        p.Alignment = Alignment.center
+        p.Font(My.Settings.carattereFont)
+        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+
+        p = p.InsertParagraphAfterSelf(My.Settings.bHashMD5_name & " " & hashVal.HashMD5)
+        p.Alignment = Alignment.center
+        p.Font(My.Settings.carattereFont)
+        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+
+        p = p.InsertParagraphAfterSelf(My.Settings.bHashSHA1_name & " " & hashVal.HashSHA1)
+        p.Alignment = Alignment.center
+        p.Font(My.Settings.carattereFont)
+        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+
+    End Sub
+
+
 
     Private Function encode(document As DocX, fs As FileStream) As Picture
 
@@ -435,7 +471,121 @@ Public Class ActionLibrary
         Dim d As Date = DateTime.Now
         getTimeStamp = d.Year & Format(d.Month, "d2") & Format(d.Day, "d2") & Format(d.Hour, "d2") & Format(d.Minute, "d2") & Format(d.Second, "d2")
     End Function
+
+    Public Function CalcolaHashMD5(filePath As String) As String
+        Using md5Hasher As MD5 = MD5.Create()
+            Using stream As FileStream = New FileStream(filePath, FileMode.Open)
+                Dim data(stream.Length - 1) As Byte
+                stream.Read(data, 0, data.Length)
+                Dim hashBytes As Byte() = md5Hasher.ComputeHash(data)
+
+                ' Convertire i byte in una stringa esadecimale
+                Dim sb As New StringBuilder()
+                For Each t As Byte In hashBytes
+                    sb.Append(t.ToString("x2"))
+                Next
+
+                Return sb.ToString()
+            End Using
+        End Using
+    End Function
+
+    Public Function CalcolaHashSHA1(filePath As String) As String
+        Using sh1Hasher As SHA1 = SHA1.Create()
+            Using stream As FileStream = New FileStream(filePath, FileMode.Open)
+                Dim data(stream.Length - 1) As Byte
+                stream.Read(data, 0, data.Length)
+                Dim hashBytes As Byte() = sh1Hasher.ComputeHash(data)
+
+                ' Convertire i byte in una stringa esadecimale
+                Dim sb As New StringBuilder()
+                For Each t As Byte In hashBytes
+                    sb.Append(t.ToString("x2"))
+                Next
+
+                Return sb.ToString()
+            End Using
+        End Using
+    End Function
+
+    Public Function CalcolaHashSHA256(filePath As String) As String
+        Using sh256Hasher As SHA256 = SHA256.Create()
+            Using stream As FileStream = New FileStream(filePath, FileMode.Open)
+                Dim data(stream.Length - 1) As Byte
+                stream.Read(data, 0, data.Length)
+                Dim hashBytes As Byte() = sh256Hasher.ComputeHash(data)
+
+                ' Convertire i byte in una stringa esadecimale
+                Dim sb As New StringBuilder()
+                For Each t As Byte In hashBytes
+                    sb.Append(t.ToString("x2"))
+                Next
+
+                Return sb.ToString()
+            End Using
+        End Using
+    End Function
+
+    Public Function CalcolaHash(filePath As String, bHashSHA1 As Boolean, bHashSHA256 As Boolean, bHashMD5 As Boolean) As HashContainer
+        Dim _hashcontainer As New HashContainer
+        Dim sh256Hasher As SHA256 = SHA256.Create()
+        Dim sh1Hasher As SHA1 = SHA1.Create()
+        Dim md5Hasher As MD5 = MD5.Create()
+
+        Dim bFileOk As Boolean = False
+
+        Try
+
+            Dim stream As FileStream = New FileStream(filePath, FileMode.Open, FileAccess.Read)
+            Dim data(stream.Length - 1) As Byte
+            stream.Read(data, 0, data.Length)
+            bFileOk = True
+
+
+            'genera HASH SHA256
+            If bHashSHA1 And bFileOk Then
+                Dim hashBytes As Byte() = sh1Hasher.ComputeHash(data)
+                ' Convertire i byte in una stringa esadecimale
+                Dim sb As New StringBuilder()
+                For Each t As Byte In hashBytes
+                    sb.Append(t.ToString("x2"))
+                Next
+                _hashcontainer.HashSHA1 = sb.ToString()
+            End If
+
+            'genera HASH SHA256
+            If bHashSHA256 And bFileOk Then
+                Dim hashBytes As Byte() = sh256Hasher.ComputeHash(data)
+                ' Convertire i byte in una stringa esadecimale
+                Dim sb As New StringBuilder()
+                For Each t As Byte In hashBytes
+                    sb.Append(t.ToString("x2"))
+                Next
+                _hashcontainer.HashSHA256 = sb.ToString()
+            End If
+
+            'genera HASH SHA256
+            If bHashMD5 And bFileOk Then
+                Dim hashBytes As Byte() = md5Hasher.ComputeHash(data)
+                ' Convertire i byte in una stringa esadecimale
+                Dim sb As New StringBuilder()
+                For Each t As Byte In hashBytes
+                    sb.Append(t.ToString("x2"))
+                Next
+                _hashcontainer.HashMD5 = sb.ToString()
+            End If
+        Catch ex As Exception
+            log.Error("Errore di apertura file " & filePath & " per calcolo hash -  Message: " & ex.Message)
+        End Try
+        Return _hashcontainer
+
+    End Function
+
+
+
 End Class
+
+
 
 
 Public Class ImagesProjectClass

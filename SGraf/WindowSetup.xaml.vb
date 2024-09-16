@@ -185,4 +185,24 @@ Public Class WindowSetup
     Public Sub updateEXIF_allimages()
         mainW.rewriteEXIF_allImages()
     End Sub
+
+    Private Sub cb_hashsha1_Click(sender As Object, e As RoutedEventArgs) Handles cb_hashsha1.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bHashSHA1 = cb.IsChecked
+        My.Settings.Save()
+
+    End Sub
+
+    Private Sub cb_hashsha256_Click(sender As Object, e As RoutedEventArgs) Handles cb_hashsha256.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bHashSHA256 = cb.IsChecked
+        My.Settings.Save()
+
+    End Sub
+
+    Private Sub cb_hashMD5_Click(sender As Object, e As RoutedEventArgs) Handles cb_hashMD5.Click
+        Dim cb As CheckBox = sender
+        My.Settings.bHashMD5 = cb.IsChecked
+        My.Settings.Save()
+    End Sub
 End Class

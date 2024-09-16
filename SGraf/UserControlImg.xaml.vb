@@ -567,25 +567,31 @@ Public Class UserControlImg
     Sub New(_sNomeFile As String, _userCtrlWidth As Integer)
         InitializeComponent()
 
+        Dim fs As IO.FileStream
+        fs = New FileStream(_sNomeFile, FileMode.Open, FileAccess.Read)
+
         log4net.Config.XmlConfigurator.Configure()
 
         sNomeFile = _sNomeFile
 
-        Dim img As System.Drawing.Image = System.Drawing.Image.FromFile(sNomeFile)
+        ' Dim img As System.Drawing.Image = System.Drawing.Image.FromFile(sNomeFile)
+        Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(fs)
         img_height = img.Height
         img_width = img.Width
+        fs.Close()
 
+        '  fs.Position = 0
         'BitmapImage è la miniatura
         Dim b_image As BitmapImage = New BitmapImage()
         b_image.BeginInit()
         b_image.UriSource = New Uri(_sNomeFile, UriKind.RelativeOrAbsolute)
 
-
+        'b_image.StreamSource() = fs
 
         ' la risoluzione della mininiatura può essere impostata nella configurazione
         b_image.DecodePixelHeight = My.Settings.thumbnailDisplayResolution
-
         b_image.EndInit()
+
 
         PictureBox1.Source = b_image
 
@@ -686,6 +692,7 @@ Public Class UserControlImg
 
         Catch ex As Exception
         End Try
+
     End Sub
     Public Sub update_label_from_EXIF()
 
