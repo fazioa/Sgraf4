@@ -55,6 +55,6 @@ Imports System.Windows
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("4.2.0.0")>
-<Assembly: AssemblyFileVersion("4.2.0.0")>
+<Assembly: AssemblyVersion("4.2.1.0")>
+<Assembly: AssemblyFileVersion("4.2.1.0")>
 <Assembly: NeutralResourcesLanguage("it")>

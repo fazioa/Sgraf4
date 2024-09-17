@@ -378,21 +378,26 @@ Public Class ActionLibrary
         Dim hashVal As HashContainer = CalcolaHash(sNomeFile, My.Settings.bHashSHA1, My.Settings.bHashSHA256, My.Settings.bHashMD5)
 
         'inserisce i dati EXIF
-        p = p.InsertParagraphAfterSelf(My.Settings.bHashSHA256_name & " " & hashVal.HashSHA256)
-        p.Alignment = Alignment.center
-        p.Font(My.Settings.carattereFont)
-        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+        If My.Settings.bHashSHA256 Then
+            p = p.InsertParagraphAfterSelf(My.Settings.bHashSHA256_name & " " & hashVal.HashSHA256)
+            p.Alignment = Alignment.center
+            p.Font(My.Settings.carattereFont)
+            p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+        End If
 
-        p = p.InsertParagraphAfterSelf(My.Settings.bHashMD5_name & " " & hashVal.HashMD5)
-        p.Alignment = Alignment.center
-        p.Font(My.Settings.carattereFont)
-        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+        If My.Settings.bHashMD5 Then
+            p = p.InsertParagraphAfterSelf(My.Settings.bHashMD5_name & " " & hashVal.HashMD5)
+            p.Alignment = Alignment.center
+            p.Font(My.Settings.carattereFont)
+            p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+        End If
 
-        p = p.InsertParagraphAfterSelf(My.Settings.bHashSHA1_name & " " & hashVal.HashSHA1)
-        p.Alignment = Alignment.center
-        p.Font(My.Settings.carattereFont)
-        p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
-
+        If My.Settings.bHashSHA1 Then
+            p = p.InsertParagraphAfterSelf(My.Settings.bHashSHA1_name & " " & hashVal.HashSHA1)
+            p.Alignment = Alignment.center
+            p.Font(My.Settings.carattereFont)
+            p.FontSize(My.Settings.carattereDimensioneDatiEXIF)
+        End If
     End Sub
 
 
